@@ -45,3 +45,8 @@ Kết quả XML và log được tạo trong `target/surefire-reports/`.
 Tài khoản trong CSV là dữ liệu kiểm thử công khai của
 [SauceDemo](https://www.saucedemo.com/). Không dùng thông tin đăng nhập thật
 trong mã nguồn hoặc tệp dữ liệu.
+
+## Môi trường thực thi kiểm thử
+- Hệ điều hành: Windows 11 (64-bit)
+- Java: OpenJDK Temurin-21.0.12 LTS
+- Trình duyệt: Google Chrome Version 155.0.8059.40 (64-bit)
