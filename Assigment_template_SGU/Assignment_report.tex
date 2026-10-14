@@ -145,20 +145,24 @@
 Hệ thống được chọn để thực hiện kiểm thử trong đề tài là \textbf{SauceDemo} (\url{https://www.saucedemo.com}) --- trang web bán hàng mẫu chuẩn công nghiệp chuyên dùng để giảng dạy và thực hành kiểm thử phần mềm tự động.
 
 \subsection{Danh sách tài khoản kiểm thử của hệ thống}
-Theo đặc tả của đề bài, SauceDemo cung cấp sẵn các tài khoản có sẵn với mật khẩu chung \texttt{secret\_sauce}:
+Trên hệ thống SauceDemo, hệ thống cung cấp sẵn 6 tài khoản mẫu với mật khẩu chung \texttt{secret\_sauce}. Mỗi tài khoản được thiết kế để mô phỏng một trạng thái hoặc lỗi đặc thù trong quá trình kiểm thử:
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|l|p{11cm}|}
+\begin{tabular}{|l|p{11.5cm}|}
 \hline
 \textbf{Tài khoản} & \textbf{Hành vi và mục đích dùng để kiểm thử} \\ \hline
-\texttt{standard\_user} & Hoạt động bình thường; sử dụng cho toàn bộ luồng chức năng chính (Happy Path). \\ \hline
-\texttt{locked\_out\_user} & Tài khoản bị khóa; đăng nhập đúng mật khẩu vẫn bị hệ thống từ chối và hiển thị thông báo lỗi. \\ \hline
-\texttt{problem\_user} & Tài khoản có lỗi giao diện và chức năng được cài sẵn; dùng cho kiểm thử khám phá và săn lỗi. \\ \hline
-\texttt{performance\_glitch\_user} & Bị làm chậm có chủ đích ($\approx 5$ giây); dùng để kiểm thử yêu cầu phi chức năng NFR-01. \\ \hline
+\texttt{standard\_user} & Tài khoản tiêu chuẩn, hoạt động bình thường trên mọi chức năng; dùng cho luồng chính (Happy Path) từ đăng nhập, giỏ hàng đến thanh toán. \\ \hline
+\texttt{locked\_out\_user} & Tài khoản bị khóa; đăng nhập đúng mật khẩu vẫn bị từ chối; dùng để kiểm thử nhánh lỗi tài khoản bị khóa trong FR-01. \\ \hline
+\texttt{problem\_user} & Tài khoản có lỗi giao diện (ảnh sản phẩm bị lỗi hiển thị giống nhau) và lỗi chức năng (không sắp xếp được sản phẩm); dùng để săn lỗi ở NV4. \\ \hline
+\texttt{performance\_glitch\_user} & Bị làm chậm có chủ đích ($\approx 5$ giây); dùng để kiểm thử yêu cầu phi chức năng hiệu năng NFR-01 (bắt lỗi \textbf{BUG-01}). \\ \hline
+\texttt{error\_user} & Tài khoản gặp lỗi ngoại lệ khi thao tác (ví dụ: nút bấm thanh toán bị lỗi không submit được); dùng cho kiểm thử khám phá mở rộng. \\ \hline
+\texttt{visual\_user} & Tài khoản có lỗi hiển thị sai lệch vị trí các phần tử giao diện CSS; dùng cho kiểm thử hồi quy trực quan (Visual Regression Testing). \\ \hline
 \end{tabular}
-\caption{Các tài khoản kiểm thử mục tiêu trên SauceDemo}
+\caption{Danh sách đầy đủ 6 tài khoản kiểm thử trên SauceDemo}
 \end{table}
+
+\noindent \textit{Ghi chú phạm vi:} Theo đặc tả của giảng viên tại Mục 2.1 đề bài, nhóm tập trung trọng tâm vào \textbf{4 tài khoản đầu tiên} (\texttt{standard\_user}, \texttt{locked\_out\_user}, \texttt{problem\_user}, và \texttt{performance\_glitch\_user}) để hoàn thành các yêu cầu từ FR-01 đến NFR-01. Hai tài khoản còn lại được nhóm sử dụng để tham khảo và mở rộng kiểm thử khám phá.
 
 \subsection{Môi trường thực thi kiểm thử của nhóm}
 \begin{itemize}
