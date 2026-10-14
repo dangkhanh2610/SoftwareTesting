@@ -202,24 +202,83 @@ Kiến trúc kiểm thử tự động của dự án ứng dụng ba annotation
 % ==============================================================================
 \section{NV2 – Phân tích yêu cầu và Đánh giá rủi ro}
 \subsection{Đặc tả yêu cầu chi tiết (Requirements Specification)}
-Nhóm xây dựng bản đặc tả yêu cầu với các quy tắc kiểm tra định lượng rõ ràng:
+Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với các thành viên phụ trách, mỗi phân hệ được chuẩn hóa theo định dạng 3 cột thống nhất: \textbf{Mã yêu cầu}, \textbf{Mô tả yêu cầu}, và \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)}.
+
+\subsubsection{Đặc tả FR-01: Xác thực và Đăng nhập (Thành viên 1)}
 \begin{table}[h!]
 \centering
 \small
 \begin{tabular}{|c|p{4.5cm}|p{8.5cm}|}
 \hline
-\textbf{Mã} & \textbf{Tên / Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
+\textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
 \textbf{FR-01.1} & Đăng nhập thành công với tài khoản hợp lệ & Nhập \texttt{standard\_user} / \texttt{secret\_sauce} $\rightarrow$ Chuyển hướng sang URL \texttt{https://www.saucedemo.com/inventory.html}. \\ \hline
 \textbf{FR-01.2} & Kiểm tra để trống trường Username & Bỏ trống username $\rightarrow$ Giữ nguyên trang đăng nhập; hiển thị lỗi: \textit{"Epic sadface: Username is required"}. \\ \hline
 \textbf{FR-01.3} & Kiểm tra để trống trường Password & Có username nhưng để trống password $\rightarrow$ Giữ nguyên trang đăng nhập; hiển thị lỗi: \textit{"Epic sadface: Password is required"}. \\ \hline
 \textbf{FR-01.4} & Kiểm tra thông tin sai hoặc sai chữ hoa/thường & Nhập sai tên, sai mật khẩu, hoặc sai chữ hoa/thường $\rightarrow$ Hiển thị lỗi: \textit{"Epic sadface: Username and password do not match any user in this service"}. \\ \hline
 \textbf{FR-01.5} & Đăng nhập tài khoản bị khóa & Nhập \texttt{locked\_out\_user} / \texttt{secret\_sauce} $\rightarrow$ Hiển thị lỗi: \textit{"Epic sadface: Sorry, this user has been locked out."}. \\ \hline
-\textbf{FR-02} & Quản lý giỏ hàng (Cart \& Badge) & Nút Add to cart đổi thành Remove khi chọn; Badge hiển thị số lượng sản phẩm (1--6); khi giỏ hàng rỗng thì Badge biến mất hoàn toàn. \\ \hline
-\textbf{FR-03} & Quy trình thanh toán (Checkout) & Bắt buộc nhập First Name, Last Name, Postal Code theo thứ tự; Nút Cancel quay về \texttt{cart.html}; Tính $\text{Tax} = 8\% \times \text{Item total}$ (làm tròn 2 chữ số thập phân); $\text{Total} = \text{Item total} + \text{Tax}$; Nhấn Finish hiển thị \textit{"Thank you for your order!"} và làm rỗng giỏ hàng. \\ \hline
-\textbf{FR-04} & Sắp xếp sản phẩm (Sorting) & Danh sách 6 sản phẩm được sắp xếp đúng theo 4 tiêu chí: Name (A to Z), Name (Z to A), Price (low to high), Price (high to low). \\ \hline
-\textbf{NFR-01} & Hiệu năng tải trang sản phẩm & Sau khi bấm Login với thông tin đúng, trang sản phẩm (\texttt{inventory.html}) phải hiển thị hoàn tất trong tối đa $\le 3$ giây (tính theo trung vị của 5 lần đo liên tiếp, mạng ổn định). \\ \hline
 \end{tabular}
-\caption{Bảng đặc tả yêu cầu kiểm thử hệ thống SauceDemo}
+\caption{Bảng đặc tả yêu cầu chức năng FR-01: Đăng nhập}
+\end{table}
+
+\subsubsection{Đặc tả FR-02: Quản lý giỏ hàng (Thành viên 2)}
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|c|p{4.5cm}|p{8.5cm}|}
+\hline
+\textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
+\textbf{FR-02.1} & Trạng thái nút Add to cart & Sản phẩm chưa được thêm vào giỏ sẽ hiển thị nút ``Add to cart''. Khi người dùng nhấn nút này, sản phẩm được thêm vào giỏ; hiện thêm nút ``Remove'' trong giỏ hàng và badge tăng thêm 1. \\ \hline
+\textbf{FR-02.2} & Trạng thái nút Remove & Khi người dùng nhấn nút ``Remove'', sản phẩm tương ứng bị xóa khỏi giỏ; nút đổi trở lại ``Add to cart'' và badge giảm đi 1. \\ \hline
+\textbf{FR-02.3} & Badge hiển thị số lượng từ 1 đến 6 & Khi giỏ có từ 1 đến 6 sản phẩm, badge hiển thị đúng số lượng sản phẩm hiện có. Ví dụ: có 3 sản phẩm thì badge hiển thị số 3; có đủ 6 sản phẩm thì badge hiển thị số 6. \\ \hline
+\textbf{FR-02.4} & Giỏ hàng rỗng & Khi chưa có sản phẩm nào được thêm vào giỏ hoặc khi tất cả sản phẩm đã bị xóa, badge không hiển thị (ẩn hoàn toàn theo đặc tả đề bài). Các sản phẩm đã bị xóa hiển thị lại nút ``Add to cart''. \\ \hline
+\end{tabular}
+\caption{Bảng đặc tả yêu cầu chức năng FR-02: Giỏ hàng}
+\end{table}
+
+\subsubsection{Đặc tả FR-03: Quy trình thanh toán (Thành viên 3)}
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|c|p{4.5cm}|p{8.5cm}|}
+\hline
+\textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
+\textbf{FR-03.1} & Kiểm tra First Name bắt buộc & Không được để trống; Nếu để trống hiển thị thông báo lỗi: \textit{Error: First Name is required}. \\ \hline
+\textbf{FR-03.2} & Kiểm tra Last Name bắt buộc & Nếu First Name hợp lệ nhưng Last Name trống hiển thị thông báo lỗi: \textit{Error: Last Name is required}. \\ \hline
+\textbf{FR-03.3} & Kiểm tra Postal Code bắt buộc & Nếu cả 2 trường hợp First và Last Name đều hợp lệ nhưng Postal Code để trống hiển thị thông báo lỗi: \textit{Error: Postal Code is required}. \\ \hline
+\textbf{FR-03.4} & Tính tiền thuế (Tax) & Tiền thuế tại trang tổng quan tính theo công thức: $\text{Tax} = 8\% \times \text{Item Total}$, làm tròn đến 2 chữ số thập phân. \\ \hline
+\textbf{FR-03.5} & Tính tổng thanh toán (Total) & Tổng tiền thanh toán bằng giá sản phẩm cộng thêm tiền thuế: $\text{Total} = \text{Item Total} + \text{Tax}$. \\ \hline
+\textbf{FR-03.6} & Hoàn tất đơn hàng (Finish) & Chuyển đến URL \texttt{checkout-complete.html}, hiển thị: \textit{Thank you for your order!} và giỏ hàng được làm trống. \\ \hline
+\textbf{FR-03.7} & Hủy tại bước nhập thông tin (Cancel) & Nhấn Cancel chuyển về URL \texttt{cart.html}, các sản phẩm đã chọn vẫn còn nguyên trong giỏ hàng. \\ \hline
+\end{tabular}
+\caption{Bảng đặc tả yêu cầu chức năng FR-03: Thanh toán}
+\end{table}
+
+\subsubsection{Đặc tả FR-04: Sắp xếp danh sách sản phẩm (Thành viên 4)}
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|c|p{4.5cm}|p{8.5cm}|}
+\hline
+\textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
+\textbf{FR-04.1} & Sắp xếp theo Tên từ A đến Z: \texttt{Name (A to Z)} & Sắp xếp sản phẩm theo thứ tự bảng chữ cái tăng dần A--Z. Đối với các sản phẩm trùng các chữ cái đầu, hệ thống thực hiện so sánh ký tự tiếp theo để sắp xếp thứ tự. Ví dụ với 3 sản phẩm: Sauce Labs Backpack, Sauce Labs Bike Light, Sauce Labs Bolt T-Shirt $\rightarrow$ hiển thị đúng thứ tự từ trên xuống dưới: Backpack $\rightarrow$ Bike Light $\rightarrow$ Bolt T-Shirt. \\ \hline
+\textbf{FR-04.2} & Sắp xếp theo Tên từ Z đến A: \texttt{Name (Z to A)} & Sắp xếp sản phẩm theo thứ tự bảng chữ cái giảm dần Z--A. Đối với các sản phẩm trùng các chữ cái đầu, so sánh ký tự tiếp theo. Với 3 sản phẩm trên, hệ thống hiển thị đảo ngược: Bolt T-Shirt $\rightarrow$ Bike Light $\rightarrow$ Backpack. \\ \hline
+\textbf{FR-04.3} & Sắp xếp theo Giá từ thấp đến cao: \texttt{Price (low to high)} & Sắp xếp sản phẩm theo thứ tự giá trị từ thấp tới cao. Sản phẩm đầu danh sách có giá thấp nhất là \$7.99 (Sauce Labs Onesie), sản phẩm cuối cùng có giá cao nhất là \$49.99 (Sauce Labs Fleece Jacket). Giá sản phẩm phía trên luôn luôn $\le$ giá sản phẩm liền kề phía dưới. \\ \hline
+\textbf{FR-04.4} & Sắp xếp theo Giá từ cao đến thấp: \texttt{Price (high to low)} & Sắp xếp sản phẩm theo thứ tự giá trị từ cao tới thấp. Sản phẩm đầu danh sách có giá cao nhất là \$49.99 (Sauce Labs Fleece Jacket), sản phẩm cuối cùng có giá thấp nhất là \$7.99 (Sauce Labs Onesie). Giá sản phẩm phía trên luôn luôn $\ge$ giá sản phẩm liền kề phía dưới. \\ \hline
+\end{tabular}
+\caption{Bảng đặc tả yêu cầu chức năng FR-04: Sắp xếp sản phẩm}
+\end{table}
+
+\subsubsection{Đặc tả NFR-01: Yêu cầu phi chức năng - Hiệu năng (Thành viên 5)}
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{|c|p{4.5cm}|p{8.5cm}|}
+\hline
+\textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
+\textbf{NFR-01.1} & Tiêu chuẩn thời gian hiển thị trang sản phẩm & Khi người dùng nhập đúng thông tin đăng nhập và nhấn nút Login, hệ thống phải hiển thị trang danh sách sản phẩm trong thời gian không vượt quá 3 giây. Tiêu chí chấp nhận: Trung vị thời gian đo không vượt quá $3.000\text{ ms}$ (3s). Mức độ ưu tiên: Cao (ảnh hưởng trực tiếp đến trải nghiệm đăng nhập và thời gian chờ của người dùng). \\ \hline
+\textbf{NFR-01.2} & Điều kiện và phương pháp đo kiểm & Tài khoản: \texttt{performance\_glitch\_user}, mật khẩu: \texttt{secret\_sauce}, môi trường mạng ổn định. Thực hiện 5 lần đo độc lập. Ghi nhận thời điểm bắt đầu khi nhấn Login và thời điểm kết thúc khi trang \texttt{inventory.html} cùng danh sách sản phẩm hiển thị hoàn tất, tính giá trị trung vị của 5 kết quả đo. \\ \hline
+\end{tabular}
+\caption{Bảng đặc tả yêu cầu phi chức năng NFR-01: Hiệu năng}
 \end{table}
 
 \subsection{Đánh giá rủi ro (Risk-based Testing)}
