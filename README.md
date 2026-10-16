@@ -28,7 +28,7 @@ Dự án Bài tập lớn số 1 môn **Kiểm thử phần mềm** — Khoa Cô
 
 ## 🛠️ Yêu cầu môi trường
 
-- **Java Development Kit (JDK):** Version 17 trở lên
+- **Java Development Kit (JDK):** Version 25 (latest LTS)
 - **Apache Maven:** Version 3.9 trở lên
 - **Trình duyệt:** Google Chrome hoặc Mozilla Firefox
 

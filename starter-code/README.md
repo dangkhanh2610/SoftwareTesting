@@ -5,7 +5,7 @@ thay Page Object, dữ liệu và test theo đúng hệ thống đã đăng ký.
 
 ## Yêu cầu
 
-- JDK 17 trở lên
+- JDK 25 (latest LTS)
 - Maven 3.9 trở lên
 - Chrome hoặc Firefox
 
@@ -48,5 +48,5 @@ trong mã nguồn hoặc tệp dữ liệu.
 
 ## Môi trường thực thi kiểm thử
 - Hệ điều hành: Windows 11 (64-bit)
-- Java: OpenJDK Temurin-21.0.12 LTS
+- Java: JDK 25 LTS
 - Trình duyệt: Google Chrome Version 155.0.8059.40 (64-bit)
