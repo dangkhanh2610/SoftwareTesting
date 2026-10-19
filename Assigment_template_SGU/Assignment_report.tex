@@ -177,7 +177,7 @@ Trên hệ thống SauceDemo, hệ thống cung cấp sẵn 6 tài khoản mẫu
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|l|p{11.5cm}|}
+\begin{tabularx}{\textwidth}{|l|X|}
 \hline
 \textbf{Tài khoản} & \textbf{Hành vi và mục đích dùng để kiểm thử} \\ \hline
 \texttt{standard\_user} & Tài khoản tiêu chuẩn, hoạt động bình thường trên mọi chức năng; dùng cho luồng chính (Happy Path) từ đăng nhập, giỏ hàng đến thanh toán. \\ \hline
@@ -186,7 +186,7 @@ Trên hệ thống SauceDemo, hệ thống cung cấp sẵn 6 tài khoản mẫu
 \texttt{performance\_glitch\_user} & Bị làm chậm có chủ đích ($\approx 5$ giây); dùng để kiểm thử yêu cầu phi chức năng hiệu năng NFR-01 (bắt lỗi \textbf{BUG-01}). \\ \hline
 \texttt{error\_user} & Tài khoản gặp lỗi ngoại lệ khi thao tác (ô Last Name không nhận ký tự nhưng vẫn cho phép Continue); dùng cho kiểm thử khám phá mở rộng. \\ \hline
 \texttt{visual\_user} & Tài khoản có lỗi hiển thị sai lệch vị trí CSS và giá sản phẩm bị gán ngẫu nhiên; dùng cho kiểm thử hồi quy trực quan. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Danh sách đầy đủ 6 tài khoản kiểm thử trên SauceDemo}
 \end{table}
 
@@ -240,7 +240,7 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|p{4.5cm}|p{8.5cm}|}
+\begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
 \hline
 \textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
 \textbf{FR-01.1} & Đăng nhập thành công với tài khoản hợp lệ & Nhập \texttt{standard\_user} / \texttt{secret\_sauce} $\rightarrow$ Chuyển hướng sang URL \texttt{https://www.saucedemo.com/inventory.html}, hiển thị đầy đủ 6 sản phẩm và menu điều hướng. \\ \hline
@@ -248,7 +248,7 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \textbf{FR-01.3} & Kiểm tra để trống trường Password & Có username nhưng để trống password $\rightarrow$ Giữ nguyên trang đăng nhập; hiển thị thông báo lỗi: \textit{"Epic sadface: Password is required"}. \\ \hline
 \textbf{FR-01.4} & Kiểm tra thông tin sai hoặc sai chữ hoa/thường & Nhập sai tên, sai mật khẩu, hoặc sai chữ hoa/thường $\rightarrow$ Hiển thị lỗi: \textit{"Epic sadface: Username and password do not match any user in this service"}. \\ \hline
 \textbf{FR-01.5} & Đăng nhập tài khoản bị khóa & Nhập \texttt{locked\_out\_user} / \texttt{secret\_sauce} $\rightarrow$ Hiển thị lỗi: \textit{"Epic sadface: Sorry, this user has been locked out."}. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Bảng đặc tả yêu cầu chức năng FR-01: Đăng nhập}
 \end{table}
 
@@ -256,14 +256,14 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|p{4.5cm}|p{8.5cm}|}
+\begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
 \hline
 \textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
 \textbf{FR-02.1} & Trạng thái nút Add to cart & Sản phẩm chưa có trong giỏ sẽ hiển thị nút ``Add to cart''. Khi nhấn nút, sản phẩm được thêm vào giỏ; nút tại trang \texttt{inventory.html} chuyển thành ``Remove'' và badge giỏ hàng tăng thêm 1. \\ \hline
 \textbf{FR-02.2} & Trạng thái nút Remove & Khi người dùng nhấn nút ``Remove'' (tại \texttt{inventory.html} hoặc \texttt{cart.html}), sản phẩm tương ứng bị xóa khỏi giỏ; nút đổi trở lại ``Add to cart'' và badge giỏ hàng giảm đi 1. \\ \hline
 \textbf{FR-02.3} & Badge hiển thị số lượng từ 1 đến 6 & Khi giỏ có từ 1 đến 6 sản phẩm, badge hiển thị đúng số lượng sản phẩm hiện có (ví dụ: có 3 sản phẩm thì badge hiển thị số 3; có đủ 6 sản phẩm thì badge hiển thị số 6). \\ \hline
 \textbf{FR-02.4} & Giỏ hàng rỗng & Khi chưa có sản phẩm nào được thêm vào giỏ hoặc khi tất cả sản phẩm đã bị xóa, badge không hiển thị (ẩn hoàn toàn khỏi DOM). Nút của các sản phẩm hiển thị lại ``Add to cart''. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Bảng đặc tả yêu cầu chức năng FR-02: Giỏ hàng}
 \end{table}
 
@@ -271,7 +271,7 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|p{4.5cm}|p{8.5cm}|}
+\begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
 \hline
 \textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
 \textbf{FR-03.1} & Kiểm tra trường First Name & First Name là bắt buộc; khi để trống cả 3 trường hoặc để trống First Name, hệ thống ưu tiên hiển thị lỗi: \textit{"Error: First Name is required"} và giữ nguyên trang \texttt{checkout-step-one.html}. \\ \hline
@@ -281,7 +281,7 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \textbf{FR-03.5} & Tính tổng thanh toán (Total) & Tổng tiền hiển thị bằng tổng tiền hàng cộng tiền thuế: $\text{Total} = \text{Item Total} + \text{Tax}$. \\ \hline
 \textbf{FR-03.6} & Hoàn tất đơn hàng (Finish) & Chuyển đến URL \texttt{checkout-complete.html}; hiển thị thông báo \textit{"THANK YOU FOR YOUR ORDER!"}; giỏ hàng được làm rỗng và badge giỏ hàng biến mất. \\ \hline
 \textbf{FR-03.7} & Hủy tại bước nhập thông tin (Cancel) & Nhấn Cancel tại \texttt{checkout-step-one.html} sẽ chuyển hướng về URL \texttt{cart.html}; các sản phẩm đã chọn vẫn còn nguyên vẹn trong giỏ hàng. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Bảng đặc tả yêu cầu chức năng FR-03: Thanh toán}
 \end{table}
 
@@ -289,14 +289,14 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|p{4.5cm}|p{8.5cm}|}
+\begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
 \hline
 \textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
 \textbf{FR-04.1} & Sắp xếp theo Name (A to Z) [Mặc định] & Sắp xếp sản phẩm theo tên tăng dần A--Z (mặc định khi mới vào trang). Với 3 sản phẩm mẫu: Sauce Labs Backpack $\rightarrow$ Sauce Labs Bike Light $\rightarrow$ Sauce Labs Bolt T-Shirt. \\ \hline
 \textbf{FR-04.2} & Sắp xếp theo Name (Z to A) & Sắp xếp sản phẩm theo tên giảm dần Z--A. Danh sách hiển thị đảo ngược: Sauce Labs Bolt T-Shirt $\rightarrow$ Sauce Labs Bike Light $\rightarrow$ Sauce Labs Backpack. \\ \hline
 \textbf{FR-04.3} & Sắp xếp theo Price (low to high) & Sắp xếp sản phẩm theo giá từ thấp tới cao. Sản phẩm đầu danh sách có giá thấp nhất là \$7.99 (Sauce Labs Onesie), sản phẩm cuối cùng là \$49.99 (Sauce Labs Fleece Jacket). Giá sản phẩm phía trên luôn $\le$ sản phẩm phía dưới. \\ \hline
 \textbf{FR-04.4} & Sắp xếp theo Price (high to low) & Sắp xếp sản phẩm theo giá từ cao tới thấp. Sản phẩm đầu danh sách có giá cao nhất là \$49.99 (Sauce Labs Fleece Jacket), sản phẩm cuối cùng là \$7.99 (Sauce Labs Onesie). Giá sản phẩm phía trên luôn $\ge$ sản phẩm phía dưới. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Bảng đặc tả yêu cầu chức năng FR-04: Sắp xếp sản phẩm}
 \end{table}
 
@@ -304,12 +304,12 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|p{4.5cm}|p{8.5cm}|}
+\begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
 \hline
 \textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
 \textbf{NFR-01.1} & Tiêu chuẩn thời gian hiển thị trang sản phẩm & Sau khi người dùng nhấn Login với thông tin đúng, trang sản phẩm (\texttt{inventory.html}) phải hiển thị hoàn tất trong thời gian không vượt quá 3 giây. Tiêu chí chấp nhận: Trung vị thời gian đo $\le 3.000\text{ ms}$ (3.0s). \\ \hline
 \textbf{NFR-01.2} & Điều kiện và phương pháp đo kiểm & Đăng nhập tài khoản \texttt{performance\_glitch\_user} / \texttt{secret\_sauce} trên mạng cáp quang ổn định. Thực hiện đo độc lập 5 lần liên tiếp từ thời điểm nhấn nút Login đến khi DOM trang tải xong, lấy giá trị trung vị của 5 lần đo. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Bảng đặc tả yêu cầu phi chức năng NFR-01: Hiệu năng}
 \end{table}
 
@@ -322,7 +322,7 @@ Trong đó $P$ là xác suất xảy ra lỗi (1--5) và $I$ là mức độ tá
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|l|c|c|c|c|p{6cm}|}
+\begin{tabularx}{\textwidth}{|c|l|c|c|c|c|X|}
 \hline
 \textbf{Mã} & \textbf{Chức năng} & \textbf{P} & \textbf{I} & \textbf{R} & \textbf{Mức độ} & \textbf{Lý do đánh giá} \\ \hline
 \textbf{FR-03} & Thanh toán & 3 & 5 & \textbf{15} & Rất cao & Tính tiền/thuế sai gây thất thoát tài chính trực tiếp; luồng nhập liệu có nhiều bước phức tạp. \\ \hline
@@ -330,7 +330,7 @@ Trong đó $P$ là xác suất xảy ra lỗi (1--5) và $I$ là mức độ tá
 \textbf{NFR-01} & Hiệu năng & 4 & 3 & \textbf{12} & Cao & Tài khoản glitch bị trễ rõ rệt; trang tải quá lâu khiến người dùng tưởng treo và bỏ giỏ hàng. \\ \hline
 \textbf{FR-02} & Giỏ hàng & 2 & 4 & \textbf{8} & Trung bình & Lỗi hiển thị số lượng badge gây nhầm lẫn số hàng đặt mua. \\ \hline
 \textbf{FR-04} & Sắp xếp & 2 & 2 & \textbf{4} & Thấp & Sắp xếp sai gây khó chịu về trải nghiệm nhưng không làm gián đoạn hay mất tiền. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Bảng phân tích và đánh giá mức độ rủi ro}
 \end{table}
 
@@ -341,15 +341,15 @@ Ma trận truy vết được nhóm xây dựng ở NV2 và cập nhật đồng
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|l|l|p{4.2cm}|c|c|}
+\begin{tabularx}{\textwidth}{|c|l|X|p{3.8cm}|c|c|}
 \hline
 \textbf{Mã YC} & \textbf{Tên chức năng} & \textbf{Kỹ thuật áp dụng} & \textbf{Mã Test Case} & \textbf{Lớp Test JUnit 5} & \textbf{Mã Lỗi} \\ \hline
 \textbf{FR-01} & Đăng nhập & EP, Bảng quyết định (DT) & \texttt{TC-LOGIN-EP1..EP8}, \texttt{DT1..DT5} & \texttt{LoginTest} & --- \\ \hline
 \textbf{FR-02} & Giỏ hàng & BVA, Use Case (UC2) & \texttt{TC-CART-B1..B5}, \texttt{UC1..UC5}, \texttt{P01} & \texttt{CartTest} & \textbf{BUG-05} \\ \hline
 \textbf{FR-03} & Thanh toán & Use Case (UC1), DT, BVA & \texttt{TC-CHK-01..05}, \texttt{DT1..DT4}, \texttt{06..07} & \texttt{CheckoutTest} & \textbf{BUG-03, 04} \\ \hline
-\textbf{FR-04} & Sắp xếp & Phân lớp tương đương (EP) & \texttt{TC-SORT-01..04} & \texttt{InventoryTest} & \textbf{BUG-02, 06} \\ \hline
+\textbf{FR-04} & Sắp xếp & Phân lớp tương đương (EP) & \texttt{TC-SORT-01..04} & \texttt{SortTest} & \textbf{BUG-02, 06} \\ \hline
 \textbf{NFR-01} & Hiệu năng & Đo thời gian (5 lần đo) & \texttt{TC-NFR-01} & \texttt{PerformanceTest} & \textbf{BUG-01} \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Ma trận truy vết yêu cầu hoàn chỉnh (Requirements Traceability Matrix)}
 \end{table}
 
@@ -366,15 +366,15 @@ Mật khẩu cố định là \texttt{secret\_sauce}. Miền giá trị của Us
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|l|l|p{6cm}|c|}
+\begin{tabularx}{\textwidth}{|c|p{4cm}|l|X|c|}
 \hline
 \textbf{Lớp} & \textbf{Mô tả lớp} & \textbf{Giá trị đại diện} & \textbf{Kết quả mong đợi} & \textbf{Mã TC} \\ \hline
-EC1 (hợp lệ) & Tài khoản tồn tại, đang hoạt động & \texttt{standard\_user} & Chuyển đến URL \texttt{inventory.html} & \texttt{TC-LOGIN-EP1} \\ \hline
-EC2 (không hợp lệ) & Tài khoản tồn tại nhưng bị khóa & \texttt{locked\_out\_user} & Epic sadface: Sorry, this user has been locked out. & \texttt{TC-LOGIN-EP2} \\ \hline
-EC3 (không hợp lệ) & Chuỗi rỗng & \texttt{""} & Epic sadface: Username is required & \texttt{TC-LOGIN-EP3} \\ \hline
-EC4 (không hợp lệ) & Tài khoản không tồn tại & \texttt{abc\_user} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP4} \\ \hline
-EC5 (không hợp lệ) & Đúng tên nhưng sai hoa/thường & \texttt{Standard\_User} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP5} \\ \hline
-\end{tabular}
+\shortstack{EC1\\\scriptsize(Hợp lệ)} & Tài khoản tồn tại, đang hoạt động & \texttt{standard\_user} & Chuyển đến URL \texttt{inventory.html} & \texttt{TC-LOGIN-EP1} \\ \hline
+\shortstack{EC2\\\scriptsize(Không hợp lệ)} & Tài khoản tồn tại nhưng bị khóa & \texttt{locked\_out\_user} & Epic sadface: Sorry, this user has been locked out. & \texttt{TC-LOGIN-EP2} \\ \hline
+\shortstack{EC3\\\scriptsize(Không hợp lệ)} & Chuỗi rỗng & \texttt{""} & Epic sadface: Username is required & \texttt{TC-LOGIN-EP3} \\ \hline
+\shortstack{EC4\\\scriptsize(Không hợp lệ)} & Tài khoản không tồn tại & \texttt{abc\_user} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP4} \\ \hline
+\shortstack{EC5\\\scriptsize(Không hợp lệ)} & Đúng tên nhưng sai hoa/thường & \texttt{Standard\_User} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP5} \\ \hline
+\end{tabularx}
 \caption{Bảng phân lớp tương đương cho trường Username}
 \end{table}
 
@@ -385,14 +385,14 @@ Tên đăng nhập cố định là \texttt{standard\_user}. Miền giá trị P
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|l|l|p{6cm}|c|}
+\begin{tabularx}{\textwidth}{|c|p{4cm}|l|X|c|}
 \hline
 \textbf{Lớp} & \textbf{Mô tả lớp} & \textbf{Giá trị đại diện} & \textbf{Kết quả mong đợi} & \textbf{Mã TC} \\ \hline
-EC6 (hợp lệ) & Mật khẩu chính xác & \texttt{secret\_sauce} & Chuyển đến URL \texttt{inventory.html} & *(Trùng EP1)* \\ \hline
-EC7 (không hợp lệ) & Bỏ trống mật khẩu & \texttt{""} & Epic sadface: Password is required & \texttt{TC-LOGIN-EP6} \\ \hline
-EC8 (không hợp lệ) & Mật khẩu sai & \texttt{wrong\_sauce} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP7} \\ \hline
-EC9 (không hợp lệ) & Đúng mật khẩu nhưng sai hoa/thường & \texttt{Secret\_sauce} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP8} \\ \hline
-\end{tabular}
+\shortstack{EC6\\\scriptsize(Hợp lệ)} & Mật khẩu chính xác & \texttt{secret\_sauce} & Chuyển đến URL \texttt{inventory.html} & *(Trùng EP1)* \\ \hline
+\shortstack{EC7\\\scriptsize(Không hợp lệ)} & Bỏ trống mật khẩu & \texttt{""} & Epic sadface: Password is required & \texttt{TC-LOGIN-EP6} \\ \hline
+\shortstack{EC8\\\scriptsize(Không hợp lệ)} & Mật khẩu sai & \texttt{wrong\_sauce} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP7} \\ \hline
+\shortstack{EC9\\\scriptsize(Không hợp lệ)} & Đúng mật khẩu nhưng sai hoa/thường & \texttt{Secret\_sauce} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP8} \\ \hline
+\end{tabularx}
 \caption{Bảng phân lớp tương đương mở rộng cho trường Password}
 \end{table}
 
@@ -401,14 +401,14 @@ Miền giá trị tùy chọn sắp xếp bao gồm 4 tùy chọn hợp lệ đ�
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|l|l|p{6.5cm}|c|}
+\begin{tabularx}{\textwidth}{|c|l|c|X|c|}
 \hline
 \textbf{Lớp} & \textbf{Tùy chọn sắp xếp} & \textbf{Giá trị value} & \textbf{Tiêu chí kiểm tra kết quả} & \textbf{Mã TC} \\ \hline
 EC10 & Name (A to Z) & \texttt{az} & Tên sản phẩm tăng dần theo thứ tự bảng chữ cái & \texttt{TC-SORT-01} \\ \hline
 EC11 & Name (Z to A) & \texttt{za} & Tên sản phẩm giảm dần theo thứ tự bảng chữ cái & \texttt{TC-SORT-02} \\ \hline
 EC12 & Price (low to high) & \texttt{lohi} & Mức giá sản phẩm tăng dần (\$7.99 $\rightarrow$ \$49.99) & \texttt{TC-SORT-03} \\ \hline
 EC13 & Price (high to low) & \texttt{hilo} & Mức giá sản phẩm giảm dần (\$49.99 $\rightarrow$ \$7.99) & \texttt{TC-SORT-04} \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Bảng phân lớp tương đương cho chức năng Sắp xếp FR-04}
 \end{table}
 
@@ -426,7 +426,7 @@ Cửa hàng SauceDemo có tổng cộng 6 sản phẩm. Do đó, số lượng s
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|c|l|p{6.5cm}|}
+\begin{tabularx}{\textwidth}{|c|c|p{5.5cm}|X|}
 \hline
 \textbf{Mã TC} & \textbf{Giá trị biên} & \textbf{Cách tạo dữ liệu thao tác} & \textbf{Kết quả mong đợi} \\ \hline
 \texttt{TC-CART-B1} & 0 (min) & Đăng nhập, không thêm sản phẩm nào & Biểu tượng giỏ hàng rỗng, không hiển thị badge \\ \hline
@@ -434,7 +434,7 @@ Cửa hàng SauceDemo có tổng cộng 6 sản phẩm. Do đó, số lượng s
 \texttt{TC-CART-B3} & 5 (max-1) & Thêm cả 6 sản phẩm rồi nhấn Remove 1 & Badge giảm từ 6 về 5, nút đổi lại Add to cart \\ \hline
 \texttt{TC-CART-B4} & 6 (max) & Nhấn Add to cart cho toàn bộ 6 sản phẩm & Badge hiển thị số 6, cả 6 nút đều là Remove \\ \hline
 \texttt{TC-CART-B5} & 1 $\rightarrow$ 0 & Thêm 1 sản phẩm rồi nhấn Remove & Badge biến mất hoàn toàn khỏi giao diện \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Bảng phân tích giá trị biên số lượng sản phẩm trong giỏ hàng}
 \end{table}
 
@@ -445,13 +445,14 @@ Theo đặc tả của đề bài, tiền thuế bằng $8\%$ giá trị đơn h
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|l|c|c|c|p{4cm}|}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{|c|p{4cm}|c|c|c|X|}
 \hline
-\textbf{Mã TC} & \textbf{Tổ hợp sản phẩm chọn mua} & \textbf{Item Total} & \textbf{Tính toán thuế (8\%)} & \textbf{Thuế làm tròn} & \textbf{Ý nghĩa giá trị biên} \\ \hline
+\textbf{Mã TC} & \textbf{Tổ hợp sản phẩm chọn mua} & \textbf{Item Total} & \textbf{Tính thuế (8\%)} & \textbf{Thuế tròn} & \textbf{Ý nghĩa giá trị biên} \\ \hline
 \texttt{TC-TAX-B1} & Sauce Labs Onesie (\$7.99) & \$7.99 & $7.99 \times 0.08 = 0.6392$ & \textbf{\$0.64} & Phần dư $0.0092 \ge 0.005 \rightarrow$ Làm tròn lên \\ \hline
 \texttt{TC-TAX-B2} & Bike Light (\$9.99) + Bolt T-Shirt (\$15.99) & \$25.98 & $25.98 \times 0.08 = 2.0784$ & \textbf{\$2.08} & Phần dư $0.0084 \ge 0.005 \rightarrow$ Làm tròn lên \\ \hline
 \texttt{TC-TAX-B3} & Sauce Labs Backpack (\$29.99) & \$29.99 & $29.99 \times 0.08 = 2.3992$ & \textbf{\$2.40} & Giá trị biên điển hình (trùng ví dụ mẫu đề bài) \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Bảng phân tích giá trị biên cho quy tắc làm tròn thuế 8\%}
 \end{table}
 
@@ -532,7 +533,7 @@ Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm th�
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|l|l|p{6.5cm}|}
+\begin{tabularx}{\textwidth}{|c|p{3.5cm}|p{4.2cm}|X|}
 \hline
 \textbf{Mã TC} & \textbf{Luồng trên sơ đồ} & \textbf{Dữ liệu đầu vào (First / Last / Postal)} & \textbf{Kết quả mong đợi} \\ \hline
 \texttt{TC-CHK-01} & Luồng chính (Happy Path) & \texttt{Duc / Tran / 700000} & Thank you for your order! (Giỏ hàng được làm rỗng) \\ \hline
@@ -540,7 +541,7 @@ Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm th�
 \texttt{TC-CHK-03} & Ngoại lệ A2 (Thiếu Last Name) & \texttt{Duc / "" / 700000} & Error: Last Name is required \\ \hline
 \texttt{TC-CHK-04} & Ngoại lệ A3 (Thiếu Postal Code) & \texttt{Duc / Tran / ""} & Error: Postal Code is required \\ \hline
 \texttt{TC-CHK-05} & Ngoại lệ A4 (Hủy Cancel) & (Không nhập) / Nhấn nút Cancel & Chuyển về URL \texttt{cart.html}, sản phẩm vẫn trong giỏ hàng \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Bảng kịch bản kiểm thử rút ra từ Sơ đồ hoạt động Thanh toán đơn hàng FR-03}
 \end{table}
 
@@ -548,7 +549,7 @@ Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm th�
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|p{6.5cm}|p{8.5cm}|}
+\begin{tabularx}{\textwidth}{|c|p{5.5cm}|X|}
 \hline
 \textbf{Bước} & \textbf{Thao tác thực hiện} & \textbf{Kết quả mong đợi chi tiết} \\ \hline
 1 & Thêm sản phẩm Sauce Labs Backpack vào giỏ hàng & Badge giỏ hàng hiển thị số 1; nút chuyển thành Remove \\ \hline
@@ -557,7 +558,7 @@ Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm th�
 4 & Nhập First Name: \texttt{Duc}, Last Name: \texttt{Tran}, Postal Code: \texttt{700000}; nhấn nút Continue & Chuyển sang URL \texttt{checkout-step-two.html} \\ \hline
 5 & Kiểm tra thông tin tóm tắt thanh toán & Item total: \$29.99, Tax: \$2.40 ($29.99 \times 8\% \approx 2.40$), Total: \$32.39 ($29.99 + 2.40 = 32.39$) \\ \hline
 6 & Nhấn nút Finish & Chuyển sang URL \texttt{checkout-complete.html}; hiển thị thông điệp \textit{"Thank you for your order!"}; giỏ hàng được làm rỗng và badge biến mất \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Đặc tả chi tiết kịch bản kiểm thử \texttt{TC-CHK-01}}
 \end{table}
 
@@ -610,7 +611,7 @@ Bảng kịch bản kiểm thử rút ra từ sơ đồ ca sử dụng Quản l�
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|c|l|p{5.5cm}|p{6cm}|}
+\begin{tabularx}{\textwidth}{|c|p{3.5cm}|p{5cm}|X|}
 \hline
 \textbf{Mã TC} & \textbf{Luồng trên sơ đồ} & \textbf{Thao tác người dùng} & \textbf{Kết quả mong đợi} \\ \hline
 \texttt{TC-CART-UC1} & Luồng chính (Thêm \& Xem) & Nhấn Add to cart tại \texttt{inventory.html}, bấm biểu tượng giỏ & URL là \texttt{cart.html}, sản phẩm hiển thị đúng tên, giá, nút Remove \\ \hline
@@ -618,7 +619,7 @@ Bảng kịch bản kiểm thử rút ra từ sơ đồ ca sử dụng Quản l�
 \texttt{TC-CART-UC3} & Luồng tiếp tục mua sắm & Đang ở \texttt{cart.html}, nhấn nút Continue Shopping & Chuyển về \texttt{inventory.html}, các sản phẩm đã chọn trước đó vẫn còn \\ \hline
 \texttt{TC-CART-UC4} & Luồng xóa tại trang chủ & Đã thêm sản phẩm, nhấn nút Remove ngay tại \texttt{inventory.html} & Nút đổi lại thành Add to cart, badge giỏ hàng giảm đi 1 \\ \hline
 \texttt{TC-CART-UC5} & Luồng chuyển sang Checkout & Đang ở \texttt{cart.html}, nhấn nút Checkout & Chuyển hướng thành công sang trang \texttt{checkout-step-one.html} \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Kịch bản kiểm thử rút ra từ Sơ đồ hoạt động Quản lý giỏ hàng UC2}
 \end{table}
 
@@ -627,7 +628,7 @@ Theo quy định tại Mục 5.5 của đề bài, nhóm tự đánh giá số l
 \begin{table}[h!]
 \centering
 \small
-\begin{tabular}{|l|c|c|c|c|}
+\begin{tabularx}{\textwidth}{|l|c|c|X|c|}
 \hline
 \textbf{Kỹ thuật kiểm thử} & \textbf{Đề yêu cầu} & \textbf{Số lượng của nhóm} & \textbf{Danh sách các ca kiểm thử} & \textbf{Đánh giá} \\ \hline
 EP (2 trường) & $\ge 8$ & \textbf{12} & \texttt{TC-LOGIN-EP1..EP8}, \texttt{TC-SORT-01..04} & \textbf{ĐẠT (Vượt)} \\ \hline
@@ -636,7 +637,7 @@ Bảng quyết định (2 bảng) & $\ge 8$ & \textbf{9} & \texttt{TC-LOGIN-DT1.
 Use Case (2 ca sử dụng) & $\ge 8$ & \textbf{10} & \texttt{TC-CHK-01..05}, \texttt{TC-CART-UC1..UC5} & \textbf{ĐẠT (Vượt)} \\ \hline
 NFR-01 (Hiệu năng) & $\ge 1$ & \textbf{1} & \texttt{TC-NFR-01} & \textbf{ĐẠT} \\ \hline \hline
 \textbf{Tổng cộng} & $\ge \mathbf{33}$ & \textbf{40} & \textit{Bao gồm cả các ca kiểm thử bổ sung} & \textbf{HOÀN THÀNH} \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Bảng đối chiếu số lượng ca kiểm thử thiết kế so với quy định đề bài}
 \end{table}
 
@@ -650,7 +651,8 @@ Nhóm tiến hành chạy thực tế toàn bộ các ca kiểm thử trên môi
 \begin{table}[h!]
 \centering
 \scriptsize
-\begin{tabular}{|l|p{3.2cm}|c|p{5.8cm}|c|c|}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabularx}{\textwidth}{|l|p{2.8cm}|c|X|c|c|}
 \hline
 \textbf{Mã TC} & \textbf{Tên ca kiểm thử} & \textbf{Người chạy} & \textbf{Kết quả thực tế quan sát được} & \textbf{Trạng thái} & \textbf{Mã BUG} \\ \hline
 \texttt{TC-LOGIN-EP1..8} & Kiểm thử EP Đăng nhập & Khánh Đăng & Chuyển hướng đúng hoặc hiển thị đúng thông báo lỗi & \textbf{PASS} & --- \\ \hline
@@ -663,7 +665,7 @@ Nhóm tiến hành chạy thực tế toàn bộ các ca kiểm thử trên môi
 \texttt{TC-CHK-06} & Checkout với \texttt{error\_user} & Việt Đức & Ô Last Name không nhận ký tự nhưng form vẫn cho Continue & \textbf{FAIL} & \textbf{BUG-04} \\ \hline
 \texttt{TC-CHK-07} & Checkout với \texttt{problem\_user} & Việt Đức & Nhập vào ô Last Name thì tự động sửa vào ô First Name & \textbf{FAIL} & \textbf{BUG-03} \\ \hline
 \texttt{TC-NFR-01} & Đo hiệu năng 5 lần đăng nhập & Ngọc Vinh & 5.12s, 5.08s, 5.11s, 5.15s, 5.10s (Trung vị: 5.11s) & \textbf{FAIL} & \textbf{BUG-01} \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Trích xuất kết quả thực thi kiểm thử thủ công trên SauceDemo}
 \end{table}
 
