@@ -346,8 +346,8 @@ Ma trận truy vết được nhóm xây dựng ở NV2 và cập nhật đồng
 \textbf{Mã YC} & \textbf{Tên chức năng} & \textbf{Kỹ thuật áp dụng} & \textbf{Mã Test Case} & \textbf{Lớp Test JUnit 5} & \textbf{Mã Lỗi} \\ \hline
 \textbf{FR-01} & Đăng nhập & EP, Bảng quyết định (DT) & \texttt{TC-LOGIN-EP1..EP8}, \texttt{DT1..DT5} & \texttt{LoginTest} & --- \\ \hline
 \textbf{FR-02} & Giỏ hàng & BVA, Use Case (UC2) & \texttt{TC-CART-B1..B5}, \texttt{UC1..UC5}, \texttt{P01} & \texttt{CartTest} & \textbf{BUG-05} \\ \hline
-\textbf{FR-03} & Thanh toán & Use Case (UC1), DT, BVA & \texttt{TC-CHK-01..05}, \texttt{DT1..DT4}, \texttt{06..07} & \texttt{CheckoutTest} & \textbf{BUG-03, 04} \\ \hline
-\textbf{FR-04} & Sắp xếp & Phân lớp tương đương (EP) & \texttt{TC-SORT-01..04} & \texttt{SortTest} & \textbf{BUG-02, 06} \\ \hline
+\textbf{FR-03} & Thanh toán & Use Case (UC1), DT, BVA & \texttt{TC-CHK-01..05}, \texttt{DT1..DT4}, \texttt{TAX-B1..B3}, \texttt{06..07} & \texttt{CheckoutTest} & \textbf{BUG-03, 04} \\ \hline
+\textbf{FR-04} & Sắp xếp & Phân lớp tương đương (EP) & \texttt{TC-SORT-EP1..EP4} & \texttt{SortTest} & \textbf{BUG-02, 06} \\ \hline
 \textbf{NFR-01} & Hiệu năng & Đo thời gian (5 lần đo) & \texttt{TC-NFR-01} & \texttt{PerformanceTest} & \textbf{BUG-01} \\ \hline
 \end{tabularx}
 \caption{Ma trận truy vết yêu cầu hoàn chỉnh (Requirements Traceability Matrix)}
@@ -404,10 +404,10 @@ Miền giá trị tùy chọn sắp xếp bao gồm 4 tùy chọn hợp lệ đ�
 \begin{tabularx}{\textwidth}{|c|l|c|X|c|}
 \hline
 \textbf{Lớp} & \textbf{Tùy chọn sắp xếp} & \textbf{Giá trị value} & \textbf{Tiêu chí kiểm tra kết quả} & \textbf{Mã TC} \\ \hline
-EC10 & Name (A to Z) & \texttt{az} & Tên sản phẩm tăng dần theo thứ tự bảng chữ cái & \texttt{TC-SORT-01} \\ \hline
-EC11 & Name (Z to A) & \texttt{za} & Tên sản phẩm giảm dần theo thứ tự bảng chữ cái & \texttt{TC-SORT-02} \\ \hline
-EC12 & Price (low to high) & \texttt{lohi} & Mức giá sản phẩm tăng dần (\$7.99 $\rightarrow$ \$49.99) & \texttt{TC-SORT-03} \\ \hline
-EC13 & Price (high to low) & \texttt{hilo} & Mức giá sản phẩm giảm dần (\$49.99 $\rightarrow$ \$7.99) & \texttt{TC-SORT-04} \\ \hline
+EC10 & Name (A to Z) & \texttt{az} & Tên sản phẩm tăng dần theo thứ tự bảng chữ cái & \texttt{TC-SORT-EP1} \\ \hline
+EC11 & Name (Z to A) & \texttt{za} & Tên sản phẩm giảm dần theo thứ tự bảng chữ cái & \texttt{TC-SORT-EP2} \\ \hline
+EC12 & Price (low to high) & \texttt{lohi} & Mức giá sản phẩm tăng dần (\$7.99 $\rightarrow$ \$49.99) & \texttt{TC-SORT-EP3} \\ \hline
+EC13 & Price (high to low) & \texttt{hilo} & Mức giá sản phẩm giảm dần (\$49.99 $\rightarrow$ \$7.99) & \texttt{TC-SORT-EP4} \\ \hline
 \end{tabularx}
 \caption{Bảng phân lớp tương đương cho chức năng Sắp xếp FR-04}
 \end{table}
@@ -631,7 +631,7 @@ Theo quy định tại Mục 5.5 của đề bài, nhóm tự đánh giá số l
 \begin{tabularx}{\textwidth}{|l|c|c|X|c|}
 \hline
 \textbf{Kỹ thuật kiểm thử} & \textbf{Đề yêu cầu} & \textbf{Số lượng của nhóm} & \textbf{Danh sách các ca kiểm thử} & \textbf{Đánh giá} \\ \hline
-EP (2 trường) & $\ge 8$ & \textbf{12} & \texttt{TC-LOGIN-EP1..EP8}, \texttt{TC-SORT-01..04} & \textbf{ĐẠT (Vượt)} \\ \hline
+EP (2 trường) & $\ge 8$ & \textbf{12} & \texttt{TC-LOGIN-EP1..EP8}, \texttt{TC-SORT-EP1..EP4} & \textbf{ĐẠT (Vượt)} \\ \hline
 BVA (2 miền giá trị) & $\ge 8$ & \textbf{8} & \texttt{TC-CART-B1..B5}, \texttt{TC-TAX-B1..B3} & \textbf{ĐẠT} \\ \hline
 Bảng quyết định (2 bảng) & $\ge 8$ & \textbf{9} & \texttt{TC-LOGIN-DT1..DT5}, \texttt{TC-CHK-DT1..DT4} & \textbf{ĐẠT} \\ \hline
 Use Case (2 ca sử dụng) & $\ge 8$ & \textbf{10} & \texttt{TC-CHK-01..05}, \texttt{TC-CART-UC1..UC5} & \textbf{ĐẠT (Vượt)} \\ \hline
@@ -656,9 +656,9 @@ Nhóm tiến hành chạy thực tế toàn bộ các ca kiểm thử trên môi
 \hline
 \textbf{Mã TC} & \textbf{Tên ca kiểm thử} & \textbf{Người chạy} & \textbf{Kết quả thực tế quan sát được} & \textbf{Trạng thái} & \textbf{Mã BUG} \\ \hline
 \texttt{TC-LOGIN-EP1..8} & Kiểm thử EP Đăng nhập & Khánh Đăng & Chuyển hướng đúng hoặc hiển thị đúng thông báo lỗi & \textbf{PASS} & --- \\ \hline
-\texttt{TC-SORT-01..04} & Sắp xếp với \texttt{standard\_user} & Thành Nhân & Danh sách sản phẩm sắp xếp chuẩn xác theo tên và giá & \textbf{PASS} & --- \\ \hline
-\texttt{TC-SORT-02..04} & Sắp xếp với \texttt{problem\_user} & Thành Nhân & Dropdown không nhận giá trị, danh sách sản phẩm bị đơ & \textbf{FAIL} & \textbf{BUG-02} \\ \hline
-\texttt{TC-SORT-03..04} & Sắp xếp giá với \texttt{visual\_user} & Thành Nhân & Giá bị gán ngẫu nhiên, danh sách hiển thị lộn xộn & \textbf{FAIL} & \textbf{BUG-06} \\ \hline
+\texttt{TC-SORT-EP1..EP4} & Sắp xếp với \texttt{standard\_user} & Thành Nhân & Danh sách sản phẩm sắp xếp chuẩn xác theo tên và giá & \textbf{PASS} & --- \\ \hline
+\texttt{TC-SORT-EP2..EP4} & Sắp xếp với \texttt{problem\_user} & Thành Nhân & Dropdown không nhận giá trị, danh sách sản phẩm bị đơ & \textbf{FAIL} & \textbf{BUG-02} \\ \hline
+\texttt{TC-SORT-EP3..EP4} & Sắp xếp giá với \texttt{visual\_user} & Thành Nhân & Giá bị gán ngẫu nhiên, danh sách hiển thị lộn xộn & \textbf{FAIL} & \textbf{BUG-06} \\ \hline
 \texttt{TC-CART-B1..B5} & Kiểm thử biên BVA giỏ hàng & Chí Tài & Badge và nút Remove hoạt động chính xác (0 đến 6) & \textbf{PASS} & --- \\ \hline
 \texttt{TC-CART-P01} & Xóa hàng với \texttt{problem\_user} & Chí Tài & Nhấn Remove nhưng nút không đổi và sản phẩm không bị xóa & \textbf{FAIL} & \textbf{BUG-05} \\ \hline
 \texttt{TC-CHK-01..05} & Kiểm thử Use Case thanh toán & Việt Đức & Chuyển hướng đúng, tính thuế chuẩn, hiển thị THANK YOU & \textbf{PASS} & --- \\ \hline
@@ -900,8 +900,8 @@ public class SortTest extends WebTestBase {
     @ParameterizedTest(name = "{0}: user={1}, option={2}")
     @DisplayName("FR-04: Sort products by name (A-Z, Z-A)")
     @CsvSource({
-        "TC-SORT-01, standard_user, az, true",
-        "TC-SORT-02, standard_user, za, false"
+        "TC-SORT-EP1, standard_user, az, true",
+        "TC-SORT-EP2, standard_user, za, false"
     })
     void sortByNamePass(String tcId, String username, String option, boolean ascending) {
         InventoryPage page = loginInventoryPage(username);
@@ -915,7 +915,7 @@ public class SortTest extends WebTestBase {
     @ParameterizedTest(name = "{0}: user={1}, option={2}")
     @DisplayName("FR-04: Sort Z-A bug with problem_user [BUG-02]")
     @CsvSource({
-        "TC-SORT[BUG-02]-02, problem_user, za, false"
+        "TC-SORT-EP2[BUG-02], problem_user, za, false"
     })
     void sortByNameKnownBugs(String tcId, String username, String option, boolean ascending) {
         InventoryPage page = loginInventoryPage(username);

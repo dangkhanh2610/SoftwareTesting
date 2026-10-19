@@ -30,11 +30,11 @@ public class SortTest extends WebTestBase{
     @ParameterizedTest(name = "{0}: user={1}, option={2}")
     @DisplayName("FR-04: Sắp xếp sản phẩm theo tên (A-Z, Z-A)")
     @CsvSource({
-            "TC-SORT-01, standard_user, az, true",
-            "TC-SORT-02, standard_user, za, false",
-            "TC-SORT-01, problem_user,  az, true",
-            "TC-SORT-01, visual_user,   az, true",
-            "TC-SORT-02, visual_user,   za, false"
+            "TC-SORT-EP1, standard_user, az, true",
+            "TC-SORT-EP2, standard_user, za, false",
+            "TC-SORT-EP1, problem_user,  az, true",
+            "TC-SORT-EP1, visual_user,   az, true",
+            "TC-SORT-EP2, visual_user,   za, false"
     })
     void sortByNamePass(String tcId, String username, String option, boolean ascending){
         InventoryPage inventoryPage = loginInventoryPage(username);
@@ -48,8 +48,8 @@ public class SortTest extends WebTestBase{
     @ParameterizedTest(name = "{0}: user={1}, option={2}")
     @DisplayName("FR-04: Sắp xếp sản phẩm theo giá (low-high, high-low)")
     @CsvSource({
-            "TC-SORT-03, standard_user, lohi, true",
-            "TC-SORT-04, standard_user, hilo, false"
+            "TC-SORT-EP3, standard_user, lohi, true",
+            "TC-SORT-EP4, standard_user, hilo, false"
     })
     void sortByPricePass(String tcId, String username, String option, boolean ascending) {
         InventoryPage inventoryPage = loginInventoryPage(username);
@@ -64,7 +64,7 @@ public class SortTest extends WebTestBase{
     @ParameterizedTest(name = "{0}: user={1}, option={2}")
     @DisplayName("FR-04: Lỗi sắp xếp theo tên Z-A với problem_user")
     @CsvSource({
-            "TC-SORT[BUG-02]-02, problem_user, za, false"
+            "TC-SORT-EP2[BUG-02], problem_user, za, false"
     })
     void sortByNameKnownBugs(String tcId, String username, String option, boolean ascending) {
         InventoryPage inventoryPage =loginInventoryPage(username);
@@ -79,10 +79,10 @@ public class SortTest extends WebTestBase{
     @ParameterizedTest(name = "{0}: user={1}, option={2}")
     @DisplayName("FR-04: Lỗi sắp xếp theo giá với problem_user và visual_user")
     @CsvSource({
-            "TC-SORT[BUG-02]-03-, problem_user, lohi, true",
-            "TC-SORT[BUG-02]-02, problem_user, hilo, false",
-            "TC-SORT[BUG-06]-02, visual_user,  lohi, true",
-            "TC-SORT[BUG-06]-03, visual_user,  hilo, false"
+            "TC-SORT-EP3[BUG-02], problem_user, lohi, true",
+            "TC-SORT-EP4[BUG-02], problem_user, hilo, false",
+            "TC-SORT-EP3[BUG-06], visual_user,  lohi, true",
+            "TC-SORT-EP4[BUG-06], visual_user,  hilo, false"
     })
     void sortByPriceKnownBugs(String tcId, String username, String option, boolean ascending) {
         InventoryPage inventoryPage = loginInventoryPage(username);
