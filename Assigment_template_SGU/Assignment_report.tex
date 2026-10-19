@@ -875,12 +875,96 @@ class CheckoutTest extends WebTestBase {
 }
 \end{lstlisting}
 
-% >>> [GHI CHÚ CHÈN THÊM CODE NẾU MUỐN]:
-% Nhóm có thể chèn thêm mã nguồn lớp CartTest.java hoặc InventoryTest.java tại đây:
-% \subsubsection{Lớp CartTest.java (Kiểm thử giá trị biên BVA giỏ hàng)}
-% \begin{lstlisting}[caption={Trích đoạn mã nguồn lớp CartTest.java}]
-% // Dán code CartTest vào đây nếu nhóm muốn hiển thị trên báo cáo
-% \end{lstlisting}
+\subsubsection{Lớp CartTest.java (Kiểm thử giá trị biên BVA giỏ hàng - FR-02)}
+\begin{lstlisting}[caption={Trích đoạn mã nguồn lớp CartTest.java}]
+@TestMethodOrder(MethodOrderer.DisplayName.class)
+@DisplayName("FR-02: Kiểm thử giá trị biên của giỏ hàng")
+public class CartTest extends WebTestBase {
+
+    private InventoryPage inventory;
+    private static final String[] PRODUCTS = {
+        "sauce-labs-backpack", "sauce-labs-bike-light", "sauce-labs-bolt-t-shirt",
+        "sauce-labs-fleece-jacket", "sauce-labs-onesie", "test.allthethings()-t-shirt-(red)"
+    };
+
+    @BeforeEach
+    void setUpCartTest() {
+        new LoginPage(driver, baseUrl).open().login("standard_user", "secret_sauce");
+        inventory = new InventoryPage(driver).open();
+    }
+
+    // TC-CART-B1: Giỏ hàng có 0 sản phẩm (Biên min = 0)
+    @Test
+    @DisplayName("TC-CART-B1: Giỏ rỗng không hiển thị badge")
+    void emptyCartHasNoBadge() {
+        assertEquals(0, inventory.cartBadgeCount(), "Badge không xuất hiện khi giỏ hàng rỗng");
+    }
+
+    // TC-CART-B2: Giỏ hàng có 1 sản phẩm (Biên min + 1)
+    @Test
+    @DisplayName("TC-CART-B2: Thêm 1 sản phẩm, badge bằng 1")
+    void addOneProduct() {
+        inventory.addToCart(PRODUCTS[0]);
+        assertEquals(1, inventory.cartBadgeCount(), "Badge hiển thị số 1");
+    }
+
+    // TC-CART-B4: Giỏ hàng đạt giới hạn 6 sản phẩm (Biên max = 6)
+    @Test
+    @DisplayName("TC-CART-B4: Thêm đủ 6 sản phẩm, badge bằng 6")
+    void cartHasSixProducts() {
+        for (String product : PRODUCTS) {
+            inventory.addToCart(product);
+        }
+        assertEquals(6, inventory.cartBadgeCount(), "Badge hiển thị số 6");
+    }
+
+    // TC-CART-B5: Xóa sản phẩm cuối cùng trở về 0
+    @Test
+    @DisplayName("TC-CART-B5: Xóa sản phẩm cuối cùng, badge biến mất")
+    void removeLastProduct() {
+        inventory.addToCart(PRODUCTS[0]);
+        inventory.removeFromCart(PRODUCTS[0]);
+        assertEquals(0, inventory.cartBadgeCount(), "Badge biến mất khi giỏ về 0");
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Lớp SortTest.java (Kiểm thử sắp xếp và phát hiện lỗi Sort - FR-04)}
+\begin{lstlisting}[caption={Trích đoạn mã nguồn lớp SortTest.java}]
+@Tag("web")
+@DisplayName("FR-04: Sắp xếp sản phẩm (Sort)")
+public class SortTest extends WebTestBase {
+
+    @ParameterizedTest(name = "{0}: user={1}, option={2}")
+    @DisplayName("FR-04: Sắp xếp sản phẩm theo tên (A-Z, Z-A)")
+    @CsvSource({
+        "TC-SORT-01, standard_user, az, true",
+        "TC-SORT-02, standard_user, za, false"
+    })
+    void sortByNamePass(String tcId, String username, String option, boolean ascending) {
+        InventoryPage page = loginInventoryPage(username);
+        List<String> actual = page.sortBy(option).names();
+        List<String> expected = new ArrayList<>(actual);
+        expected.sort(ascending ? Comparator.naturalOrder() : Comparator.reverseOrder());
+        assertEquals(expected, actual, "Thứ tự tên không đúng với " + username);
+    }
+
+    @Tag("known-bug")
+    @ParameterizedTest(name = "{0}: user={1}, option={2}")
+    @DisplayName("FR-04: Lỗi sắp xếp Z-A với problem_user [BUG-02]")
+    @CsvSource({
+        "TC-SORT[BUG-02]-02, problem_user, za, false"
+    })
+    void sortByNameKnownBugs(String tcId, String username, String option, boolean ascending) {
+        InventoryPage page = loginInventoryPage(username);
+        List<String> actual = page.sortBy(option).names();
+        List<String> expected = new ArrayList<>(actual);
+        expected.sort(ascending ? Comparator.naturalOrder() : Comparator.reverseOrder());
+        // Assert này bắt buộc FAIL trên problem_user vì hệ thống không đảo chiều danh sách
+        assertEquals(expected, actual, "Hệ thống không sắp xếp tên cho problem_user");
+    }
+}
+\end{lstlisting}
 
 \subsubsection{Lớp PerformanceTest.java (Đo hiệu năng NFR-01 \& Đánh dấu lỗi đã biết)}
 \begin{lstlisting}[caption={Trích đoạn mã nguồn lớp PerformanceTest.java}]
