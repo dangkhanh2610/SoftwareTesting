@@ -2,9 +2,10 @@ package vn.edu.softwaretesting.tests;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
 import org.openqa.selenium.By;
+
 import vn.edu.softwaretesting.core.WebTestBase;
 import vn.edu.softwaretesting.pages.CartPage;
 import vn.edu.softwaretesting.pages.CheckoutPage;
@@ -13,9 +14,12 @@ import vn.edu.softwaretesting.pages.LoginPage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-public class CheckoutErrorUserTest extends WebTestBase{
+
+@Tag("known-bug")
+public class CheckoutErrorUserTest extends WebTestBase {
     private CheckoutPage checkoutPage;
     private CartPage cartPage;
+
     @BeforeEach
     void prepareCheckout() {
         LoginPage loginPage = new LoginPage(driver, baseUrl);
@@ -30,12 +34,14 @@ public class CheckoutErrorUserTest extends WebTestBase{
         cartPage.clickCheckOut();
         checkoutPage = new CheckoutPage(driver);
     }
+
     @Test
-    @DisplayName("TC-CHK-06 - Bỏ trống LastName")
-    public void errorMisingLastName() {
-        checkoutPage.fillInformation("Nguyen","","700000");
-        checkoutPage.continueToOverviewAndReadTotal();
-        assertEquals(true,driver.getCurrentUrl().contains("checkout-step-one.html"), "Hệ thống cho chuyển trang khi thiếu LastName");
-        assertEquals("Error: Last Name is required",driver.findElement(By.cssSelector("[data-test='error']")).getText().trim(),"Hệ thống hiển thị lỗi yêu cầu nhập LastName ");
+    @DisplayName("TC-CHK-06 [BUG-04] - Lỗi bỏ qua kiểm tra LastName khi checkout với error_user")
+    public void errorMissingLastName() {
+        checkoutPage.fillInformation("Nguyen", "", "700000");
+        driver.findElement(By.id("continue")).click();
+        // BUG-04: Hệ thống cho phép chuyển trang sang checkout-step-two.html thay vì giữ lại ở checkout-step-one.html và báo lỗi
+        assertEquals(true, driver.getCurrentUrl().contains("checkout-step-one.html"),
+                "Hệ thống cho chuyển trang checkout-step-two.html khi thiếu LastName");
     }
 }
