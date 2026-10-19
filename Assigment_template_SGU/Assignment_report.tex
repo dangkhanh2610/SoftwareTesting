@@ -578,8 +578,8 @@ Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm th�
 \begin{tikzpicture}[
   node distance=1.2cm and 2cm,
   startend/.style={circle, fill=black, inner sep=4pt},
-  activity/.style={rectangle, rounded corners, draw=black, fill=green!10, text width=3.8cm, text centered, minimum height=0.8cm, font=\small},
-  decision/.style={diamond, draw=black, fill=yellow!15, text width=2cm, text centered, inner sep=1pt, font=\scriptsize},
+  activity/.style={rectangle, rounded corners, draw=black, fill=white, text width=3.8cm, text centered, minimum height=0.8cm, font=\small},
+  decision/.style={diamond, draw=black, fill=white, text width=2cm, text centered, inner sep=1pt, font=\scriptsize},
   arrow/.style={-Latex, thick}
 ]
   \node[startend] (start) {};
@@ -951,21 +951,21 @@ class PerformanceTest extends WebTestBase {
 Nhóm thực thi lệnh kiểm tra tự động hóa qua Maven:
 \begin{mdframed}[backgroundcolor=green!5,linecolor=green!60,roundcorner=4pt]
 \small \ttfamily
-mvn test -DexcludedGroups=known-bug \\
-[INFO] Running vn.edu.softwaretesting.tests.LoginTest \\
-[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.57 s \\
-[INFO] Running vn.edu.softwaretesting.tests.CheckoutTest \\
-[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.86 s \\
-[INFO] Running vn.edu.softwaretesting.tests.CartTest \\
-[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.07 s \\
-[INFO] Running vn.edu.softwaretesting.tests.SortTest \\
-[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.60 s \\
-[INFO] ------------------------------------------------------------------------ \\
-[INFO] Results: \\
-[INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0 \\
-[INFO] ------------------------------------------------------------------------ \\
-[INFO] BUILD SUCCESS \\
-[INFO] ------------------------------------------------------------------------
+mvn test -DexcludedGroups=known-bug \\{}
+{[INFO]} Running vn.edu.softwaretesting.tests.LoginTest \\{}
+{[INFO]} Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.57 s \\{}
+{[INFO]} Running vn.edu.softwaretesting.tests.CheckoutTest \\{}
+{[INFO]} Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.86 s \\{}
+{[INFO]} Running vn.edu.softwaretesting.tests.CartTest \\{}
+{[INFO]} Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.07 s \\{}
+{[INFO]} Running vn.edu.softwaretesting.tests.SortTest \\{}
+{[INFO]} Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.60 s \\{}
+{[INFO]} ------------------------------------------------------------------------ \\{}
+{[INFO]} Results: \\{}
+{[INFO]} Tests run: 30, Failures: 0, Errors: 0, Skipped: 0 \\{}
+{[INFO]} ------------------------------------------------------------------------ \\{}
+{[INFO]} BUILD SUCCESS \\{}
+{[INFO]} ------------------------------------------------------------------------
 \end{mdframed}
 Khi chạy kiểm thử nhóm lỗi đã biết (\texttt{mvn test -Dgroups=known-bug}), các ca kiểm thử tái hiện lỗi (\texttt{PerformanceTest}, \texttt{CheckoutProblemUserTest}, \texttt{CheckoutErrorUserTest}, \texttt{SortTest}) ghi nhận FAIL chính xác nhằm minh chứng sự tồn tại của 6 BUG theo đúng yêu cầu đề bài.
 
