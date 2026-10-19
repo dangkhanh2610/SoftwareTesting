@@ -521,67 +521,27 @@ A4: Chuyển sang trang \texttt{checkout-step-two.html} & & & & \checkmark \\ \h
 \subsubsection{Ca sử dụng 1 (UC1): Quy trình thanh toán đơn hàng (FR-03)}
 \noindent \textbf{Tiền điều kiện:} Đã đăng nhập bằng \texttt{standard\_user}, giỏ hàng có ít nhất một sản phẩm.
 
-% >>> [GHI CHÚ CHÈN ẢNH SƠ ĐỒ UC1 NẾU DÙNG FILE NGOÀI]:
-% Hiện tại sơ đồ dưới đây đang được vẽ tự động bằng TikZ trực tiếp trong LaTeX.
-% Nếu nhóm đã vẽ sơ đồ bằng Draw.io/StarUML và muốn chèn file ảnh (ví dụ: evidence/UC1_activity.png):
-% Hãy thêm dấu % trước khối \begin{tikzpicture}...\end{tikzpicture} và mở khóa dòng lệnh dưới đây:
-% \begin{figure}[h!]
-% \centering
-% \includegraphics[width=0.85\textwidth]{evidence/UC1_activity.png}
-% \caption{Sơ đồ hoạt động của Ca sử dụng 1: Thanh toán đơn hàng}
-% \end{figure}
-
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}[
-  node distance=1.2cm and 2cm,
-  startend/.style={circle, fill=black, inner sep=4pt},
-  activity/.style={rectangle, rounded corners, draw=black, fill=blue!10, text width=4cm, text centered, minimum height=0.8cm, font=\small},
-  decision/.style={diamond, draw=black, fill=yellow!15, text width=2.2cm, text centered, inner sep=1pt, font=\scriptsize},
-  arrow/.style={-Latex, thick}
-]
-  \node[startend] (start) {};
-  \node[activity, below=0.6cm of start] (cart) {Xem trang giỏ hàng\\(\texttt{cart.html})};
-  \node[activity, below=0.7cm of cart] (checkout) {Nhấn Checkout\\(\texttt{checkout-step-one.html})};
-  \node[activity, below=0.7cm of checkout] (input) {Nhập First, Last, Postal\\hoặc nhấn Cancel};
-  \node[decision, below=0.8cm of input] (dec1) {Nhấn nút gì?};
-  \node[activity, left=1.5cm of dec1] (cancel) {Hủy thanh toán\\(Quay về \texttt{cart.html})};
-  \node[decision, below=1cm of dec1] (dec2) {Đủ 3 trường?};
-  \node[activity, right=1.5cm of dec2] (error) {Báo lỗi thiếu trường\\(Giữ nguyên trang)};
-  \node[activity, below=1cm of dec2] (step2) {Chuyển sang Overview\\Kiểm tra Tax/Total};
-  \node[activity, below=0.7cm of step2] (finish) {Nhấn Finish\\(\texttt{checkout-complete.html})};
-  \node[circle, draw=black, double, fill=black, inner sep=3pt, below=0.6cm of finish] (end) {};
-
-  \draw[arrow] (start) -- (cart);
-  \draw[arrow] (cart) -- (checkout);
-  \draw[arrow] (checkout) -- (input);
-  \draw[arrow] (input) -- (dec1);
-  \draw[arrow] (dec1) -- node[above, font=\scriptsize] {Cancel} (cancel);
-  \draw[arrow] (dec1) -- node[right, font=\scriptsize] {Continue} (dec2);
-  \draw[arrow] (dec2) -- node[above, font=\scriptsize] {Thiếu} (error);
-  \draw[arrow] (dec2) -- node[right, font=\scriptsize] {Đủ} (step2);
-  \draw[arrow] (step2) -- (finish);
-  \draw[arrow] (finish) -- (end);
-  \draw[arrow] (error.north) |- (input.east);
-  \draw[arrow] (cancel.south) |- (end.west);
-\end{tikzpicture}
-\caption{Sơ đồ hoạt động (Activity Diagram) của Ca sử dụng 1: Thanh toán đơn hàng}
+\includegraphics[width=0.68\textwidth]{usecase_checkout_diagram.png}
+\caption{Sơ đồ hoạt động (Activity Diagram) của Ca sử dụng Thanh toán đơn hàng (FR-03)}
+\label{fig:uc_checkout}
 \end{figure}
 
-Từ sơ đồ hoạt động, nhóm rút ra 5 kịch bản kiểm thử:
+Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm thử bao phủ toàn diện luồng chính và 4 luồng ngoại lệ:
 \begin{table}[h!]
 \centering
 \small
 \begin{tabular}{|c|l|l|p{6.5cm}|}
 \hline
-\textbf{Mã TC} & \textbf{Luồng trên sơ đồ} & \textbf{Dữ liệu đầu vào (First / Last / Zip)} & \textbf{Kết quả mong đợi} \\ \hline
-\texttt{TC-CHK-01} & Luồng chính (Happy Path) & An / Nguyen / 700000 & Chuyển \texttt{checkout-complete.html}, hiện THANK YOU \\ \hline
-\texttt{TC-CHK-02} & Ngoại lệ A1 (Thiếu First) & "" / Nguyen / 700000 & Error: First Name is required \\ \hline
-\texttt{TC-CHK-03} & Ngoại lệ A2 (Thiếu Last) & An / "" / 700000 & Error: Last Name is required \\ \hline
-\texttt{TC-CHK-04} & Ngoại lệ A3 (Thiếu Postal) & An / Nguyen / "" & Error: Postal Code is required \\ \hline
-\texttt{TC-CHK-05} & Luồng rẽ nhánh A4 (Cancel) & (Bỏ trống) / Nhấn Cancel & URL quay về \texttt{cart.html}, hàng vẫn còn nguyên \\ \hline
+\textbf{Mã TC} & \textbf{Luồng trên sơ đồ} & \textbf{Dữ liệu đầu vào (First / Last / Postal)} & \textbf{Kết quả mong đợi} \\ \hline
+\texttt{TC-CHK-01} & Luồng chính (Happy Path) & \texttt{Duc / Tran / 700000} & Thank you for your order! (Giỏ hàng được làm rỗng) \\ \hline
+\texttt{TC-CHK-02} & Ngoại lệ A1 (Thiếu First Name) & \texttt{"" / Tran / 700000} & Error: First Name is required \\ \hline
+\texttt{TC-CHK-03} & Ngoại lệ A2 (Thiếu Last Name) & \texttt{Duc / "" / 700000} & Error: Last Name is required \\ \hline
+\texttt{TC-CHK-04} & Ngoại lệ A3 (Thiếu Postal Code) & \texttt{Duc / Tran / ""} & Error: Postal Code is required \\ \hline
+\texttt{TC-CHK-05} & Ngoại lệ A4 (Hủy Cancel) & (Không nhập) / Nhấn nút Cancel & Chuyển về URL \texttt{cart.html}, sản phẩm vẫn trong giỏ hàng \\ \hline
 \end{tabular}
-\caption{Kịch bản kiểm thử rút ra từ Sơ đồ hoạt động Thanh toán UC1}
+\caption{Bảng kịch bản kiểm thử rút ra từ Sơ đồ hoạt động Thanh toán đơn hàng FR-03}
 \end{table}
 
 \noindent \textbf{Đặc tả chi tiết từng bước của ca kiểm thử mẫu \texttt{TC-CHK-01}:}
@@ -591,12 +551,12 @@ Từ sơ đồ hoạt động, nhóm rút ra 5 kịch bản kiểm thử:
 \begin{tabular}{|c|p{6.5cm}|p{8.5cm}|}
 \hline
 \textbf{Bước} & \textbf{Thao tác thực hiện} & \textbf{Kết quả mong đợi chi tiết} \\ \hline
-1 & Nhấn Add to cart ở Sauce Labs Backpack & Badge giỏ hàng hiển thị số 1; nút chuyển thành Remove \\ \hline
-2 & Nhấn vào biểu tượng giỏ hàng & URL là \texttt{cart.html}; hiển thị 1 sản phẩm với giá \$29.99 \\ \hline
+1 & Thêm sản phẩm Sauce Labs Backpack vào giỏ hàng & Badge giỏ hàng hiển thị số 1; nút chuyển thành Remove \\ \hline
+2 & Nhấn vào biểu tượng giỏ hàng & Chuyển hướng sang \texttt{cart.html}; hiển thị 1 sản phẩm với giá \$29.99 \\ \hline
 3 & Nhấn nút Checkout & Chuyển sang URL \texttt{checkout-step-one.html} \\ \hline
-4 & Nhập First Name: An, Last: Nguyen, Zip: 700000; nhấn Continue & Chuyển sang URL \texttt{checkout-step-two.html} \\ \hline
-5 & Kiểm tra thông tin tóm tắt thanh toán & Item total: \$29.99, Tax: \$2.40 (tính: $29.99 \times 8\% \approx 2.40$), Total: \$32.39 ($29.99 + 2.40 = 32.39$) \\ \hline
-6 & Nhấn nút Finish & Chuyển sang URL \texttt{checkout-complete.html}; hiển thị dòng chữ \textit{THANK YOU FOR YOUR ORDER}; giỏ hàng rỗng và badge biến mất \\ \hline
+4 & Nhập First Name: \texttt{Duc}, Last Name: \texttt{Tran}, Postal Code: \texttt{700000}; nhấn nút Continue & Chuyển sang URL \texttt{checkout-step-two.html} \\ \hline
+5 & Kiểm tra thông tin tóm tắt thanh toán & Item total: \$29.99, Tax: \$2.40 ($29.99 \times 8\% \approx 2.40$), Total: \$32.39 ($29.99 + 2.40 = 32.39$) \\ \hline
+6 & Nhấn nút Finish & Chuyển sang URL \texttt{checkout-complete.html}; hiển thị thông điệp \textit{"Thank you for your order!"}; giỏ hàng được làm rỗng và badge biến mất \\ \hline
 \end{tabular}
 \caption{Đặc tả chi tiết kịch bản kiểm thử \texttt{TC-CHK-01}}
 \end{table}
@@ -718,8 +678,8 @@ Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám ph�
 \textbf{Các bước tái hiện:} 1. Truy cập trang chủ SauceDemo. 2. Nhập \texttt{performance\_glitch\_user} / \texttt{secret\_sauce}. 3. Bấm Login và bấm giờ đến khi trang tải xong. \\
 \textbf{Kết quả mong đợi:} Trang sản phẩm hiển thị trong thời gian $\le 3.0$ giây. \\
 \textbf{Kết quả thực tế:} 5 lần đo: 5.12s, 5.08s, 5.11s, 5.15s, 5.10s. Trung vị là 5.11s ($> 3.0$s). \\
-\textbf{Bằng chứng đính kèm:} \texttt{evidence/NV4\_BUG-01.mp4}.
-% >>> [CHÈN ẢNH CHỤP NẾU CẦN]: \begin{center}\includegraphics[width=0.7\textwidth]{evidence/NV4_BUG-01.png}\end{center}
+\textbf{Bằng chứng đính kèm:} Video ghi hình \texttt{evidence/NV4\_BUG-01.mp4} (hình trích xuất bên dưới).
+\begin{center}\includegraphics[width=0.65\textwidth]{evidence/NV4_BUG-01.png}\end{center}
 \end{mdframed}
 
 \vspace{0.2cm}
@@ -732,8 +692,8 @@ Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám ph�
 \textbf{Các bước tái hiện:} Đăng nhập bằng \texttt{problem\_user}, nhấp chọn bộ lọc sắp xếp (Z-A hoặc Price low-high/high-low). \\
 \textbf{Kết quả mong đợi:} Dropdown chuyển sang tiêu chí được chọn và danh sách sản phẩm sắp xếp lại tương ứng. \\
 \textbf{Kết quả thực tế:} Dropdown không nhận giá trị mới, danh sách sản phẩm giữ nguyên thứ tự mặc định (Name A to Z). \\
-\textbf{Bằng chứng đính kèm:} \texttt{evidence/NV4\_BUG-02.png}.
-% >>> [CHÈN ẢNH CHỤP NẾU CẦN]: \begin{center}\includegraphics[width=0.7\textwidth]{evidence/NV4_BUG-02.png}\end{center}
+\textbf{Bằng chứng đính kèm:} Ảnh chụp màn hình \texttt{evidence/NV4\_BUG-02.png}.
+\begin{center}\includegraphics[width=0.65\textwidth]{evidence/NV4_BUG-02.png}\end{center}
 \end{mdframed}
 
 \vspace{0.2cm}
@@ -746,8 +706,8 @@ Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám ph�
 \textbf{Các bước tái hiện:} Đăng nhập bằng \texttt{problem\_user}, vào Checkout Step One, nhập First Name: 'An', sau đó nhập Last Name: 'Nguyen'. \\
 \textbf{Kết quả mong đợi:} Ô First Name giữ nguyên 'An', ô Last Name hiển thị 'Nguyen'. \\
 \textbf{Kết quả thực tế:} Ô First Name bị tự động ghi đè thành 'Nguyen', ô Last Name không nhận giá trị độc lập. \\
-\textbf{Bằng chứng đính kèm:} \texttt{evidence/NV4\_BUG-03.png}.
-% >>> [CHÈN ẢNH CHỤP NẾU CẦN]: \begin{center}\includegraphics[width=0.7\textwidth]{evidence/NV4_BUG-03.png}\end{center}
+\textbf{Bằng chứng đính kèm:} Ảnh chụp màn hình \texttt{evidence/NV4\_BUG-03.png}.
+\begin{center}\includegraphics[width=0.65\textwidth]{evidence/NV4_BUG-03.png}\end{center}
 \end{mdframed}
 
 \vspace{0.2cm}
@@ -760,8 +720,8 @@ Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám ph�
 \textbf{Các bước tái hiện:} Đăng nhập \texttt{error\_user}, vào Checkout Step One, nhập First Name, Postal Code và cố gắng nhập Last Name, nhấn Continue. \\
 \textbf{Kết quả mong đợi:} Ô Last Name nhận ký tự bình thường; nếu thiếu Last Name phải chặn lại và hiển thị lỗi. \\
 \textbf{Kết quả thực tế:} Ô Last Name không gõ được chữ (Console báo lỗi TypeError); khi nhấn Continue hệ thống bypass validation và tự chuyển sang \texttt{checkout-step-two.html}. \\
-\textbf{Bằng chứng đính kèm:} \texttt{evidence/NV4\_BUG-04.png}.
-% >>> [CHÈN ẢNH CHỤP NẾU CẦN]: \begin{center}\includegraphics[width=0.7\textwidth]{evidence/NV4_BUG-04.png}\end{center}
+\textbf{Bằng chứng đính kèm:} Video ghi hình \texttt{evidence/NV4\_BUG-04.mp4} (hình trích xuất bên dưới).
+\begin{center}\includegraphics[width=0.65\textwidth]{evidence/NV4_BUG-04.png}\end{center}
 \end{mdframed}
 
 \vspace{0.2cm}
@@ -774,8 +734,8 @@ Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám ph�
 \textbf{Các bước tái hiện:} Đăng nhập \texttt{problem\_user}, thêm sản phẩm vào giỏ, vào \texttt{cart.html} và nhấn nút Remove. \\
 \textbf{Kết quả mong đợi:} Sản phẩm bị xóa khỏi giỏ, nút đổi lại thành 'Add to cart', badge giỏ hàng giảm đi 1. \\
 \textbf{Kết quả thực tế:} Nút không chuyển lại thành Add to cart, sản phẩm vẫn còn trong giỏ và badge không giảm. \\
-\textbf{Bằng chứng đính kèm:} \texttt{evidence/NV4\_BUG-05.png}.
-% >>> [CHÈN ẢNH CHỤP NẾU CẦN]: \begin{center}\includegraphics[width=0.7\textwidth]{evidence/NV4_BUG-05.png}\end{center}
+\textbf{Bằng chứng đính kèm:} Ảnh chụp màn hình \texttt{evidence/NV4\_BUG-05.png}.
+\begin{center}\includegraphics[width=0.65\textwidth]{evidence/NV4_BUG-05.png}\end{center}
 \end{mdframed}
 
 \vspace{0.2cm}
@@ -788,8 +748,8 @@ Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám ph�
 \textbf{Các bước tái hiện:} Đăng nhập \texttt{visual\_user}, quan sát giá niêm yết trên \texttt{inventory.html} và chọn bộ lọc theo giá. \\
 \textbf{Kết quả mong đợi:} Giá sản phẩm hiển thị đúng giá niêm yết gốc và được sắp xếp tuần tự. \\
 \textbf{Kết quả thực tế:} Giá sản phẩm bị gán số ngẫu nhiên; khi lọc theo giá thì thứ tự hiển thị bị lộn xộn. \\
-\textbf{Bằng chứng đính kèm:} \texttt{evidence/NV4\_BUG-06.png}.
-% >>> [CHÈN ẢNH CHỤP NẾU CẦN]: \begin{center}\includegraphics[width=0.7\textwidth]{evidence/NV4_BUG-06.png}\end{center}
+\textbf{Bằng chứng đính kèm:} Ảnh chụp màn hình \texttt{evidence/NV4\_BUG-06.png}.
+\begin{center}\includegraphics[width=0.65\textwidth]{evidence/NV4_BUG-06.png}\end{center}
 \end{mdframed}
 
 % ==============================================================================
@@ -1009,13 +969,12 @@ mvn test -DexcludedGroups=known-bug \\
 \end{mdframed}
 Khi chạy kiểm thử nhóm lỗi đã biết (\texttt{mvn test -Dgroups=known-bug}), các ca kiểm thử tái hiện lỗi (\texttt{PerformanceTest}, \texttt{CheckoutProblemUserTest}, \texttt{CheckoutErrorUserTest}, \texttt{SortTest}) ghi nhận FAIL chính xác nhằm minh chứng sự tồn tại của 6 BUG theo đúng yêu cầu đề bài.
 
-% >>> [GHI CHÚ CHÈN ẢNH CHỤP TERMINAL THỰC TẾ]:
-% Nếu muốn chèn ảnh chụp màn hình terminal thực tế của nhóm:
-% \begin{figure}[h!]
-% \centering
-% \includegraphics[width=0.92\textwidth]{evidence/NV5_terminal_mvn_test.png}
-% \caption{Ảnh chụp màn hình kết quả chạy thực tế toàn bộ test suite}
-% \end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.88\textwidth]{evidence/NV1_terminal_mvn_clean_test.png}
+\caption{Ảnh chụp màn hình kết quả thực thi tự động hóa với Maven}
+\label{fig:terminal_mvn}
+\end{figure}
 
 % ==============================================================================
 % MỤC 7: KẾT LUẬN & TỰ ĐÁNH GIÁ TRƯỚC KHI NỘP BÀI
