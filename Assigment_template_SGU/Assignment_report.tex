@@ -141,15 +141,15 @@
 
 % Bảng thông tin nhóm căn chính giữa (center) cân đối tuyệt đối
 \begin{center}
-\begin{tabular}{llcc}
-  \multicolumn{4}{l}{\textbf{Giảng viên hướng dẫn:}\quad \textbf{Từ Lãng Phiêu}} \\[0.4cm]
-  \textbf{STT \quad Họ và tên sinh viên} & \textbf{Vai trò phụ trách} & \textbf{MSSV} & \textbf{Đóng góp} \\
+\begin{tabular}{cllcc}
+  \multicolumn{5}{l}{\textbf{Giảng viên hướng dẫn:}\quad \textbf{Từ Lãng Phiêu}} \\[0.4cm]
+  \textbf{STT} & \textbf{Họ và tên sinh viên} & \textbf{Vai trò phụ trách} & \textbf{MSSV} & \textbf{Đóng góp} \\
   \hline
-  1. Lê Khánh Đăng & Nhóm trưởng (Login - FR-01) & 3124560022 & 100\% \\
-  2. Dương Chí Tài & QA (Giỏ hàng - FR-02) & 3124560076 & 100\% \\
-  3. Trần Việt Đức & QA (Thanh toán - FR-03) & 3124560024 & 100\% \\
-  4. Nguyễn Thành Nhân & QA (Sắp xếp - FR-04) & 3124560065 & 100\% \\
-  5. Phan Ngọc Vinh & QA (Hiệu năng - NFR-01/Excel) & 3124560098 & 100\% \\
+  1 & Lê Khánh Đăng & Nhóm trưởng (Login - FR-01) & 3124560022 & 100\% \\
+  2 & Dương Chí Tài & QA (Giỏ hàng - FR-02) & 3124560076 & 100\% \\
+  3 & Trần Việt Đức & QA (Thanh toán - FR-03) & 3124560024 & 100\% \\
+  4 & Nguyễn Thành Nhân & QA (Sắp xếp - FR-04) & 3124560065 & 100\% \\
+  5 & Phan Ngọc Vinh & QA (Hiệu năng - NFR-01/Excel) & 3124560098 & 100\% \\
   \hline
 \end{tabular}
 \end{center}
@@ -840,7 +840,7 @@ class CheckoutTest extends WebTestBase {
 \subsubsection{Lớp CartTest.java (Kiểm thử giá trị biên BVA giỏ hàng - FR-02)}
 \begin{lstlisting}[caption={Trích đoạn mã nguồn lớp CartTest.java}]
 @TestMethodOrder(MethodOrderer.DisplayName.class)
-@DisplayName("FR-02: Kiểm thử giá trị biên của giỏ hàng")
+@DisplayName("FR-02: Cart boundary value analysis (BVA)")
 public class CartTest extends WebTestBase {
 
     private InventoryPage inventory;
@@ -855,38 +855,38 @@ public class CartTest extends WebTestBase {
         inventory = new InventoryPage(driver).open();
     }
 
-    // TC-CART-B1: Giỏ hàng có 0 sản phẩm (Biên min = 0)
+    // TC-CART-B1: Empty cart (Boundary min = 0)
     @Test
-    @DisplayName("TC-CART-B1: Giỏ rỗng không hiển thị badge")
+    @DisplayName("TC-CART-B1: Empty cart has no badge")
     void emptyCartHasNoBadge() {
-        assertEquals(0, inventory.cartBadgeCount(), "Badge không xuất hiện khi giỏ hàng rỗng");
+        assertEquals(0, inventory.cartBadgeCount(), "Badge should not appear when cart is empty");
     }
 
-    // TC-CART-B2: Giỏ hàng có 1 sản phẩm (Biên min + 1)
+    // TC-CART-B2: Cart with 1 item (Boundary min + 1)
     @Test
-    @DisplayName("TC-CART-B2: Thêm 1 sản phẩm, badge bằng 1")
+    @DisplayName("TC-CART-B2: Add 1 product, badge count is 1")
     void addOneProduct() {
         inventory.addToCart(PRODUCTS[0]);
-        assertEquals(1, inventory.cartBadgeCount(), "Badge hiển thị số 1");
+        assertEquals(1, inventory.cartBadgeCount(), "Badge count should be 1");
     }
 
-    // TC-CART-B4: Giỏ hàng đạt giới hạn 6 sản phẩm (Biên max = 6)
+    // TC-CART-B4: Cart reaches 6 items limit (Boundary max = 6)
     @Test
-    @DisplayName("TC-CART-B4: Thêm đủ 6 sản phẩm, badge bằng 6")
+    @DisplayName("TC-CART-B4: Add all 6 products, badge count is 6")
     void cartHasSixProducts() {
         for (String product : PRODUCTS) {
             inventory.addToCart(product);
         }
-        assertEquals(6, inventory.cartBadgeCount(), "Badge hiển thị số 6");
+        assertEquals(6, inventory.cartBadgeCount(), "Badge count should be 6");
     }
 
-    // TC-CART-B5: Xóa sản phẩm cuối cùng trở về 0
+    // TC-CART-B5: Remove last product, reset to 0
     @Test
-    @DisplayName("TC-CART-B5: Xóa sản phẩm cuối cùng, badge biến mất")
+    @DisplayName("TC-CART-B5: Remove last product, badge disappears")
     void removeLastProduct() {
         inventory.addToCart(PRODUCTS[0]);
         inventory.removeFromCart(PRODUCTS[0]);
-        assertEquals(0, inventory.cartBadgeCount(), "Badge biến mất khi giỏ về 0");
+        assertEquals(0, inventory.cartBadgeCount(), "Badge disappears when cart is empty");
     }
 }
 \end{lstlisting}
@@ -894,11 +894,11 @@ public class CartTest extends WebTestBase {
 \subsubsection{Lớp SortTest.java (Kiểm thử sắp xếp và phát hiện lỗi Sort - FR-04)}
 \begin{lstlisting}[caption={Trích đoạn mã nguồn lớp SortTest.java}]
 @Tag("web")
-@DisplayName("FR-04: Sắp xếp sản phẩm (Sort)")
+@DisplayName("FR-04: Product sorting (Sort)")
 public class SortTest extends WebTestBase {
 
     @ParameterizedTest(name = "{0}: user={1}, option={2}")
-    @DisplayName("FR-04: Sắp xếp sản phẩm theo tên (A-Z, Z-A)")
+    @DisplayName("FR-04: Sort products by name (A-Z, Z-A)")
     @CsvSource({
         "TC-SORT-01, standard_user, az, true",
         "TC-SORT-02, standard_user, za, false"
@@ -908,12 +908,12 @@ public class SortTest extends WebTestBase {
         List<String> actual = page.sortBy(option).names();
         List<String> expected = new ArrayList<>(actual);
         expected.sort(ascending ? Comparator.naturalOrder() : Comparator.reverseOrder());
-        assertEquals(expected, actual, "Thứ tự tên không đúng với " + username);
+        assertEquals(expected, actual, "Name order does not match for " + username);
     }
 
     @Tag("known-bug")
     @ParameterizedTest(name = "{0}: user={1}, option={2}")
-    @DisplayName("FR-04: Lỗi sắp xếp Z-A với problem_user [BUG-02]")
+    @DisplayName("FR-04: Sort Z-A bug with problem_user [BUG-02]")
     @CsvSource({
         "TC-SORT[BUG-02]-02, problem_user, za, false"
     })
@@ -922,8 +922,8 @@ public class SortTest extends WebTestBase {
         List<String> actual = page.sortBy(option).names();
         List<String> expected = new ArrayList<>(actual);
         expected.sort(ascending ? Comparator.naturalOrder() : Comparator.reverseOrder());
-        // Assert này bắt buộc FAIL trên problem_user vì hệ thống không đảo chiều danh sách
-        assertEquals(expected, actual, "Hệ thống không sắp xếp tên cho problem_user");
+        // Assert nay bat buoc FAIL tren problem_user vi he thong khong dao chieu danh sach
+        assertEquals(expected, actual, "System fails to sort product names for problem_user");
     }
 }
 \end{lstlisting}
