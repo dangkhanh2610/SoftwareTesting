@@ -993,18 +993,21 @@ Nhóm thực thi lệnh kiểm tra tự động hóa qua Maven:
 \small \ttfamily
 mvn test -DexcludedGroups=known-bug \\
 [INFO] Running vn.edu.softwaretesting.tests.LoginTest \\
-[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.12 s \\
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.57 s \\
 [INFO] Running vn.edu.softwaretesting.tests.CheckoutTest \\
-[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.35 s \\
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.86 s \\
 [INFO] Running vn.edu.softwaretesting.tests.CartTest \\
-[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.81 s \\
-[INFO] Running vn.edu.softwaretesting.tests.InventoryTest \\
-[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.44 s \\
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.07 s \\
+[INFO] Running vn.edu.softwaretesting.tests.SortTest \\
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.60 s \\
+[INFO] ------------------------------------------------------------------------ \\
+[INFO] Results: \\
+[INFO] Tests run: 30, Failures: 0, Errors: 0, Skipped: 0 \\
 [INFO] ------------------------------------------------------------------------ \\
 [INFO] BUILD SUCCESS \\
 [INFO] ------------------------------------------------------------------------
 \end{mdframed}
-Khi chạy riêng nhóm kiểm thử lỗi đã biết (\texttt{mvn test -Dgroups=known-bug}), ca kiểm thử \texttt{TC-NFR-01 [BUG-01]} ghi nhận FAIL chính xác do thời gian phản hồi vượt ngưỡng 3.0 giây theo đúng đặc thù lỗi của SauceDemo.
+Khi chạy kiểm thử nhóm lỗi đã biết (\texttt{mvn test -Dgroups=known-bug}), các ca kiểm thử tái hiện lỗi (\texttt{PerformanceTest}, \texttt{CheckoutProblemUserTest}, \texttt{CheckoutErrorUserTest}, \texttt{SortTest}) ghi nhận FAIL chính xác nhằm minh chứng sự tồn tại của 6 BUG theo đúng yêu cầu đề bài.
 
 % >>> [GHI CHÚ CHÈN ẢNH CHỤP TERMINAL THỰC TẾ]:
 % Nếu muốn chèn ảnh chụp màn hình terminal thực tế của nhóm:
