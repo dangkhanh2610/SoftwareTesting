@@ -681,24 +681,25 @@ Nhóm tiến hành chạy thực tế toàn bộ các ca kiểm thử trên môi
 \caption{Trích xuất kết quả thực thi kiểm thử thủ công trên SauceDemo}
 \end{table}
 
+\clearpage
 \subsection{Báo cáo các lỗi hệ thống phát hiện được (Defect Reports)}
 Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám phá và thực thi đều được lập phiếu báo cáo lỗi chuẩn:
 
-\begin{mdframed}[backgroundcolor=red!5,linecolor=red!60,roundcorner=4pt]
+\begin{mdframed}[backgroundcolor=red!5,linecolor=red!60,roundcorner=4pt,nobreak=true]
 \small
 \textbf{Mã lỗi: BUG-01} \\
 \textbf{Tiêu đề lỗi:} Trang sản phẩm mất khoảng 5.11 giây để hiển thị với tài khoản \texttt{performance\_glitch\_user} (vi phạm NFR-01). \\
 \textbf{Mức nghiêm trọng:} Major. \textbf{Môi trường:} Google Chrome 155, Win 11, mạng cáp quang. \\
-\textbf{Các bước tái hiện:} 1. Truy cập trang chủ SauceDemo. 2. Nhập \texttt{performance\_glitch\_user} / \texttt{secret\_sauce}. 3. Bấm Login và bấm giờ đến khi trang tải xong. \\
+\textbf{Các bước tái hiện:} 1. Truy cập trang chủ SauceDemo. 2. Nhập \texttt{performance\_glitch\_user} / \texttt{secret\_sauce}. 3. Bấm Login và đo thời gian đến khi trang tải xong. \\
 \textbf{Kết quả mong đợi:} Trang sản phẩm hiển thị trong thời gian $\le 3.0$ giây. \\
-\textbf{Kết quả thực tế:} 5 lần đo: 5.12s, 5.08s, 5.11s, 5.15s, 5.10s. Trung vị là 5.11s ($> 3.0$s). \\
-\textbf{Bằng chứng đính kèm:} Video ghi hình \texttt{evidence/NV4\_BUG-01.mp4} (hình trích xuất bên dưới).
-\begin{center}\includegraphics[width=0.65\textwidth]{evidence/NV4_BUG-01.png}\end{center}
+\textbf{Kết quả thực tế:} 5 lần đo: 5.12s, 5.08s, 5.11s, 5.15s, 5.10s (Trung vị: 5.11s). Đo kiểm tra qua công cụ Chrome DevTools Performance ghi nhận chỉ số LCP đạt đúng $5.11\text{ s}$ (mức cảnh báo poor, vượt xa ngưỡng chấp nhận $3.0\text{ s}$). \\
+\textbf{Bằng chứng đính kèm:} Video ghi hình \texttt{evidence/NV4\_BUG-01.mp4} và ảnh chụp màn hình DevTools LCP \texttt{evidence/NV4\_BUG-01.png}.
+\begin{center}\includegraphics[width=0.62\textwidth]{evidence/NV4_BUG-01.png}\end{center}
 \end{mdframed}
 
 \vspace{0.2cm}
 
-\begin{mdframed}[backgroundcolor=orange!5,linecolor=orange!60,roundcorner=4pt]
+\begin{mdframed}[backgroundcolor=orange!5,linecolor=orange!60,roundcorner=4pt,nobreak=true]
 \small
 \textbf{Mã lỗi: BUG-02} \\
 \textbf{Tiêu đề lỗi:} Bộ lọc sắp xếp không hoạt động khi chọn các tiêu chí sắp xếp với tài khoản \texttt{problem\_user}. \\
@@ -707,12 +708,12 @@ Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám ph�
 \textbf{Kết quả mong đợi:} Dropdown chuyển sang tiêu chí được chọn và danh sách sản phẩm sắp xếp lại tương ứng. \\
 \textbf{Kết quả thực tế:} Dropdown không nhận giá trị mới, danh sách sản phẩm giữ nguyên thứ tự mặc định (Name A to Z). \\
 \textbf{Bằng chứng đính kèm:} Ảnh chụp màn hình \texttt{evidence/NV4\_BUG-02.png}.
-\begin{center}\includegraphics[width=0.65\textwidth]{evidence/NV4_BUG-02.png}\end{center}
+\begin{center}\includegraphics[width=0.62\textwidth]{evidence/NV4_BUG-02.png}\end{center}
 \end{mdframed}
 
-\vspace{0.2cm}
+\clearpage
 
-\begin{mdframed}[backgroundcolor=red!5,linecolor=red!60,roundcorner=4pt]
+\begin{mdframed}[backgroundcolor=red!5,linecolor=red!60,roundcorner=4pt,nobreak=true]
 \small
 \textbf{Mã lỗi: BUG-03} \\
 \textbf{Tiêu đề lỗi:} Nhập ký tự vào ô Last Name thì hệ thống tự động ghi đè sang ô First Name khi dùng \texttt{problem\_user}. \\
@@ -721,26 +722,26 @@ Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám ph�
 \textbf{Kết quả mong đợi:} Ô First Name giữ nguyên 'An', ô Last Name hiển thị 'Nguyen'. \\
 \textbf{Kết quả thực tế:} Ô First Name bị tự động ghi đè thành 'Nguyen', ô Last Name không nhận giá trị độc lập. \\
 \textbf{Bằng chứng đính kèm:} Ảnh chụp màn hình \texttt{evidence/NV4\_BUG-03.png}.
-\begin{center}\includegraphics[width=0.65\textwidth]{evidence/NV4_BUG-03.png}\end{center}
+\begin{center}\includegraphics[width=0.62\textwidth]{evidence/NV4_BUG-03.png}\end{center}
 \end{mdframed}
 
 \vspace{0.2cm}
 
-\begin{mdframed}[backgroundcolor=red!5,linecolor=red!60,roundcorner=4pt]
+\begin{mdframed}[backgroundcolor=red!5,linecolor=red!60,roundcorner=4pt,nobreak=true]
 \small
 \textbf{Mã lỗi: BUG-04} \\
 \textbf{Tiêu đề lỗi:} Ô Last Name không nhận ký tự nhưng form vẫn cho phép Continue sang Overview khi dùng \texttt{error\_user}. \\
 \textbf{Mức nghiêm trọng:} Major. \textbf{Môi trường:} Google Chrome 155, Win 11. \\
-\textbf{Các bước tái hiện:} Đăng nhập \texttt{error\_user}, vào Checkout Step One, nhập First Name, Postal Code và cố gắng nhập Last Name, nhấn Continue. \\
+\textbf{Các bước tái hiện:} Đăng nhập \texttt{error\_user}, vào Checkout Step One, nhập First Name: 'Duc', Postal Code: '700000', để trống Last Name và nhấn Continue. \\
 \textbf{Kết quả mong đợi:} Ô Last Name nhận ký tự bình thường; nếu thiếu Last Name phải chặn lại và hiển thị lỗi. \\
 \textbf{Kết quả thực tế:} Ô Last Name không gõ được chữ (Console báo lỗi TypeError); khi nhấn Continue hệ thống bypass validation và tự chuyển sang \texttt{checkout-step-two.html}. \\
-\textbf{Bằng chứng đính kèm:} Video ghi hình \texttt{evidence/NV4\_BUG-04.mp4} (hình trích xuất bên dưới).
-\begin{center}\includegraphics[width=0.65\textwidth]{evidence/NV4_BUG-04.png}\end{center}
+\textbf{Bằng chứng đính kèm:} Video ghi hình \texttt{evidence/NV4\_BUG-04.mp4} và ảnh chụp màn hình \texttt{evidence/NV4\_BUG-04.png}.
+\begin{center}\includegraphics[width=0.62\textwidth]{evidence/NV4_BUG-04.png}\end{center}
 \end{mdframed}
 
-\vspace{0.2cm}
+\clearpage
 
-\begin{mdframed}[backgroundcolor=orange!5,linecolor=orange!60,roundcorner=4pt]
+\begin{mdframed}[backgroundcolor=orange!5,linecolor=orange!60,roundcorner=4pt,nobreak=true]
 \small
 \textbf{Mã lỗi: BUG-05} \\
 \textbf{Tiêu đề lỗi:} Không thể xóa sản phẩm khỏi giỏ hàng bằng nút Remove khi dùng tài khoản \texttt{problem\_user}. \\
@@ -749,12 +750,12 @@ Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám ph�
 \textbf{Kết quả mong đợi:} Sản phẩm bị xóa khỏi giỏ, nút đổi lại thành 'Add to cart', badge giỏ hàng giảm đi 1. \\
 \textbf{Kết quả thực tế:} Nút không chuyển lại thành Add to cart, sản phẩm vẫn còn trong giỏ và badge không giảm. \\
 \textbf{Bằng chứng đính kèm:} Ảnh chụp màn hình \texttt{evidence/NV4\_BUG-05.png}.
-\begin{center}\includegraphics[width=0.65\textwidth]{evidence/NV4_BUG-05.png}\end{center}
+\begin{center}\includegraphics[width=0.62\textwidth]{evidence/NV4_BUG-05.png}\end{center}
 \end{mdframed}
 
 \vspace{0.2cm}
 
-\begin{mdframed}[backgroundcolor=orange!5,linecolor=orange!60,roundcorner=4pt]
+\begin{mdframed}[backgroundcolor=orange!5,linecolor=orange!60,roundcorner=4pt,nobreak=true]
 \small
 \textbf{Mã lỗi: BUG-06} \\
 \textbf{Tiêu đề lỗi:} Giá sản phẩm bị hiển thị ngẫu nhiên và danh sách giá bị lộn xộn khi dùng \texttt{visual\_user}. \\
@@ -763,7 +764,7 @@ Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám ph�
 \textbf{Kết quả mong đợi:} Giá sản phẩm hiển thị đúng giá niêm yết gốc và được sắp xếp tuần tự. \\
 \textbf{Kết quả thực tế:} Giá sản phẩm bị gán số ngẫu nhiên; khi lọc theo giá thì thứ tự hiển thị bị lộn xộn. \\
 \textbf{Bằng chứng đính kèm:} Ảnh chụp màn hình \texttt{evidence/NV4\_BUG-06.png}.
-\begin{center}\includegraphics[width=0.65\textwidth]{evidence/NV4_BUG-06.png}\end{center}
+\begin{center}\includegraphics[width=0.62\textwidth]{evidence/NV4_BUG-06.png}\end{center}
 \end{mdframed}
 
 % ==============================================================================
