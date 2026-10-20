@@ -1,5 +1,6 @@
 # Assignment 1 — JUnit 5 & Selenium WebDriver Automation
 **Học phần:** Kiểm thử phần mềm — Trường Đại học Sài Gòn  
+**Nhóm thực hiện:** Nhóm 04  
 **Giảng viên hướng dẫn:** Từ Lãng Phiêu  
 **Hệ thống kiểm thử mục tiêu:** SauceDemo (https://www.saucedemo.com)  
 
