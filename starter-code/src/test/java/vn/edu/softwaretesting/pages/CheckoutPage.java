@@ -28,7 +28,7 @@ public class CheckoutPage {
     private final WebDriverWait wait;
     public CheckoutPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(8));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
     public CheckoutPage fillInformation(String first, String last, String postal) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(FIRST_NAME)).sendKeys(first);
@@ -37,7 +37,7 @@ public class CheckoutPage {
         return this;
     }
     public String continueToOverviewAndReadTotal() {
-        driver.findElement(CONTINUE).click();
+        wait.until(ExpectedConditions.elementToBeClickable(CONTINUE)).click();
         return wait.until(ExpectedConditions.visibilityOfElementLocated(TOTAL)).getText();
     }
     public String getItemTotal() {
@@ -50,7 +50,7 @@ public class CheckoutPage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(TOTAL)).getText();
     }
     public String continueExpectingError() {
-        driver.findElement(CONTINUE).click();
+        wait.until(ExpectedConditions.elementToBeClickable(CONTINUE)).click();
         return wait.until(ExpectedConditions.visibilityOfElementLocated(ERROR)).getText();
     }
     public String finishOrder() {

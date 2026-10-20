@@ -59,6 +59,7 @@ public class CartPage {
     }
     public void clickCheckOut() {
         wait.until(ExpectedConditions.elementToBeClickable(checkOutButton)).click();
+        wait.until(ExpectedConditions.urlContains("checkout-step-one"));
     }
     public void removeProduct(String productName) {
         for (WebElement item : driver.findElements(cartItems)) {
