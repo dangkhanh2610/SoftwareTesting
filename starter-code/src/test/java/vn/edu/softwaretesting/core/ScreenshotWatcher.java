@@ -16,10 +16,6 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
-/**
- * JUnit 5 Extension (TestWatcher & AfterTestExecutionCallback)
- * Tự động chụp ảnh màn hình khi một ca kiểm thử bị FAIL (Điểm Bonus Mục 7.7)
- */
 public class ScreenshotWatcher implements TestWatcher, AfterTestExecutionCallback {
 
     private static final Path SCREENSHOT_DIR = Paths.get("target", "screenshots");
@@ -65,6 +61,5 @@ public class ScreenshotWatcher implements TestWatcher, AfterTestExecutionCallbac
 
     @Override
     public void testSuccessful(ExtensionContext context) {
-        // Tuỳ chọn ghi nhận ca kiểm thử thành công
     }
 }

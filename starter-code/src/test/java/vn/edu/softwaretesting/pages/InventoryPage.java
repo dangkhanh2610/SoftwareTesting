@@ -35,7 +35,6 @@ public class InventoryPage {
                 this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         }
 
-        // Chờ trang sản phẩm hiển thị
         public InventoryPage open() {
                 wait.until(ExpectedConditions.visibilityOfElementLocated(inventoryList));
                 return this;
@@ -97,7 +96,6 @@ public class InventoryPage {
                 return result;
         }
 
-        // Đọc danh sách giá sản phẩm
         public List<Double> prices() {
                 wait.until(ExpectedConditions.visibilityOfElementLocated(productPrices));
 

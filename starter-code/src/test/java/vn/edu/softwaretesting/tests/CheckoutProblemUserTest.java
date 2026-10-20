@@ -39,7 +39,6 @@ public class CheckoutProblemUserTest extends WebTestBase {
     @DisplayName("TC-CHK-07 [BUG-03] - Lỗi nhập liệu ở LastName thì hiển thị ở FirstName với problem_user")
     public void errorChangeName() {
         checkoutPage.fillInformation("Nguyen", "Van A", "700000");
-        // BUG-03: problem_user ghi đè ô FirstName khi nhập LastName
         assertEquals("Nguyen", driver.findElement(By.id("first-name")).getAttribute("value"), "Lỗi: FirstName bị thay đổi khi nhập LastName");
         assertEquals("Van A", driver.findElement(By.id("last-name")).getAttribute("value"), "Lỗi LastName không giữ đúng giá trị khi nhập liệu");
     }

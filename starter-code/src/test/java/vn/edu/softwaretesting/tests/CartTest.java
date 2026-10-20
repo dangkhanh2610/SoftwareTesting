@@ -36,7 +36,6 @@ public class CartTest extends WebTestBase {
         inventory = new InventoryPage(driver).open();
     }
 
-    // TC-CART-B1: Giỏ hàng có 0 sản phẩm
     @Test
     @DisplayName("TC-CART-B1: Giỏ rỗng không hiển thị badge")
     void emptyCartHasNoBadge() {
@@ -47,7 +46,6 @@ public class CartTest extends WebTestBase {
         );
     }
 
-    // TC-CART-B2: Giỏ hàng có 1 sản phẩm
     @Test
     @DisplayName("TC-CART-B2: Thêm 1 sản phẩm, badge bằng 1")
     void addOneProduct() {
@@ -60,16 +58,13 @@ public class CartTest extends WebTestBase {
         );
     }
 
-    // TC-CART-B3: Giỏ hàng có 5 sản phẩm
     @Test
     @DisplayName("TC-CART-B3: Giỏ có 5 sản phẩm, badge bằng 5")
     void cartHasFiveProducts() {
-        // Thêm đủ 6 sản phẩm
         for (String product : PRODUCTS) {
             inventory.addToCart(product);
         }
 
-        // Xóa 1 sản phẩm để còn 5
         inventory.removeFromCart(PRODUCTS[5]);
 
         assertEquals(
@@ -79,7 +74,6 @@ public class CartTest extends WebTestBase {
         );
     }
 
-    // TC-CART-B4: Giỏ hàng đạt giới hạn 6 sản phẩm
     @Test
     @DisplayName("TC-CART-B4: Thêm đủ 6 sản phẩm, badge bằng 6")
     void cartHasSixProducts() {
@@ -94,7 +88,6 @@ public class CartTest extends WebTestBase {
         );
     }
 
-    // TC-CART-B5: Chuyển từ 1 sản phẩm về 0
     @Test
     @DisplayName("TC-CART-B5: Xóa sản phẩm cuối cùng, badge biến mất")
     void removeLastProduct() {

@@ -2,21 +2,6 @@
 % BÁO CÁO BÀI TẬP LỚN MÔN KIỂM THỬ PHẦN MỀM (ASSIGNMENT 1) - ĐH SÀI GÒN
 % Giảng viên hướng dẫn: Từ Lãng Phiêu
 % Nhóm sinh viên: Lê Khánh Đăng, Dương Chí Tài, Trần Việt Đức, Nguyễn Thành Nhân, Phan Ngọc Vinh
-%
-% ------------------------------------------------------------------------------
-% HƯỚNG DẪN DÀNH CHO NHÓM (CÁC VỊ TRÍ CẦN CHÈN HOẶC TÙY CHỌN BỔ SUNG):
-% 1. [SƠ ĐỒ USE CASE - Mục 4.4.1 & 4.4.2]:
-%    Báo cáo đã vẽ sẵn 2 sơ đồ hoạt động UML hoàn chỉnh bằng thư viện TikZ.
-%    Nếu nhóm vẽ sơ đồ riêng bằng Draw.io (file ảnh .png), chỉ cần làm theo
-%    hướng dẫn ghi chú tại Mục 4.4 để mở khóa dòng \includegraphics.
-% 2. [ẢNH CHỤP MINH CHỨNG LỖI - Mục 5.2]:
-%    Đã để sẵn các dòng ghi chú mẫu bên dưới mỗi khung lỗi BUG-01..06 để nhóm
-%    có thể chèn trực tiếp ảnh chụp màn hình vào báo cáo nếu muốn.
-% 3. [MÃ NGUỒN JUNIT 5 - Mục 6.2]:
-%    Đã có code mẫu của LoginTest, CheckoutTest, PerformanceTest.
-%    Đã để sẵn khung để nhóm dán thêm code của CartTest và InventoryTest nếu cần.
-% 4. [ẢNH CHỤP TERMINAL TEST TỰ ĐỘNG - Mục 6.6]:
-%    Đã có sẵn khung mdframed hiển thị log Maven. Có thể thay bằng ảnh chụp terminal.
 % ==============================================================================
 
 \documentclass[a4paper]{article}
@@ -575,15 +560,6 @@ Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm th�
 \subsubsection{Ca sử dụng 2 (UC2): Quản lý giỏ hàng (FR-02) [Nhóm tự mở rộng]}
 \noindent \textbf{Mô tả ca sử dụng:} Ca sử dụng thứ hai được nhóm tự xây dựng theo hướng dẫn tại Mục 5.4 của đề bài, bao gồm các luồng: thêm sản phẩm từ trang chính, xem giỏ hàng, xóa sản phẩm trong trang giỏ hàng, và tiếp tục mua sắm (\textit{Continue Shopping}).
 
-% >>> [GHI CHÚ CHÈN ẢNH SƠ ĐỒ UC2 NẾU DÙNG FILE NGOÀI]:
-% Tương tự UC1, nếu nhóm đã vẽ sơ đồ UC2 bằng Draw.io (ví dụ: evidence/UC2_activity.png):
-% Hãy thêm dấu % trước khối \begin{tikzpicture}...\end{tikzpicture} và mở khóa dòng lệnh dưới đây:
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.85\textwidth]{evidence/UC2_activity.png}
-% \caption{Sơ đồ hoạt động của Ca sử dụng 2: Quản lý giỏ hàng}
-% \end{figure}
-
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
@@ -957,7 +933,6 @@ class PerformanceTest extends WebTestBase {
         long millis = Duration.ofNanos(System.nanoTime() - start).toMillis();
 
         assertTrue(result.accepted());
-        // Test nay bat buoc phai FAIL vi he thong bi loi performance glitch (~5.1s)
         assertTrue(millis <= 3000, () -> "Inventory took " + millis + " ms (threshold: 3000 ms)");
     }
 }

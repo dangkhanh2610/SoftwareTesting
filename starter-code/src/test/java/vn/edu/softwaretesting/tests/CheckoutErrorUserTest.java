@@ -40,7 +40,6 @@ public class CheckoutErrorUserTest extends WebTestBase {
     public void errorMissingLastName() {
         checkoutPage.fillInformation("Nguyen", "", "700000");
         driver.findElement(By.id("continue")).click();
-        // BUG-04: Hệ thống cho phép chuyển trang sang checkout-step-two.html thay vì giữ lại ở checkout-step-one.html và báo lỗi
         assertEquals(true, driver.getCurrentUrl().contains("checkout-step-one.html"),
                 "Hệ thống cho chuyển trang checkout-step-two.html khi thiếu LastName");
     }
