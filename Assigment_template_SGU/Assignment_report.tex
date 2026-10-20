@@ -28,7 +28,7 @@
 \usepackage{enumerate}
 \usepackage{color}
 \usepackage{graphicx}
-\usepackage{tabularx, caption}
+\usepackage{tabularx, caption, float}
 \usepackage{multirow}
 \usepackage[framemethod=tikz]{mdframed}
 \usepackage{tikz}
@@ -112,7 +112,7 @@
 \end{center}
 \vspace{0.6cm}
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \begin{center}
   \includegraphics[width=3.2cm]{logoITSGU.png}
 \end{center}
@@ -174,7 +174,7 @@ Hệ thống được chọn để thực hiện kiểm thử trong đề tài l
 
 \subsection{Danh sách tài khoản kiểm thử của hệ thống}
 Trên hệ thống SauceDemo, hệ thống cung cấp sẵn 6 tài khoản mẫu với mật khẩu chung \texttt{secret\_sauce}. Mỗi tài khoản được thiết kế để mô phỏng một trạng thái hoặc lỗi đặc thù trong quá trình kiểm thử:
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|l|X|}
@@ -208,7 +208,7 @@ Trên hệ thống SauceDemo, hệ thống cung cấp sẵn 6 tài khoản mẫu
 \subsection{Kết quả thực thi mã nguồn mẫu ban đầu}
 Nhóm tiến hành khởi chạy dự án mẫu (\texttt{starter-code}) thông qua giao diện dòng lệnh bằng lệnh \texttt{mvn clean test}. Hệ thống tích hợp Selenium Manager tự động thiết lập driver phù hợp và thực thi thành công các ca kiểm thử mẫu ở chế độ ngầm (\textit{headless}).
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.92\textwidth]{NV1_terminal_mvn_clean_test.png}
 \caption{Ảnh chụp màn hình kết quả chạy thực tế \texttt{mvn clean test} thành công}
@@ -232,12 +232,13 @@ Kiến trúc kiểm thử tự động của dự án ứng dụng ba annotation
 % ==============================================================================
 % MỤC 3: NV2 – PHÂN TÍCH YÊU CẦU & ĐÁNH GIÁ RỦI RO
 % ==============================================================================
+\clearpage
 \section{NV2 – Phân tích yêu cầu và Đánh giá rủi ro}
 \subsection{Đặc tả yêu cầu chi tiết (Requirements Specification)}
 Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với các thành viên phụ trách, mỗi phân hệ được chuẩn hóa theo định dạng 3 cột thống nhất: \textbf{Mã yêu cầu}, \textbf{Mô tả yêu cầu}, và \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)}.
 
 \subsubsection{Đặc tả FR-01: Xác thực và Đăng nhập (Lê Khánh Đăng)}
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
@@ -253,7 +254,7 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \end{table}
 
 \subsubsection{Đặc tả FR-02: Quản lý giỏ hàng (Dương Chí Tài)}
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
@@ -267,8 +268,9 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \caption{Bảng đặc tả yêu cầu chức năng FR-02: Giỏ hàng}
 \end{table}
 
+\clearpage
 \subsubsection{Đặc tả FR-03: Quy trình thanh toán (Trần Việt Đức)}
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
@@ -286,7 +288,7 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \end{table}
 
 \subsubsection{Đặc tả FR-04: Sắp xếp danh sách sản phẩm (Nguyễn Thành Nhân)}
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
@@ -301,7 +303,7 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \end{table}
 
 \subsubsection{Đặc tả NFR-01: Yêu cầu phi chức năng - Hiệu năng (Phan Ngọc Vinh)}
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
@@ -313,13 +315,14 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \caption{Bảng đặc tả yêu cầu phi chức năng NFR-01: Hiệu năng}
 \end{table}
 
+\clearpage
 \subsection{Đánh giá rủi ro (Risk-based Testing)}
 Mức độ rủi ro $R$ được xác định theo công thức chuẩn:
 \begin{equation}
   R = P \times I
 \end{equation}
 Trong đó $P$ là xác suất xảy ra lỗi (1--5) và $I$ là mức độ tác động thiệt hại (1--5).
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|l|c|c|c|c|X|}
@@ -338,7 +341,7 @@ Trong đó $P$ là xác suất xảy ra lỗi (1--5) và $I$ là mức độ tá
 
 \subsection{Ma trận truy vết yêu cầu (Traceability Matrix)}
 Ma trận truy vết được nhóm xây dựng ở NV2 và cập nhật đồng bộ xuyên suốt đến cuối bài nộp:
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|l|X|p{3.8cm}|c|c|}
@@ -356,6 +359,7 @@ Ma trận truy vết được nhóm xây dựng ở NV2 và cập nhật đồng
 % ==============================================================================
 % MỤC 4: NV3 – THIẾT KẾ TEST CASE
 % ==============================================================================
+\clearpage
 \section{NV3 – Thiết kế Test Case}
 
 \subsection{Phân lớp tương đương (Equivalence Partitioning - EP)}
@@ -363,7 +367,7 @@ Kỹ thuật EP được nhóm áp dụng trên 2 trường dữ liệu của FR
 
 \subsubsection{Phân lớp tương đương cho trường Username (FR-01)}
 Mật khẩu cố định là \texttt{secret\_sauce}. Miền giá trị của Username được chia thành 5 lớp tương đương:
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|p{4cm}|l|X|c|}
@@ -382,7 +386,7 @@ Mật khẩu cố định là \texttt{secret\_sauce}. Miền giá trị của Us
 
 \subsubsection{Phân lớp tương đương tự mở rộng cho trường Password (FR-01)}
 Tên đăng nhập cố định là \texttt{standard\_user}. Miền giá trị Password được phân thành 4 lớp:
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|p{4cm}|l|X|c|}
@@ -398,7 +402,7 @@ Tên đăng nhập cố định là \texttt{standard\_user}. Miền giá trị P
 
 \subsubsection{Phân lớp tương đương cho chức năng Sắp xếp (FR-04)}
 Miền giá trị tùy chọn sắp xếp bao gồm 4 tùy chọn hợp lệ được phân thành 4 ca kiểm thử:
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|l|c|X|c|}
@@ -412,6 +416,7 @@ EC13 & Price (high to low) & \texttt{hilo} & Mức giá sản phẩm giảm dầ
 \caption{Bảng phân lớp tương đương cho chức năng Sắp xếp FR-04}
 \end{table}
 
+\clearpage
 \subsection{Phân tích giá trị biên (Boundary Value Analysis - BVA)}
 Đề bài yêu cầu áp dụng BVA cho ít nhất 2 miền giá trị với tối thiểu 8 ca kiểm thử.
 
@@ -423,7 +428,7 @@ Cửa hàng SauceDemo có tổng cộng 6 sản phẩm. Do đó, số lượng s
   \item \textbf{Biên động:} $1 \rightarrow 0$ (thêm 1 sản phẩm rồi xóa để kiểm tra việc ẩn badge).
 \end{itemize}
 
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|c|p{5.5cm}|X|}
@@ -442,7 +447,7 @@ Cửa hàng SauceDemo có tổng cộng 6 sản phẩm. Do đó, số lượng s
 
 \subsubsection{Miền 2: Làm tròn thuế 8\% tại trang Thanh toán (FR-03)}
 Theo đặc tả của đề bài, tiền thuế bằng $8\%$ giá trị đơn hàng làm tròn 2 chữ số thập phân. Nhóm thiết kế kiểm thử giá trị biên cho quy tắc làm tròn (làm tròn xuống khi phần thập phân thứ 3 $< 5$, làm tròn lên khi $\ge 5$, và đúng điểm biên $0.005$):
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
@@ -456,12 +461,13 @@ Theo đặc tả của đề bài, tiền thuế bằng $8\%$ giá trị đơn h
 \caption{Bảng phân tích giá trị biên cho quy tắc làm tròn thuế 8\%}
 \end{table}
 
+\clearpage
 \subsection{Bảng quyết định (Decision Table - DT)}
 Đề bài quy định xây dựng tối thiểu 2 bảng quyết định ($\ge 8$ ca kiểm thử).
 
 \subsubsection{Bảng quyết định 1: Logic xác thực Đăng nhập (FR-01)}
 Bảng quyết định phân tích tổ hợp 4 điều kiện đầu vào của quá trình xác thực:
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabular}{|l|c|c|c|c|c|}
@@ -491,7 +497,7 @@ Mỗi quy tắc từ R1 đến R5 được ánh xạ thành một ca kiểm th�
 
 \subsubsection{Bảng quyết định 2: Xác thực biểu mẫu thông tin Thanh toán (FR-03)}
 Đặc tả quy định First Name, Last Name, Postal Code đều bắt buộc và kiểm tra theo thứ tự ưu tiên:
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabular}{|l|c|c|c|c|}
@@ -516,13 +522,14 @@ A4: Chuyển sang trang \texttt{checkout-step-two.html} & & & & \checkmark \\ \h
   \item \textbf{R4 $\rightarrow$ \texttt{TC-CHK-DT4}:} Nhập đủ cả 3 trường $\rightarrow$ Chuyển tiếp thành công (A4).
 \end{itemize}
 
+\clearpage
 \subsection{Kiểm thử ca sử dụng (Use Case Testing)}
 Đề bài yêu cầu áp dụng kỹ thuật Use Case cho 2 ca sử dụng: mỗi ca sử dụng có sơ đồ hoạt động (Activity Diagram), luồng chính và tối thiểu 2 luồng thay thế/ngoại lệ.
 
 \subsubsection{Ca sử dụng 1 (UC1): Quy trình thanh toán đơn hàng (FR-03)}
 \noindent \textbf{Tiền điều kiện:} Đã đăng nhập bằng \texttt{standard\_user}, giỏ hàng có ít nhất một sản phẩm.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.68\textwidth]{usecase_checkout_diagram.png}
 \caption{Sơ đồ hoạt động (Activity Diagram) của Ca sử dụng Thanh toán đơn hàng (FR-03)}
@@ -530,7 +537,7 @@ A4: Chuyển sang trang \texttt{checkout-step-two.html} & & & & \checkmark \\ \h
 \end{figure}
 
 Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm thử bao phủ toàn diện luồng chính và 4 luồng ngoại lệ:
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|p{3.5cm}|p{4.2cm}|X|}
@@ -546,7 +553,7 @@ Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm th�
 \end{table}
 
 \noindent \textbf{Đặc tả chi tiết từng bước của ca kiểm thử mẫu \texttt{TC-CHK-01}:}
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|p{5.5cm}|X|}
@@ -562,19 +569,20 @@ Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm th�
 \caption{Đặc tả chi tiết kịch bản kiểm thử \texttt{TC-CHK-01}}
 \end{table}
 
+\clearpage
 \subsubsection{Ca sử dụng 2 (UC2): Quản lý giỏ hàng (FR-02) [Nhóm tự mở rộng]}
 \noindent \textbf{Mô tả ca sử dụng:} Ca sử dụng thứ hai được nhóm tự xây dựng theo hướng dẫn tại Mục 5.4 của đề bài, bao gồm các luồng: thêm sản phẩm từ trang chính, xem giỏ hàng, xóa sản phẩm trong trang giỏ hàng, và tiếp tục mua sắm (\textit{Continue Shopping}).
 
 % >>> [GHI CHÚ CHÈN ẢNH SƠ ĐỒ UC2 NẾU DÙNG FILE NGOÀI]:
 % Tương tự UC1, nếu nhóm đã vẽ sơ đồ UC2 bằng Draw.io (ví dụ: evidence/UC2_activity.png):
 % Hãy thêm dấu % trước khối \begin{tikzpicture}...\end{tikzpicture} và mở khóa dòng lệnh dưới đây:
-% \begin{figure}[h!]
+% \begin{figure}[H]
 % \centering
 % \includegraphics[width=0.85\textwidth]{evidence/UC2_activity.png}
 % \caption{Sơ đồ hoạt động của Ca sử dụng 2: Quản lý giỏ hàng}
 % \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[
   node distance=1.2cm and 2cm,
@@ -608,7 +616,7 @@ Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm th�
 \end{figure}
 
 Bảng kịch bản kiểm thử rút ra từ sơ đồ ca sử dụng Quản lý giỏ hàng:
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|c|p{3.5cm}|p{5cm}|X|}
@@ -623,9 +631,10 @@ Bảng kịch bản kiểm thử rút ra từ sơ đồ ca sử dụng Quản l�
 \caption{Kịch bản kiểm thử rút ra từ Sơ đồ hoạt động Quản lý giỏ hàng UC2}
 \end{table}
 
+\clearpage
 \subsection{Bảng tổng hợp đối chiếu số lượng ca kiểm thử (Mục 5.5)}
 Theo quy định tại Mục 5.5 của đề bài, nhóm tự đánh giá số lượng ca kiểm thử đã thiết kế so với chỉ tiêu tối thiểu:
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \small
 \begin{tabularx}{\textwidth}{|l|c|c|X|c|}
@@ -644,11 +653,12 @@ NFR-01 (Hiệu năng) & $\ge 1$ & \textbf{1} & \texttt{TC-NFR-01} & \textbf{Đ�
 % ==============================================================================
 % MỤC 5: NV4 – THỰC THI THỦ CÔNG & BÁO LỖI
 % ==============================================================================
+\clearpage
 \section{NV4 – Thực thi thủ công và Báo cáo lỗi}
 \subsection{Nhật ký thực thi kiểm thử thủ công}
 Nhóm tiến hành chạy thực tế toàn bộ các ca kiểm thử trên môi trường chuẩn (Google Chrome 155, Windows 11 64-bit). Dưới đây là bảng trích xuất kết quả thực thi kiểm thử:
 
-\begin{table}[h!]
+\begin{table}[H]
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3.5pt}
@@ -757,6 +767,7 @@ Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám ph�
 % ==============================================================================
 % MỤC 6: NV5 – TỰ ĐỘNG HÓA VỚI JUNIT 5 & SELENIUM
 % ==============================================================================
+\clearpage
 \section{NV5 – Tự động hóa bằng JUnit 5}
 \subsection{Kiến trúc Page Object Model (POM)}
 Nhóm triển khai mô hình thiết kế chuẩn công nghiệp Page Object Model:
@@ -971,7 +982,7 @@ mvn test -DexcludedGroups=known-bug \\{}
 \end{mdframed}
 Khi chạy kiểm thử nhóm lỗi đã biết (\texttt{mvn test -Dgroups=known-bug}), các ca kiểm thử tái hiện lỗi (\texttt{PerformanceTest}, \texttt{CheckoutProblemUserTest}, \texttt{CheckoutErrorUserTest}, \texttt{SortTest}) ghi nhận FAIL chính xác nhằm minh chứng sự tồn tại của 6 BUG theo đúng yêu cầu đề bài.
 
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.88\textwidth]{evidence/NV1_terminal_mvn_clean_test.png}
 \caption{Ảnh chụp màn hình kết quả thực thi tự động hóa với Maven}
@@ -981,6 +992,7 @@ Khi chạy kiểm thử nhóm lỗi đã biết (\texttt{mvn test -Dgroups=known
 % ==============================================================================
 % MỤC 7: KẾT LUẬN & TỰ ĐÁNH GIÁ TRƯỚC KHI NỘP BÀI
 % ==============================================================================
+\clearpage
 \section{Kết luận và Tự đánh giá trước khi nộp bài}
 Đối chiếu với danh sách kiểm tra (Checklist Mục 9 trong đề bài của giảng viên Từ Lãng Phiêu):
 \begin{itemize}
