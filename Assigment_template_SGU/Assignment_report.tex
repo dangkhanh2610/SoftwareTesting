@@ -991,6 +991,22 @@ Khi chạy kiểm thử nhóm lỗi đã biết (\texttt{mvn test -Dgroups=known
 \label{fig:terminal_mvn}
 \end{figure}
 
+\subsection{Cấu hình mở rộng đạt điểm Bonus (Mục 7.7 đề bài)}
+Theo quy định tại Mục 7.7 của đề bài, nhóm đã nghiên cứu và triển khai thành công hai tính năng nâng cao nhằm đạt điểm cộng tối đa:
+
+\subsubsection{Cơ chế tự động chụp ảnh màn hình khi FAIL bằng JUnit 5 TestWatcher}
+Nhóm triển khai lớp \texttt{ScreenshotWatcher} hiện thực đồng thời hai giao diện cốt lõi của JUnit 5 Extension: \texttt{TestWatcher} và \texttt{AfterTestExecutionCallback}. 
+Khi một ca kiểm thử bị thất bại (tiêu biểu khi chạy nhóm kiểm thử mang nhãn \texttt{known-bug}), callback sẽ can thiệp ngay thời điểm phát sinh lỗi trước khi trình duyệt bị đóng bởi \texttt{@AfterEach}, sử dụng \texttt{TakesScreenshot} của Selenium để chụp lại nguyên trạng màn hình trình duyệt và tự động lưu vào thư mục \texttt{target/screenshots/} theo định dạng \texttt{\{ClassName\}\_\{MethodName\}\_\{Timestamp\}.png}.
+Lớp cơ sở \texttt{WebTestBase} được gắn annotation \texttt{@ExtendWith(ScreenshotWatcher.class)}, giúp toàn bộ các lớp kiểm thử tự động thừa hưởng tính năng này một cách trong suốt mà không cần sửa đổi mã nguồn kiểm thử.
+
+\subsubsection{Tích hợp quy trình kiểm thử tự động liên tục (CI) với GitHub Actions}
+Nhóm xây dựng quy trình CI hoàn chỉnh thông qua tệp cấu hình \texttt{.github/workflows/test.yml}:
+\begin{itemize}
+  \item \textbf{Môi trường thực thi:} Máy ảo Ubuntu (\texttt{ubuntu-latest}) tích hợp Google Chrome Headless và bộ phát triển OpenJDK 17.
+  \item \textbf{Kích hoạt tự động:} Workflow tự động kích hoạt mỗi khi có thao tác \texttt{push} hoặc \texttt{pull\_request} vào nhánh chính \texttt{main}.
+  \item \textbf{Lưu trữ kết quả kiểm thử (Artifacts):} Sử dụng \texttt{actions/upload-artifact@v4} để tự động đóng gói toàn bộ thư mục báo cáo \texttt{target/surefire-reports/} thành artifact tải về trên giao diện GitHub Actions với thời hạn lưu trữ 14 ngày. Ngoài ra, nếu có kiểm thử bị FAIL, thư mục ảnh chụp \texttt{target/screenshots/} từ \texttt{TestWatcher} cũng được tự động lưu trữ làm bằng chứng phân tích lỗi.
+\end{itemize}
+
 % ==============================================================================
 % MỤC 7: KẾT LUẬN & TỰ ĐÁNH GIÁ TRƯỚC KHI NỘP BÀI
 % ==============================================================================
@@ -1004,6 +1020,8 @@ Khi chạy kiểm thử nhóm lỗi đã biết (\texttt{mvn test -Dgroups=known
   \item[\checkmark] Toàn bộ kết quả mong đợi đều được tính toán khoa học từ tài liệu đặc tả, không chép lại từ màn hình giao diện.
   \item[\checkmark] Mã định danh ca kiểm thử đồng nhất 100\% giữa tệp Excel (\texttt{test-cases.xlsx}), báo cáo thuyết minh PDF và thuộc tính \texttt{@DisplayName} trong mã nguồn tự động hóa.
   \item[\checkmark] Toàn bộ mã nguồn kiểm thử không có bất kỳ dòng lệnh \texttt{Thread.sleep()} nào, tuân thủ nghiêm ngặt cơ chế Explicit Wait.
+  \item[\checkmark] \textbf{[Bonus đạt chuẩn]} Cấu hình hoàn chỉnh JUnit 5 \texttt{TestWatcher} tự động chụp ảnh màn hình khi FAIL và lưu tại \texttt{target/screenshots/}.
+  \item[\checkmark] \textbf{[Bonus đạt chuẩn]} Thiết lập pipeline GitHub Actions CI tự động hóa chạy kiểm thử và lưu trữ \texttt{surefire-reports} làm artifact.
 \end{itemize}
 
 \end{document}
