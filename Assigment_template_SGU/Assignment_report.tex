@@ -29,7 +29,7 @@
 \usepackage{color}
 \usepackage{graphicx}
 \usepackage{tabularx, caption, float}
-\usepackage{multirow}
+\usepackage{multirow, makecell}
 \usepackage[framemethod=tikz]{mdframed}
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows.meta, positioning}
@@ -370,14 +370,15 @@ Mật khẩu cố định là \texttt{secret\_sauce}. Miền giá trị của Us
 \begin{table}[H]
 \centering
 \small
+\renewcommand{\arraystretch}{1.15}
 \begin{tabularx}{\textwidth}{|c|p{4cm}|l|X|c|}
 \hline
 \textbf{Lớp} & \textbf{Mô tả lớp} & \textbf{Giá trị đại diện} & \textbf{Kết quả mong đợi} & \textbf{Mã TC} \\ \hline
-\shortstack{EC1\\\scriptsize(Hợp lệ)} & Tài khoản tồn tại, đang hoạt động & \texttt{standard\_user} & Chuyển đến URL \texttt{inventory.html} & \texttt{TC-LOGIN-EP1} \\ \hline
-\shortstack{EC2\\\scriptsize(Không hợp lệ)} & Tài khoản tồn tại nhưng bị khóa & \texttt{locked\_out\_user} & Epic sadface: Sorry, this user has been locked out. & \texttt{TC-LOGIN-EP2} \\ \hline
-\shortstack{EC3\\\scriptsize(Không hợp lệ)} & Chuỗi rỗng & \texttt{""} & Epic sadface: Username is required & \texttt{TC-LOGIN-EP3} \\ \hline
-\shortstack{EC4\\\scriptsize(Không hợp lệ)} & Tài khoản không tồn tại & \texttt{abc\_user} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP4} \\ \hline
-\shortstack{EC5\\\scriptsize(Không hợp lệ)} & Đúng tên nhưng sai hoa/thường & \texttt{Standard\_User} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP5} \\ \hline
+\makecell[t]{\textbf{EC1}\\\scriptsize(Hợp lệ)} & Tài khoản tồn tại, đang hoạt động & \texttt{standard\_user} & Chuyển đến URL \texttt{inventory.html} & \texttt{TC-LOGIN-EP1} \\ \hline
+\makecell[t]{\textbf{EC2}\\\scriptsize(Không hợp lệ)} & Tài khoản tồn tại nhưng bị khóa & \texttt{locked\_out\_user} & Epic sadface: Sorry, this user has been locked out. & \texttt{TC-LOGIN-EP2} \\ \hline
+\makecell[t]{\textbf{EC3}\\\scriptsize(Không hợp lệ)} & Chuỗi rỗng & \texttt{""} & Epic sadface: Username is required & \texttt{TC-LOGIN-EP3} \\ \hline
+\makecell[t]{\textbf{EC4}\\\scriptsize(Không hợp lệ)} & Tài khoản không tồn tại & \texttt{abc\_user} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP4} \\ \hline
+\makecell[t]{\textbf{EC5}\\\scriptsize(Không hợp lệ)} & Đúng tên nhưng sai hoa/thường & \texttt{Standard\_User} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP5} \\ \hline
 \end{tabularx}
 \caption{Bảng phân lớp tương đương cho trường Username}
 \end{table}
@@ -389,13 +390,14 @@ Tên đăng nhập cố định là \texttt{standard\_user}. Miền giá trị P
 \begin{table}[H]
 \centering
 \small
+\renewcommand{\arraystretch}{1.15}
 \begin{tabularx}{\textwidth}{|c|p{4cm}|l|X|c|}
 \hline
 \textbf{Lớp} & \textbf{Mô tả lớp} & \textbf{Giá trị đại diện} & \textbf{Kết quả mong đợi} & \textbf{Mã TC} \\ \hline
-\shortstack{EC6\\\scriptsize(Hợp lệ)} & Mật khẩu chính xác & \texttt{secret\_sauce} & Chuyển đến URL \texttt{inventory.html} & *(Trùng EP1)* \\ \hline
-\shortstack{EC7\\\scriptsize(Không hợp lệ)} & Bỏ trống mật khẩu & \texttt{""} & Epic sadface: Password is required & \texttt{TC-LOGIN-EP6} \\ \hline
-\shortstack{EC8\\\scriptsize(Không hợp lệ)} & Mật khẩu sai & \texttt{wrong\_sauce} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP7} \\ \hline
-\shortstack{EC9\\\scriptsize(Không hợp lệ)} & Đúng mật khẩu nhưng sai hoa/thường & \texttt{Secret\_sauce} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP8} \\ \hline
+\makecell[t]{\textbf{EC6}\\\scriptsize(Hợp lệ)} & Mật khẩu chính xác & \texttt{secret\_sauce} & Chuyển đến URL \texttt{inventory.html} & *(Trùng EP1)* \\ \hline
+\makecell[t]{\textbf{EC7}\\\scriptsize(Không hợp lệ)} & Bỏ trống mật khẩu & \texttt{""} & Epic sadface: Password is required & \texttt{TC-LOGIN-EP6} \\ \hline
+\makecell[t]{\textbf{EC8}\\\scriptsize(Không hợp lệ)} & Mật khẩu sai & \texttt{wrong\_sauce} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP7} \\ \hline
+\makecell[t]{\textbf{EC9}\\\scriptsize(Không hợp lệ)} & Đúng mật khẩu nhưng sai hoa/thường & \texttt{Secret\_sauce} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP8} \\ \hline
 \end{tabularx}
 \caption{Bảng phân lớp tương đương mở rộng cho trường Password}
 \end{table}
