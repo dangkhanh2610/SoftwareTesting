@@ -79,7 +79,8 @@
   breakatwhitespace=true,
   tabsize=2,
   numbersep=5pt,    
-  firstnumber=1
+  firstnumber=1,
+  escapeinside={(*@}{@*)}
 }
 
 % Điều chỉnh độ giãn dòng bảng chuẩn đẹp
@@ -764,66 +765,125 @@ Nhóm triển khai mô hình thiết kế chuẩn công nghiệp Page Object Mod
 @DisplayName("FR-01: Authentication (Login)")
 class LoginTest extends WebTestBase {
 
+    private LoginPage loginPage;
+
+    @BeforeEach
+    void openLoginPage() {
+        loginPage = new LoginPage(driver, baseUrl).open();
+    }
+
     @ParameterizedTest(name = "{0}: user=''{1}'', accepted={3}")
     @CsvFileSource(resources = "/login-data.csv", numLinesToSkip = 1)
     void loginEquivalencePartitioning(
-            String testCaseId, String username, String password,
-            boolean expectedAccepted, String expectedEvidence) {
+            String testCaseId,
+            String username,
+            String password,
+            boolean expectedAccepted,
+            String expectedEvidence) {
+
         LoginResult actual = loginPage.login(username, password);
-        assertEquals(expectedAccepted, actual.accepted());
-        assertTrue(actual.currentUrl().contains(expectedEvidence)
-                || actual.message().contains(expectedEvidence));
+
+        assertEquals(expectedAccepted, actual.accepted(),
+                () -> testCaseId + ": (*@Kết quả accepted không khớp cho user:@*) '" + username + "'");
+        assertTrue(
+                actual.currentUrl().contains(expectedEvidence)
+                        || actual.message().contains(expectedEvidence),
+                () -> testCaseId + ": (*@Kỳ vọng chứa@*) '" + expectedEvidence
+                        + "', (*@nhưng thực tế URL:@*) '" + actual.currentUrl()
+                        + "', (*@thông báo:@*) '" + actual.message() + "'");
     }
 
-    @ParameterizedTest(name = "{0} [{1}]: user=''{2}'', pass=''{3}''")
+    @ParameterizedTest(name = "{0} [{1}]: user=''{2}'', pass=''{3}'' -> error/URL: {5}")
     @CsvSource({
-        "TC-LOGIN-DT1, Quy tac R1, '', '', false, Username is required",
-        "TC-LOGIN-DT2, Quy tac R2, standard_user, '', false, Password is required",
-        "TC-LOGIN-DT3, Quy tac R3, locked_out_user, wrong_password, false, Username and password do not match",
-        "TC-LOGIN-DT4, Quy tac R4, locked_out_user, secret_sauce, false, Sorry, this user has been locked out",
-        "TC-LOGIN-DT5, Quy tac R5, standard_user, secret_sauce, true, inventory.html"
+        "TC-LOGIN-DT1, (*@Quy tắc R1@*), '', '', false, Username is required",
+        "TC-LOGIN-DT2, (*@Quy tắc R2@*), standard_user, '', false, Password is required",
+        "TC-LOGIN-DT3, (*@Quy tắc R3@*), locked_out_user, wrong_password, false, Username and password do not match",
+        "TC-LOGIN-DT4, (*@Quy tắc R4@*), locked_out_user, secret_sauce, false, Sorry, this user has been locked out",
+        "TC-LOGIN-DT5, (*@Quy tắc R5@*), standard_user, secret_sauce, true, inventory.html"
     })
-    void loginDecisionTable(String testCaseId, String ruleName,
-            String username, String password, boolean expectedAccepted, String expectedEvidence) {
+    void loginDecisionTable(
+            String testCaseId,
+            String ruleName,
+            String username,
+            String password,
+            boolean expectedAccepted,
+            String expectedEvidence) {
+
         LoginResult actual = loginPage.login(username, password);
-        assertEquals(expectedAccepted, actual.accepted());
+
+        assertEquals(expectedAccepted, actual.accepted(),
+                () -> testCaseId + " (" + ruleName + "): (*@Kết quả accepted không khớp@*)");
+        assertTrue(
+                actual.currentUrl().contains(expectedEvidence)
+                        || actual.message().contains(expectedEvidence),
+                () -> testCaseId + " (" + ruleName + "): (*@Kỳ vọng chứa@*) '" + expectedEvidence
+                        + "', (*@nhưng thực tế URL:@*) '" + actual.currentUrl()
+                        + "', (*@thông báo:@*) '" + actual.message() + "'");
     }
 }
 \end{lstlisting}
 
 \subsubsection{Lớp CheckoutTest.java (Kiểm thử kịch bản Use Case)}
 \begin{lstlisting}[caption={Trích đoạn mã nguồn lớp CheckoutTest.java}]
-@Tag("web")
-@DisplayName("FR-03: Checkout")
-class CheckoutTest extends WebTestBase {
-
+public class CheckoutTest extends WebTestBase {
     private CheckoutPage checkoutPage;
+    private CartPage cartPage;
 
     @BeforeEach
-    void goToCheckoutWithOneItem() {
-        new LoginPage(driver, baseUrl).open().login("standard_user", "secret_sauce");
-        new InventoryPage(driver).addToCart("sauce-labs-backpack").openCart();
-        checkoutPage = new CartPage(driver).checkout();
+    void prepareCheckout() {
+        LoginPage loginPage = new LoginPage(driver, baseUrl);
+        LoginPage.LoginResult loginResult = loginPage.open().login("standard_user", "secret_sauce");
+        assertTrue(loginResult.accepted(), "(*@Đăng nhập thất bại:@*)" + loginResult.message());
+
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.open().addToCart("sauce-labs-backpack");
+        inventoryPage.openCart();
+        cartPage = new CartPage(driver);
+        cartPage.open();
+        cartPage.clickCheckOut();
+        checkoutPage = new CheckoutPage(driver);
     }
 
     @Test
-    @DisplayName("TC-CHK-01: main flow computes total with 8% tax")
-    void mainFlowShowsCorrectTotal() {
-        String total = checkoutPage.fillInformation("An", "Nguyen", "700000")
-                                  .continueToOverviewAndReadTotal();
-        assertEquals("Total: $32.39", total);
+    @DisplayName("(*@TC-CHK-01 - Checkout thành công@*)")
+    void testCheckoutSucces() {
+        checkoutPage.fillInformation("Nguyen", "Van A", "700000");
+        checkoutPage.continueToOverviewAndReadTotal();
+        assertEquals("Item total: $29.99", checkoutPage.getItemTotal());
+        assertEquals("Tax: $2.40", checkoutPage.getTax());
+        assertEquals("Total: $32.39", checkoutPage.getTotal());
+        assertEquals("Thank you for your order!", checkoutPage.finishOrder());
     }
 
-    @ParameterizedTest(name = "{0}: missing field -> {4}")
-    @CsvSource({
-        "TC-CHK-02, '', Nguyen, 700000, First Name is required",
-        "TC-CHK-03, An, '', 700000, Last Name is required",
-        "TC-CHK-04, An, Nguyen, '', Postal Code is required"
-    })
-    void missingFieldShowsError(String id, String first, String last, String postal, String expected) {
-        String message = checkoutPage.fillInformation(first, last, postal)
-                                   .continueExpectingError();
-        assertTrue(message.contains(expected), () -> id + " got: " + message);
+    @Test
+    @DisplayName("(*@TC-CHK-02 - Bỏ trống trường FirstName@*)")
+    void testMissingFirstName() {
+        checkoutPage.fillInformation("", "Van A", "700000");
+        assertEquals("Error: First Name is required", checkoutPage.continueExpectingError());
+    }
+
+    @Test
+    @DisplayName("(*@TC-CHK-03 - Bỏ trống trường LastName@*)")
+    void testMissingLastName() {
+        checkoutPage.fillInformation("Nguyen", "", "700000");
+        assertEquals("Error: Last Name is required", checkoutPage.continueExpectingError());
+    }
+
+    @Test
+    @DisplayName("(*@TC-CHK-04 - Bỏ trống trường Postal@*)")
+    void testMissingPostal() {
+        checkoutPage.fillInformation("Nguyen", "Van A", "");
+        assertEquals("Error: Postal Code is required", checkoutPage.continueExpectingError());
+    }
+
+    @Test
+    @DisplayName("(*@TC-CHK-05 - Nhấn Cancel Checkout @*)")
+    void testCancelCheckout() {
+        checkoutPage.clickCancel();
+        cartPage.open();
+        assertTrue(driver.getCurrentUrl().contains("cart.html"), "(*@Không quay lại giỏ hàng@*)");
+        assertTrue(cartPage.isProductInCart("Sauce Labs Backpack"), "(*@Sản phẩm đã mất@*)");
+        assertEquals(1, cartPage.countProduct(), "(*@Số lượng sản phẩm không đúng @*)");
     }
 }
 \end{lstlisting}
@@ -831,53 +891,70 @@ class CheckoutTest extends WebTestBase {
 \subsubsection{Lớp CartTest.java (Kiểm thử giá trị biên BVA giỏ hàng - FR-02)}
 \begin{lstlisting}[caption={Trích đoạn mã nguồn lớp CartTest.java}]
 @TestMethodOrder(MethodOrderer.DisplayName.class)
-@DisplayName("FR-02: Cart boundary value analysis (BVA)")
+@DisplayName("(*@FR-02: Kiểm thử giá trị biên của giỏ hàng@*)")
 public class CartTest extends WebTestBase {
 
     private InventoryPage inventory;
+
     private static final String[] PRODUCTS = {
-        "sauce-labs-backpack", "sauce-labs-bike-light", "sauce-labs-bolt-t-shirt",
-        "sauce-labs-fleece-jacket", "sauce-labs-onesie", "test.allthethings()-t-shirt-(red)"
+        "sauce-labs-backpack",
+        "sauce-labs-bike-light",
+        "sauce-labs-bolt-t-shirt",
+        "sauce-labs-fleece-jacket",
+        "sauce-labs-onesie",
+        "test.allthethings()-t-shirt-(red)"
     };
 
     @BeforeEach
     void setUpCartTest() {
-        new LoginPage(driver, baseUrl).open().login("standard_user", "secret_sauce");
+        new LoginPage(driver, baseUrl)
+                .open()
+                .login("standard_user", "secret_sauce");
+
         inventory = new InventoryPage(driver).open();
     }
 
-    // TC-CART-B1: Empty cart (Boundary min = 0)
     @Test
-    @DisplayName("TC-CART-B1: Empty cart has no badge")
+    @DisplayName("(*@TC-CART-B1: Giỏ rỗng không hiển thị badge@*)")
     void emptyCartHasNoBadge() {
-        assertEquals(0, inventory.cartBadgeCount(), "Badge should not appear when cart is empty");
+        assertEquals(0, inventory.cartBadgeCount(), "(*@Badge phải không xuất hiện khi giỏ hàng rỗng@*)");
     }
 
-    // TC-CART-B2: Cart with 1 item (Boundary min + 1)
     @Test
-    @DisplayName("TC-CART-B2: Add 1 product, badge count is 1")
+    @DisplayName("(*@TC-CART-B2: Thêm 1 sản phẩm, badge bằng 1@*)")
     void addOneProduct() {
         inventory.addToCart(PRODUCTS[0]);
-        assertEquals(1, inventory.cartBadgeCount(), "Badge count should be 1");
+        assertEquals(1, inventory.cartBadgeCount(), "(*@Badge phải hiển thị số 1@*)");
     }
 
-    // TC-CART-B4: Cart reaches 6 items limit (Boundary max = 6)
     @Test
-    @DisplayName("TC-CART-B4: Add all 6 products, badge count is 6")
+    @DisplayName("(*@TC-CART-B3: Giỏ có 5 sản phẩm, badge bằng 5@*)")
+    void cartHasFiveProducts() {
+        for (String product : PRODUCTS) {
+            inventory.addToCart(product);
+        }
+        inventory.removeFromCart(PRODUCTS[5]);
+        inventory.waitForCartBadge("5");
+        assertEquals(5, inventory.cartBadgeCount(), "(*@Badge phải hiển thị số 5@*)");
+    }
+
+    @Test
+    @DisplayName("(*@TC-CART-B4: Thêm đủ 6 sản phẩm, badge bằng 6@*)")
     void cartHasSixProducts() {
         for (String product : PRODUCTS) {
             inventory.addToCart(product);
         }
-        assertEquals(6, inventory.cartBadgeCount(), "Badge count should be 6");
+        assertEquals(6, inventory.cartBadgeCount(), "(*@Badge phải hiển thị số 6@*)");
     }
 
-    // TC-CART-B5: Remove last product, reset to 0
     @Test
-    @DisplayName("TC-CART-B5: Remove last product, badge disappears")
+    @DisplayName("(*@TC-CART-B5: Xóa sản phẩm cuối cùng, badge biến mất@*)")
     void removeLastProduct() {
         inventory.addToCart(PRODUCTS[0]);
+        assertEquals(1, inventory.cartBadgeCount(), "(*@Trước khi xóa, badge phải bằng 1@*)");
         inventory.removeFromCart(PRODUCTS[0]);
-        assertEquals(0, inventory.cartBadgeCount(), "Badge disappears when cart is empty");
+        inventory.waitForCartBadge("0");
+        assertEquals(0, inventory.cartBadgeCount(), "(*@Badge phải biến mất khi giỏ hàng trở về 0@*)");
     }
 }
 \end{lstlisting}
@@ -885,56 +962,98 @@ public class CartTest extends WebTestBase {
 \subsubsection{Lớp SortTest.java (Kiểm thử sắp xếp và phát hiện lỗi Sort - FR-04)}
 \begin{lstlisting}[caption={Trích đoạn mã nguồn lớp SortTest.java}]
 @Tag("web")
-@DisplayName("FR-04: Product sorting (Sort)")
+@DisplayName("FR-04: Sort")
 public class SortTest extends WebTestBase {
 
+    private InventoryPage loginInventoryPage(String username) {
+        LoginPage loginPage = new LoginPage(driver, baseUrl).open();
+        LoginResult result = loginPage.login(username, "secret_sauce");
+        assertTrue(result.accepted(), "(*@Đăng nhập thất bại với tài khoản: @*)" + username);
+        return new InventoryPage(driver).open();
+    }
+
     @ParameterizedTest(name = "{0}: user={1}, option={2}")
-    @DisplayName("FR-04: Sort products by name (A-Z, Z-A)")
+    @DisplayName("(*@FR-04: Sắp xếp sản phẩm theo tên (A-Z, Z-A)@*)")
     @CsvSource({
         "TC-SORT-EP1, standard_user, az, true",
-        "TC-SORT-EP2, standard_user, za, false"
+        "TC-SORT-EP2, standard_user, za, false",
+        "TC-SORT-EP1, problem_user,  az, true",
+        "TC-SORT-EP1, visual_user,   az, true",
+        "TC-SORT-EP2, visual_user,   za, false"
     })
     void sortByNamePass(String tcId, String username, String option, boolean ascending) {
-        InventoryPage page = loginInventoryPage(username);
-        List<String> actual = page.sortBy(option).names();
+        InventoryPage inventoryPage = loginInventoryPage(username);
+        List<String> actual = inventoryPage.sortBy(option).names();
         List<String> expected = new ArrayList<>(actual);
         expected.sort(ascending ? Comparator.naturalOrder() : Comparator.reverseOrder());
-        assertEquals(expected, actual, "Name order does not match for " + username);
+        assertEquals(expected, actual, () -> String.format("[%s] (*@Thứ tự tên sản phẩm không đúng với@*) user=%s, option=%s", tcId, username, option));
+    }
+
+    @ParameterizedTest(name = "{0}: user={1}, option={2}")
+    @DisplayName("(*@FR-04: Sắp xếp sản phẩm theo giá (low-high, high-low)@*)")
+    @CsvSource({
+        "TC-SORT-EP3, standard_user, lohi, true",
+        "TC-SORT-EP4, standard_user, hilo, false"
+    })
+    void sortByPricePass(String tcId, String username, String option, boolean ascending) {
+        InventoryPage inventoryPage = loginInventoryPage(username);
+        List<Double> actual = inventoryPage.sortBy(option).prices();
+        List<Double> expected = new ArrayList<>(actual);
+        expected.sort(ascending ? Comparator.naturalOrder() : Comparator.reverseOrder());
+        assertEquals(expected, actual, () -> String.format("[%s] (*@Thứ tự giá sản phẩm không đúng với@*) user=%s, option=%s", tcId, username, option));
     }
 
     @Tag("known-bug")
     @ParameterizedTest(name = "{0}: user={1}, option={2}")
-    @DisplayName("FR-04: Sort Z-A bug with problem_user [BUG-02]")
+    @DisplayName("(*@FR-04: Lỗi sắp xếp theo tên Z-A với@*) problem_user")
     @CsvSource({
         "TC-SORT-EP2[BUG-02], problem_user, za, false"
     })
     void sortByNameKnownBugs(String tcId, String username, String option, boolean ascending) {
-        InventoryPage page = loginInventoryPage(username);
-        List<String> actual = page.sortBy(option).names();
+        InventoryPage inventoryPage = loginInventoryPage(username);
+        List<String> actual = inventoryPage.sortBy(option).names();
         List<String> expected = new ArrayList<>(actual);
         expected.sort(ascending ? Comparator.naturalOrder() : Comparator.reverseOrder());
-        // Assert nay bat buoc FAIL tren problem_user vi he thong khong dao chieu danh sach
-        assertEquals(expected, actual, "System fails to sort product names for problem_user");
+        assertEquals(expected, actual, () -> String.format("[%s] (*@Hệ thống không sắp xếp tên theo@*) %s (*@cho@*) %s", tcId, option, username));
+    }
+
+    @Tag("known-bug")
+    @ParameterizedTest(name = "{0}: user={1}, option={2}")
+    @DisplayName("(*@FR-04: Lỗi sắp xếp theo giá với@*) problem_user (*@và@*) visual_user")
+    @CsvSource({
+        "TC-SORT-EP3[BUG-02], problem_user, lohi, true",
+        "TC-SORT-EP4[BUG-02], problem_user, hilo, false",
+        "TC-SORT-EP3[BUG-06], visual_user,  lohi, true",
+        "TC-SORT-EP4[BUG-06], visual_user,  hilo, false"
+    })
+    void sortByPriceKnownBugs(String tcId, String username, String option, boolean ascending) {
+        InventoryPage inventoryPage = loginInventoryPage(username);
+        List<Double> actual = inventoryPage.sortBy(option).prices();
+        List<Double> expected = new ArrayList<>(actual);
+        expected.sort(ascending ? Comparator.naturalOrder() : Comparator.reverseOrder());
+        assertEquals(expected, actual, () -> String.format("[%s] (*@Hệ thống không sắp xếp giá theo@*) %s (*@cho@*) %s", tcId, option, username));
     }
 }
 \end{lstlisting}
 
 \subsubsection{Lớp PerformanceTest.java (Đo hiệu năng NFR-01 \& Đánh dấu lỗi đã biết)}
 \begin{lstlisting}[caption={Trích đoạn mã nguồn lớp PerformanceTest.java}]
-@Tag("web")
-@DisplayName("NFR-01: Performance")
 class PerformanceTest extends WebTestBase {
 
     @Test
     @Tag("known-bug")
-    @DisplayName("TC-NFR-01 [BUG-01]: inventory loads within 3 s")
-    void inventoryLoadsWithinThreeSeconds() {
+    @DisplayName("TC-NFR-01: Login performance")
+    void inventoryLoadsWithin3Seconds() {
+        LoginPage loginPage = new LoginPage(driver, baseUrl).open();
         long start = System.nanoTime();
         LoginResult result = loginPage.login("performance_glitch_user", "secret_sauce");
-        long millis = Duration.ofNanos(System.nanoTime() - start).toMillis();
+        long elapsedMs = Duration.ofNanos(System.nanoTime() - start).toMillis();
 
-        assertTrue(result.accepted());
-        assertTrue(millis <= 3000, () -> "Inventory took " + millis + " ms (threshold: 3000 ms)");
+        System.out.println("(*@Thời gian đăng nhập: @*)" + elapsedMs + " ms");
+        System.out.println("(*@Kết quả: @*)" + result.message());
+
+        assertTrue(result.accepted(), "(*@Đăng nhập không thành công@*)");
+        assertTrue(elapsedMs <= 3000, "(*@Vượt ngưỡng 3000 ms: @*)" + elapsedMs + " ms");
     }
 }
 \end{lstlisting}
