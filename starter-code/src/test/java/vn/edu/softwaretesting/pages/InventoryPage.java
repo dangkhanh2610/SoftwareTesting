@@ -60,6 +60,15 @@ public class InventoryPage {
                 return this;
         }
 
+        public InventoryPage waitForCartBadge(String countText) {
+                if ("0".equals(countText)) {
+                        wait.until(ExpectedConditions.invisibilityOfElementLocated(cartBadge));
+                } else {
+                        wait.until(ExpectedConditions.textToBe(cartBadge, countText));
+                }
+                return this;
+        }
+
         public int cartBadgeCount() {
                 List<WebElement> badges = driver.findElements(cartBadge);
 

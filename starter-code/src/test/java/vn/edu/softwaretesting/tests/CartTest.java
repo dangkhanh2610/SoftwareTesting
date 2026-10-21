@@ -66,6 +66,7 @@ public class CartTest extends WebTestBase {
         }
 
         inventory.removeFromCart(PRODUCTS[5]);
+        inventory.waitForCartBadge("5");
 
         assertEquals(
                 5,
@@ -100,6 +101,7 @@ public class CartTest extends WebTestBase {
         );
 
         inventory.removeFromCart(PRODUCTS[0]);
+        inventory.waitForCartBadge("0");
 
         assertEquals(
                 0,
