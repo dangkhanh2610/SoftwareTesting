@@ -1,0 +1,1106 @@
+% ==============================================================================
+% BÁO CÁO BÀI TẬP LỚN MÔN KIỂM THỬ PHẦN MỀM (ASSIGNMENT 1) - ĐH SÀI GÒN
+% Giảng viên hướng dẫn: Từ Lãng Phiêu
+% Nhóm sinh viên: Lê Khánh Đăng, Dương Chí Tài, Trần Việt Đức, Nguyễn Thành Nhân, Phan Ngọc Vinh
+% ==============================================================================
+
+\documentclass[a4paper]{article}
+\usepackage{vntex}
+\usepackage{a4wide,amssymb,latexsym,multicol,array,hhline,fancyhdr}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{tabularx, caption, float}
+\usepackage{multirow, makecell}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{hyperref}
+\hypersetup{urlcolor=blue,linkcolor=black,citecolor=black,colorlinks=true} 
+
+\geometry{
+  a4paper,
+  total={170mm,245mm},
+  left=20mm,
+  top=25mm,
+}
+
+\setlength{\headheight}{40pt}
+\pagestyle{fancy}
+\fancyhead{} 
+\fancyhead[L]{
+  \begin{tabular}{rl}
+    \begin{picture}(25,15)(0,0)
+      \put(0,-8){\includegraphics[width=8mm, height=8mm]{logoITSGUsmall.png}}
+    \end{picture}&
+    \begin{tabular}{l}
+      \textbf{\ttfamily Trường Đại học Sài Gòn}\\
+      \textbf{\ttfamily Khoa Công Nghệ Thông Tin}
+    \end{tabular} 	
+  \end{tabular}
+}
+\fancyhead[R]{
+  \begin{tabular}{r}
+    \small \bf Kiểm thử phần mềm (Assignment 1)\\
+    \footnotesize \textit{Niên khóa 2026--2027}
+  \end{tabular}
+}
+\fancyfoot{} 
+\fancyfoot[L]{\scriptsize \ttfamily Báo cáo Bài tập lớn: Kiểm thử hộp đen \& Tự động hóa web với JUnit 5}
+\fancyfoot[R]{\scriptsize \ttfamily Trang {\thepage}/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{navyblue}{rgb}{0.12,0.23,0.54}
+
+\lstset{
+  frame=single,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue}\bfseries,
+  commentstyle=\color{dkgreen}\textit,
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2,
+  numbersep=5pt,    
+  firstnumber=1,
+  escapeinside={(*@}{@*)}
+}
+
+% Điều chỉnh độ giãn dòng bảng chuẩn đẹp
+\renewcommand{\arraystretch}{1.25}
+
+\begin{document}
+
+% ==============================================================================
+% TRANG BÌA
+% ==============================================================================
+\begin{titlepage}
+\begin{center}
+  \textbf{\large TRƯỜNG ĐẠI HỌC SÀI GÒN} \\
+  \textbf{\large KHOA CÔNG NGHỆ THÔNG TIN}
+\end{center}
+\vspace{0.6cm}
+
+\begin{figure}[H]
+\begin{center}
+  \includegraphics[width=3.2cm]{logoITSGU.png}
+\end{center}
+\end{figure}
+
+\vspace{0.6cm}
+
+\begin{center}
+  \begin{tabular}{c}
+    \multicolumn{1}{l}{\textbf{{\Large BÁO CÁO BÀI TẬP LỚN}}}\\
+    \multicolumn{1}{l}{\textbf{{\LARGE MÔN: KIỂM THỬ PHẦN MỀM}}}\\
+    ~~\\
+    \hline
+    \\
+    \textbf{{\Huge Assignment 1: Kiểm Thử Hộp Đen}}\\
+    \vspace{0.3cm}
+    \textbf{{\Large Thiết Kế Test Case \& Tự Động Hóa Web Với JUnit 5}}\\
+    \vspace{0.2cm}
+    \textit{{\normalsize Hệ thống kiểm thử mục tiêu: SauceDemo (https://www.saucedemo.com)}}\\
+    \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\vspace{1.2cm}
+
+% Bảng thông tin nhóm căn chính giữa (center) cân đối tuyệt đối
+\begin{center}
+\begin{tabular}{cllcc}
+  \multicolumn{5}{l}{\textbf{Nhóm thực hiện:}\quad \textbf{Nhóm 04}} \\[0.2cm]
+  \multicolumn{5}{l}{\textbf{Giảng viên hướng dẫn:}\quad \textbf{Từ Lãng Phiêu}} \\[0.4cm]
+  \textbf{STT} & \textbf{Họ và tên sinh viên} & \textbf{Vai trò phụ trách} & \textbf{MSSV} & \textbf{Đóng góp} \\
+  \hline
+  1 & Lê Khánh Đăng & Nhóm trưởng (Login - FR-01) & 3124560022 & 100\% \\
+  2 & Dương Chí Tài & QA (Giỏ hàng - FR-02) & 3124560076 & 100\% \\
+  3 & Trần Việt Đức & QA (Thanh toán - FR-03) & 3124560024 & 100\% \\
+  4 & Nguyễn Thành Nhân & QA (Sắp xếp - FR-04) & 3124560065 & 100\% \\
+  5 & Phan Ngọc Vinh & QA (Hiệu năng - NFR-01/Excel) & 3124560098 & 100\% \\
+  \hline
+\end{tabular}
+\end{center}
+
+\vfill
+
+\begin{center}
+  \textbf{TP. HỒ CHÍ MINH, THÁNG 10/2026}
+\end{center}
+\end{titlepage}
+
+\thispagestyle{empty}
+\newpage
+\tableofcontents
+\newpage
+
+% ==============================================================================
+% MỤC 1: TỔNG QUAN
+% ==============================================================================
+\section{Tổng quan hệ thống và môi trường kiểm thử}
+Hệ thống được chọn để thực hiện kiểm thử trong đề tài là \textbf{SauceDemo} (\url{https://www.saucedemo.com}) --- trang web bán hàng mẫu chuẩn công nghiệp chuyên dùng để giảng dạy và thực hành kiểm thử phần mềm tự động.
+
+\subsection{Danh sách tài khoản kiểm thử của hệ thống}
+Trên hệ thống SauceDemo, hệ thống cung cấp sẵn 6 tài khoản mẫu với mật khẩu chung \texttt{secret\_sauce}. Mỗi tài khoản được thiết kế để mô phỏng một trạng thái hoặc lỗi đặc thù trong quá trình kiểm thử:
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Tài khoản} & \textbf{Hành vi và mục đích dùng để kiểm thử} \\ \hline
+\texttt{standard\_user} & Tài khoản tiêu chuẩn, hoạt động bình thường trên mọi chức năng; dùng cho luồng chính (Happy Path) từ đăng nhập, giỏ hàng đến thanh toán. \\ \hline
+\texttt{locked\_out\_user} & Tài khoản bị khóa; đăng nhập đúng mật khẩu vẫn bị từ chối; dùng để kiểm thử nhánh lỗi tài khoản bị khóa trong FR-01. \\ \hline
+\texttt{problem\_user} & Tài khoản có lỗi giao diện (ảnh sản phẩm bị lỗi hiển thị giống nhau) và lỗi chức năng (không sắp xếp được sản phẩm, không xóa được sản phẩm); dùng để săn lỗi ở NV4. \\ \hline
+\texttt{performance\_glitch\_user} & Bị làm chậm có chủ đích ($\approx 5$ giây); dùng để kiểm thử yêu cầu phi chức năng hiệu năng NFR-01 (bắt lỗi \textbf{BUG-01}). \\ \hline
+\texttt{error\_user} & Tài khoản gặp lỗi ngoại lệ khi thao tác (ô Last Name không nhận ký tự nhưng vẫn cho phép Continue); dùng cho kiểm thử khám phá mở rộng. \\ \hline
+\texttt{visual\_user} & Tài khoản có lỗi hiển thị sai lệch vị trí CSS và giá sản phẩm bị gán ngẫu nhiên; dùng cho kiểm thử hồi quy trực quan. \\ \hline
+\end{tabularx}
+\caption{Danh sách đầy đủ 6 tài khoản kiểm thử trên SauceDemo}
+\end{table}
+
+\noindent \textit{Ghi chú phạm vi:} Theo đặc tả tại Mục 2.1 của đề bài, nhóm tập trung trọng tâm vào \textbf{4 tài khoản đầu tiên} (\texttt{standard\_user}, \texttt{locked\_out\_user}, \texttt{problem\_user}, và \texttt{performance\_glitch\_user}) để hoàn thành các yêu cầu từ FR-01 đến NFR-01. Hai tài khoản còn lại được nhóm sử dụng để mở rộng kiểm thử khám phá và phát hiện lỗi hệ thống.
+
+\subsection{Môi trường thực thi kiểm thử của nhóm}
+\begin{itemize}
+  \item \textbf{Hệ điều hành:} Microsoft Windows 11 Pro 64-bit.
+  \item \textbf{Bộ phát triển Java (JDK):} OpenJDK Temurin 21.0.12 LTS.
+  \item \textbf{Công cụ quản lý dự án:} Apache Maven 3.9+.
+  \item \textbf{Trình duyệt kiểm thử:} Google Chrome Version 155.0.8059.40 (64-bit) và Mozilla Firefox.
+  \item \textbf{Thư viện kiểm thử cốt lõi:} JUnit 5.11 (Jupiter) và Selenium WebDriver 4.27.
+\end{itemize}
+
+% ==============================================================================
+% MỤC 2: NV1 – CHẠY VÀ MỞ RỘNG MÃ MẪU
+% ==============================================================================
+\section{NV1 – Chạy và mở rộng mã nguồn mẫu}
+\subsection{Kết quả thực thi mã nguồn mẫu ban đầu}
+Nhóm tiến hành khởi chạy dự án mẫu (\texttt{starter-code}) thông qua giao diện dòng lệnh bằng lệnh \texttt{mvn clean test}. Hệ thống tích hợp Selenium Manager tự động thiết lập driver phù hợp và thực thi thành công các ca kiểm thử mẫu ở chế độ ngầm (\textit{headless}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{NV1_terminal_mvn_clean_test.png}
+\caption{Ảnh chụp màn hình kết quả chạy thực tế \texttt{mvn clean test} thành công}
+\end{figure}
+
+Sau khi mở rộng tệp \texttt{login-data.csv} với các trường hợp biên (chuỗi rỗng), toàn bộ các ca kiểm thử đều vượt qua thành công (\textbf{BUILD SUCCESS}).
+
+\subsection{Vai trò của các Annotation trong JUnit 5}
+Kiến trúc kiểm thử tự động của dự án ứng dụng ba annotation cốt lõi của JUnit 5:
+\begin{enumerate}[\bfseries a)]
+  \item \textbf{\texttt{@BeforeEach}} (Gói \texttt{org.junit.jupiter.api}):\\
+  Được thực thi tự động ngay trước mỗi phương thức kiểm thử. Trong lớp cơ sở \texttt{WebTestBase}, annotation này đảm nhận việc khởi tạo phiên bản trình duyệt \texttt{WebDriver} mới tinh, cấu hình kích thước cửa sổ và timeout. Nhờ vậy, mỗi ca kiểm thử được chạy độc lập hoàn toàn (\textit{Test Isolation}), không bị ảnh hưởng bởi cookie, cache hay dữ liệu phiên của ca kiểm thử chạy trước đó.
+  
+  \item \textbf{\texttt{@ParameterizedTest}} (Gói \texttt{org.junit.jupiter.params}):\\
+  Cho phép thực thi lặp lại cùng một phương thức kiểm thử với nhiều bộ tham số đầu vào khác nhau. Kỹ thuật này áp dụng triệt để nguyên lý DRY (\textit{Don't Repeat Yourself}), tránh việc sao chép mã nguồn kiểm thử và hỗ trợ định dạng tên ca kiểm thử linh hoạt qua thuộc tính \texttt{name}.
+  
+  \item \textbf{\texttt{@CsvFileSource}} (Gói \texttt{org.junit.jupiter.params.provider}):\\
+  Đóng vai trò là bộ nạp tham số đọc dữ liệu từ tệp tin dạng bảng CSV ngoài mã nguồn (\texttt{login-data.csv}). Cơ chế này giúp tách bạch hoàn toàn giữa \textbf{Mã kịch bản kiểm thử (Test Script)} và \textbf{Dữ liệu kiểm thử (Test Data)}, cho phép bổ sung hàng loạt ca kiểm thử mới trực tiếp trên tệp CSV mà không cần biên dịch lại mã nguồn Java.
+\end{enumerate}
+
+% ==============================================================================
+% MỤC 3: NV2 – PHÂN TÍCH YÊU CẦU & ĐÁNH GIÁ RỦI RO
+% ==============================================================================
+\clearpage
+\section{NV2 – Phân tích yêu cầu và Đánh giá rủi ro}
+\subsection{Đặc tả yêu cầu chi tiết (Requirements Specification)}
+Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với các thành viên phụ trách, mỗi phân hệ được chuẩn hóa theo định dạng 3 cột thống nhất: \textbf{Mã yêu cầu}, \textbf{Mô tả yêu cầu}, và \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)}.
+
+\subsubsection{Đặc tả FR-01: Xác thực và Đăng nhập (Lê Khánh Đăng)}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
+\hline
+\textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
+\textbf{FR-01.1} & Đăng nhập thành công với tài khoản hợp lệ & Nhập \texttt{standard\_user} / \texttt{secret\_sauce} $\rightarrow$ Chuyển hướng sang URL \texttt{https://www.saucedemo.com/inventory.html}, hiển thị đầy đủ 6 sản phẩm và menu điều hướng. \\ \hline
+\textbf{FR-01.2} & Kiểm tra để trống trường Username & Bỏ trống username $\rightarrow$ Giữ nguyên trang đăng nhập; hiển thị thông báo lỗi: \textit{"Epic sadface: Username is required"}. \\ \hline
+\textbf{FR-01.3} & Kiểm tra để trống trường Password & Có username nhưng để trống password $\rightarrow$ Giữ nguyên trang đăng nhập; hiển thị thông báo lỗi: \textit{"Epic sadface: Password is required"}. \\ \hline
+\textbf{FR-01.4} & Kiểm tra thông tin sai hoặc sai chữ hoa/thường & Nhập sai tên, sai mật khẩu, hoặc sai chữ hoa/thường $\rightarrow$ Hiển thị lỗi: \textit{"Epic sadface: Username and password do not match any user in this service"}. \\ \hline
+\textbf{FR-01.5} & Đăng nhập tài khoản bị khóa & Nhập \texttt{locked\_out\_user} / \texttt{secret\_sauce} $\rightarrow$ Hiển thị lỗi: \textit{"Epic sadface: Sorry, this user has been locked out."}. \\ \hline
+\end{tabularx}
+\caption{Bảng đặc tả yêu cầu chức năng FR-01: Đăng nhập}
+\end{table}
+
+\subsubsection{Đặc tả FR-02: Quản lý giỏ hàng (Dương Chí Tài)}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
+\hline
+\textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
+\textbf{FR-02.1} & Trạng thái nút Add to cart & Sản phẩm chưa có trong giỏ sẽ hiển thị nút ``Add to cart''. Khi nhấn nút, sản phẩm được thêm vào giỏ; nút tại trang \texttt{inventory.html} chuyển thành ``Remove'' và badge giỏ hàng tăng thêm 1. \\ \hline
+\textbf{FR-02.2} & Trạng thái nút Remove & Khi người dùng nhấn nút ``Remove'' (tại \texttt{inventory.html} hoặc \texttt{cart.html}), sản phẩm tương ứng bị xóa khỏi giỏ; nút đổi trở lại ``Add to cart'' và badge giỏ hàng giảm đi 1. \\ \hline
+\textbf{FR-02.3} & Badge hiển thị số lượng từ 1 đến 6 & Khi giỏ có từ 1 đến 6 sản phẩm, badge hiển thị đúng số lượng sản phẩm hiện có (ví dụ: có 3 sản phẩm thì badge hiển thị số 3; có đủ 6 sản phẩm thì badge hiển thị số 6). \\ \hline
+\textbf{FR-02.4} & Giỏ hàng rỗng & Khi chưa có sản phẩm nào được thêm vào giỏ hoặc khi tất cả sản phẩm đã bị xóa, badge không hiển thị (ẩn hoàn toàn khỏi DOM). Nút của các sản phẩm hiển thị lại ``Add to cart''. \\ \hline
+\end{tabularx}
+\caption{Bảng đặc tả yêu cầu chức năng FR-02: Giỏ hàng}
+\end{table}
+
+\clearpage
+\subsubsection{Đặc tả FR-03: Quy trình thanh toán (Trần Việt Đức)}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
+\hline
+\textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
+\textbf{FR-03.1} & Kiểm tra trường First Name & First Name là bắt buộc; khi để trống cả 3 trường hoặc để trống First Name, hệ thống ưu tiên hiển thị lỗi: \textit{"Error: First Name is required"} và giữ nguyên trang \texttt{checkout-step-one.html}. \\ \hline
+\textbf{FR-03.2} & Kiểm tra trường Last Name & Nếu First Name hợp lệ nhưng Last Name để trống, hệ thống hiển thị lỗi: \textit{"Error: Last Name is required"} và giữ nguyên trang \texttt{checkout-step-one.html}. \\ \hline
+\textbf{FR-03.3} & Kiểm tra trường Postal Code & Nếu cả First Name và Last Name đều hợp lệ nhưng Postal Code để trống, hệ thống hiển thị lỗi: \textit{"Error: Postal Code is required"} và giữ nguyên trang \texttt{checkout-step-one.html}. \\ \hline
+\textbf{FR-03.4} & Tính tiền thuế (Tax) & Thuế được tính bằng 8\% Item Total và làm tròn chuẩn 2 chữ số thập phân: $\text{Tax} = \text{round}(\text{Item Total} \times 0.08, 2)$. \\ \hline
+\textbf{FR-03.5} & Tính tổng thanh toán (Total) & Tổng tiền hiển thị bằng tổng tiền hàng cộng tiền thuế: $\text{Total} = \text{Item Total} + \text{Tax}$. \\ \hline
+\textbf{FR-03.6} & Hoàn tất đơn hàng (Finish) & Chuyển đến URL \texttt{checkout-complete.html}; hiển thị thông báo \textit{"THANK YOU FOR YOUR ORDER!"}; giỏ hàng được làm rỗng và badge giỏ hàng biến mất. \\ \hline
+\textbf{FR-03.7} & Hủy tại bước nhập thông tin (Cancel) & Nhấn Cancel tại \texttt{checkout-step-one.html} sẽ chuyển hướng về URL \texttt{cart.html}; các sản phẩm đã chọn vẫn còn nguyên vẹn trong giỏ hàng. \\ \hline
+\end{tabularx}
+\caption{Bảng đặc tả yêu cầu chức năng FR-03: Thanh toán}
+\end{table}
+
+\subsubsection{Đặc tả FR-04: Sắp xếp danh sách sản phẩm (Nguyễn Thành Nhân)}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
+\hline
+\textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
+\textbf{FR-04.1} & Sắp xếp theo Name (A to Z) [Mặc định] & Sắp xếp sản phẩm theo tên tăng dần A--Z (mặc định khi mới vào trang). Với 3 sản phẩm mẫu: Sauce Labs Backpack $\rightarrow$ Sauce Labs Bike Light $\rightarrow$ Sauce Labs Bolt T-Shirt. \\ \hline
+\textbf{FR-04.2} & Sắp xếp theo Name (Z to A) & Sắp xếp sản phẩm theo tên giảm dần Z--A. Danh sách hiển thị đảo ngược: Sauce Labs Bolt T-Shirt $\rightarrow$ Sauce Labs Bike Light $\rightarrow$ Sauce Labs Backpack. \\ \hline
+\textbf{FR-04.3} & Sắp xếp theo Price (low to high) & Sắp xếp sản phẩm theo giá từ thấp tới cao. Sản phẩm đầu danh sách có giá thấp nhất là \$7.99 (Sauce Labs Onesie), sản phẩm cuối cùng là \$49.99 (Sauce Labs Fleece Jacket). Giá sản phẩm phía trên luôn $\le$ sản phẩm phía dưới. \\ \hline
+\textbf{FR-04.4} & Sắp xếp theo Price (high to low) & Sắp xếp sản phẩm theo giá từ cao tới thấp. Sản phẩm đầu danh sách có giá cao nhất là \$49.99 (Sauce Labs Fleece Jacket), sản phẩm cuối cùng là \$7.99 (Sauce Labs Onesie). Giá sản phẩm phía trên luôn $\ge$ sản phẩm phía dưới. \\ \hline
+\end{tabularx}
+\caption{Bảng đặc tả yêu cầu chức năng FR-04: Sắp xếp sản phẩm}
+\end{table}
+
+\subsubsection{Đặc tả NFR-01: Yêu cầu phi chức năng - Hiệu năng (Phan Ngọc Vinh)}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|c|p{4.5cm}|X|}
+\hline
+\textbf{Mã} & \textbf{Mô tả yêu cầu} & \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)} \\ \hline
+\textbf{NFR-01.1} & Tiêu chuẩn thời gian hiển thị trang sản phẩm & Sau khi người dùng nhấn Login với thông tin đúng, trang sản phẩm (\texttt{inventory.html}) phải hiển thị hoàn tất trong thời gian không vượt quá 3 giây. Tiêu chí chấp nhận: Trung vị thời gian đo $\le 3.000\text{ ms}$ (3.0s). \\ \hline
+\textbf{NFR-01.2} & Điều kiện và phương pháp đo kiểm & Đăng nhập tài khoản \texttt{performance\_glitch\_user} / \texttt{secret\_sauce} trên mạng cáp quang ổn định. Thực hiện đo độc lập 5 lần liên tiếp từ thời điểm nhấn nút Login đến khi DOM trang tải xong, lấy giá trị trung vị của 5 lần đo. \\ \hline
+\end{tabularx}
+\caption{Bảng đặc tả yêu cầu phi chức năng NFR-01: Hiệu năng}
+\end{table}
+
+\clearpage
+\subsection{Đánh giá rủi ro (Risk-based Testing)}
+Mức độ rủi ro $R$ được xác định theo công thức chuẩn:
+\begin{equation}
+  R = P \times I
+\end{equation}
+Trong đó $P$ là xác suất xảy ra lỗi (1--5) và $I$ là mức độ tác động thiệt hại (1--5).
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|c|l|c|c|c|c|X|}
+\hline
+\textbf{Mã} & \textbf{Chức năng} & \textbf{P} & \textbf{I} & \textbf{R} & \textbf{Mức độ} & \textbf{Lý do đánh giá} \\ \hline
+\textbf{FR-03} & Thanh toán & 3 & 5 & \textbf{15} & Rất cao & Tính tiền/thuế sai gây thất thoát tài chính trực tiếp; luồng nhập liệu có nhiều bước phức tạp. \\ \hline
+\textbf{FR-01} & Đăng nhập & 3 & 4 & \textbf{12} & Cao & Cửa ngõ truy cập toàn bộ hệ thống; có 4 nhánh thông báo lỗi bảo mật rẽ nhánh. \\ \hline
+\textbf{NFR-01} & Hiệu năng & 4 & 3 & \textbf{12} & Cao & Tài khoản glitch bị trễ rõ rệt; trang tải quá lâu khiến người dùng tưởng treo và bỏ giỏ hàng. \\ \hline
+\textbf{FR-02} & Giỏ hàng & 2 & 4 & \textbf{8} & Trung bình & Lỗi hiển thị số lượng badge gây nhầm lẫn số hàng đặt mua. \\ \hline
+\textbf{FR-04} & Sắp xếp & 2 & 2 & \textbf{4} & Thấp & Sắp xếp sai gây khó chịu về trải nghiệm nhưng không làm gián đoạn hay mất tiền. \\ \hline
+\end{tabularx}
+\caption{Bảng phân tích và đánh giá mức độ rủi ro}
+\end{table}
+
+\noindent \textbf{Kết luận:} Các chức năng có $R \ge 12$ (\textbf{FR-03}, \textbf{FR-01}, \textbf{NFR-01}) được nhóm ưu tiên phân bổ số lượng ca kiểm thử lớn nhất ở NV3.
+
+\subsection{Ma trận truy vết yêu cầu (Traceability Matrix)}
+Ma trận truy vết được nhóm xây dựng ở NV2 và cập nhật đồng bộ xuyên suốt đến cuối bài nộp:
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|c|l|X|p{3.8cm}|c|c|}
+\hline
+\textbf{Mã YC} & \textbf{Tên chức năng} & \textbf{Kỹ thuật áp dụng} & \textbf{Mã Test Case} & \textbf{Lớp Test JUnit 5} & \textbf{Mã Lỗi} \\ \hline
+\textbf{FR-01} & Đăng nhập & EP, Bảng quyết định (DT) & \texttt{TC-LOGIN-EP1..EP8}, \texttt{DT1..DT5} & \texttt{LoginTest} & --- \\ \hline
+\textbf{FR-02} & Giỏ hàng & BVA, Use Case (UC2) & \texttt{TC-CART-B1..B5}, \texttt{UC1..UC5}, \texttt{P01} & \texttt{CartTest} & \textbf{BUG-05} \\ \hline
+\textbf{FR-03} & Thanh toán & Use Case (UC1), DT, BVA & \texttt{TC-CHK-UC1..UC5}, \texttt{DT1..DT4}, \texttt{TAX-B1..B3}, \texttt{UC6..UC7} & \texttt{CheckoutTest} & \textbf{BUG-03, 04} \\ \hline
+\textbf{FR-04} & Sắp xếp & Phân lớp tương đương (EP) & \texttt{TC-SORT-EP1..EP4} & \texttt{SortTest} & \textbf{BUG-02, 06} \\ \hline
+\textbf{NFR-01} & Hiệu năng & Đo thời gian (5 lần đo) & \texttt{TC-NFR-01} & \texttt{PerformanceTest} & \textbf{BUG-01} \\ \hline
+\end{tabularx}
+\caption{Ma trận truy vết yêu cầu hoàn chỉnh (Requirements Traceability Matrix)}
+\end{table}
+
+% ==============================================================================
+% MỤC 4: NV3 – THIẾT KẾ TEST CASE
+% ==============================================================================
+\clearpage
+\section{NV3 – Thiết kế Test Case}
+
+\subsection{Phân lớp tương đương (Equivalence Partitioning - EP)}
+Kỹ thuật EP được nhóm áp dụng trên 2 trường dữ liệu của FR-01 và chức năng sắp xếp FR-04.
+
+\subsubsection{Phân lớp tương đương cho trường Username (FR-01)}
+Mật khẩu cố định là \texttt{secret\_sauce}. Miền giá trị của Username được chia thành 5 lớp tương đương:
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}p{4cm}|l|>{\raggedright\arraybackslash}X|c|}
+\hline
+\textbf{Lớp} & \textbf{Mô tả lớp} & \textbf{Giá trị đại diện} & \textbf{Kết quả mong đợi} & \textbf{Mã TC} \\ \hline
+\makecell[t]{\textbf{EC1}\\\scriptsize(Hợp lệ)} & Tài khoản tồn tại, đang hoạt động & \texttt{standard\_user} & Chuyển đến URL \texttt{inventory.html} & \texttt{TC-LOGIN-EP1} \\ \hline
+\makecell[t]{\textbf{EC2}\\\scriptsize(Không hợp lệ)} & Tài khoản tồn tại nhưng bị khóa & \texttt{locked\_out\_user} & Epic sadface: Sorry, this user has been locked out. & \texttt{TC-LOGIN-EP2} \\ \hline
+\makecell[t]{\textbf{EC3}\\\scriptsize(Không hợp lệ)} & Chuỗi rỗng & \texttt{""} & Epic sadface: Username is required & \texttt{TC-LOGIN-EP3} \\ \hline
+\makecell[t]{\textbf{EC4}\\\scriptsize(Không hợp lệ)} & Tài khoản không tồn tại & \texttt{abc\_user} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP4} \\ \hline
+\makecell[t]{\textbf{EC5}\\\scriptsize(Không hợp lệ)} & Đúng tên nhưng sai hoa/thường & \texttt{Standard\_User} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP5} \\ \hline
+\end{tabularx}
+\caption{Bảng phân lớp tương đương cho trường Username}
+\end{table}
+
+\noindent \textit{Nhận xét:} Lớp \textbf{EC5} đóng vai trò quan trọng vì đặc tả quy định username phân biệt chữ hoa/thường. Nếu bỏ qua lớp này, nhóm không thể phát hiện lỗi nếu hệ thống chấp nhận sai tài khoản viết hoa.
+
+\subsubsection{Phân lớp tương đương tự mở rộng cho trường Password (FR-01)}
+Tên đăng nhập cố định là \texttt{standard\_user}. Miền giá trị Password được phân thành 4 lớp:
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}p{4cm}|l|>{\raggedright\arraybackslash}X|c|}
+\hline
+\textbf{Lớp} & \textbf{Mô tả lớp} & \textbf{Giá trị đại diện} & \textbf{Kết quả mong đợi} & \textbf{Mã TC} \\ \hline
+\makecell[t]{\textbf{EC6}\\\scriptsize(Hợp lệ)} & Mật khẩu chính xác & \texttt{secret\_sauce} & Chuyển đến URL \texttt{inventory.html} & *(Trùng EP1)* \\ \hline
+\makecell[t]{\textbf{EC7}\\\scriptsize(Không hợp lệ)} & Bỏ trống mật khẩu & \texttt{""} & Epic sadface: Password is required & \texttt{TC-LOGIN-EP6} \\ \hline
+\makecell[t]{\textbf{EC8}\\\scriptsize(Không hợp lệ)} & Mật khẩu sai & \texttt{wrong\_sauce} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP7} \\ \hline
+\makecell[t]{\textbf{EC9}\\\scriptsize(Không hợp lệ)} & Đúng mật khẩu nhưng sai hoa/thường & \texttt{Secret\_sauce} & Epic sadface: Username and password do not match... & \texttt{TC-LOGIN-EP8} \\ \hline
+\end{tabularx}
+\caption{Bảng phân lớp tương đương mở rộng cho trường Password}
+\end{table}
+
+\subsubsection{Phân lớp tương đương cho chức năng Sắp xếp (FR-04)}
+Miền giá trị tùy chọn sắp xếp bao gồm 4 tùy chọn hợp lệ được phân thành 4 ca kiểm thử:
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|c|l|c|X|c|}
+\hline
+\textbf{Lớp} & \textbf{Tùy chọn sắp xếp} & \textbf{Giá trị value} & \textbf{Tiêu chí kiểm tra kết quả} & \textbf{Mã TC} \\ \hline
+EC10 & Name (A to Z) & \texttt{az} & Tên sản phẩm tăng dần theo thứ tự bảng chữ cái & \texttt{TC-SORT-EP1} \\ \hline
+EC11 & Name (Z to A) & \texttt{za} & Tên sản phẩm giảm dần theo thứ tự bảng chữ cái & \texttt{TC-SORT-EP2} \\ \hline
+EC12 & Price (low to high) & \texttt{lohi} & Mức giá sản phẩm tăng dần (\$7.99 $\rightarrow$ \$49.99) & \texttt{TC-SORT-EP3} \\ \hline
+EC13 & Price (high to low) & \texttt{hilo} & Mức giá sản phẩm giảm dần (\$49.99 $\rightarrow$ \$7.99) & \texttt{TC-SORT-EP4} \\ \hline
+\end{tabularx}
+\caption{Bảng phân lớp tương đương cho chức năng Sắp xếp FR-04}
+\end{table}
+
+\clearpage
+\subsection{Phân tích giá trị biên (Boundary Value Analysis - BVA)}
+Đề bài yêu cầu áp dụng BVA cho ít nhất 2 miền giá trị với tối thiểu 8 ca kiểm thử.
+
+\subsubsection{Miền 1: Số lượng sản phẩm trong giỏ hàng (FR-02)}
+Cửa hàng SauceDemo có tổng cộng 6 sản phẩm. Do đó, số lượng sản phẩm có thể thêm vào giỏ hàng nằm trong miền hợp lệ $[0, 6]$:
+\begin{itemize}
+  \item \textbf{Biên dưới:} $0$ (giỏ rỗng) và $1$ (ngay trên biên dưới: $\text{min}+1$).
+  \item \textbf{Biên trên:} $6$ (giỏ đầy) và $5$ (ngay dưới biên trên: $\text{max}-1$).
+  \item \textbf{Biên động:} $1 \rightarrow 0$ (thêm 1 sản phẩm rồi xóa để kiểm tra việc ẩn badge).
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|c|c|p{5.5cm}|X|}
+\hline
+\textbf{Mã TC} & \textbf{Giá trị biên} & \textbf{Cách tạo dữ liệu thao tác} & \textbf{Kết quả mong đợi} \\ \hline
+\texttt{TC-CART-B1} & 0 (min) & Đăng nhập, không thêm sản phẩm nào & Biểu tượng giỏ hàng rỗng, không hiển thị badge \\ \hline
+\texttt{TC-CART-B2} & 1 (min+1) & Nhấn Add to cart sản phẩm Backpack & Nút chuyển thành Remove, badge hiển thị số 1 \\ \hline
+\texttt{TC-CART-B3} & 5 (max-1) & Thêm cả 6 sản phẩm rồi nhấn Remove 1 & Badge giảm từ 6 về 5, nút đổi lại Add to cart \\ \hline
+\texttt{TC-CART-B4} & 6 (max) & Nhấn Add to cart cho toàn bộ 6 sản phẩm & Badge hiển thị số 6, cả 6 nút đều là Remove \\ \hline
+\texttt{TC-CART-B5} & 1 $\rightarrow$ 0 & Thêm 1 sản phẩm rồi nhấn Remove & Badge biến mất hoàn toàn khỏi giao diện \\ \hline
+\end{tabularx}
+\caption{Bảng phân tích giá trị biên số lượng sản phẩm trong giỏ hàng}
+\end{table}
+
+\noindent \textit{Giải thích giá trị ngoài biên (theo yêu cầu đề bài):} Các giá trị ngoài biên gồm $-1$ (dưới biên dưới) và $7$ (vượt quá biên trên) \textbf{không thể tạo được qua giao diện web}. Lý do là hệ thống không có ô nhập số lượng bằng tay; mỗi sản phẩm chỉ có duy nhất một nút bấm Add to cart/Remove, và toàn bộ cửa hàng chỉ có tối đa 6 sản phẩm độc lập.
+
+\subsubsection{Miền 2: Làm tròn thuế 8\% tại trang Thanh toán (FR-03)}
+Theo đặc tả của đề bài, tiền thuế bằng $8\%$ giá trị đơn hàng làm tròn 2 chữ số thập phân. Nhóm thiết kế kiểm thử giá trị biên cho quy tắc làm tròn (làm tròn xuống khi phần thập phân thứ 3 $< 5$, làm tròn lên khi $\ge 5$, và đúng điểm biên $0.005$):
+\begin{table}[H]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{|c|p{4cm}|c|c|c|X|}
+\hline
+\textbf{Mã TC} & \textbf{Tổ hợp sản phẩm chọn mua} & \textbf{Item Total} & \textbf{Tính thuế (8\%)} & \textbf{Thuế tròn} & \textbf{Ý nghĩa giá trị biên} \\ \hline
+\texttt{TC-TAX-B1} & Sauce Labs Onesie (\$7.99) & \$7.99 & $7.99 \times 0.08 = 0.6392$ & \textbf{\$0.64} & Phần dư $0.0092 \ge 0.005 \rightarrow$ Làm tròn lên \\ \hline
+\texttt{TC-TAX-B2} & Bike Light (\$9.99) + Bolt T-Shirt (\$15.99) & \$25.98 & $25.98 \times 0.08 = 2.0784$ & \textbf{\$2.08} & Phần dư $0.0084 \ge 0.005 \rightarrow$ Làm tròn lên \\ \hline
+\texttt{TC-TAX-B3} & Sauce Labs Backpack (\$29.99) & \$29.99 & $29.99 \times 0.08 = 2.3992$ & \textbf{\$2.40} & Giá trị biên điển hình (trùng ví dụ mẫu đề bài) \\ \hline
+\end{tabularx}
+\caption{Bảng phân tích giá trị biên cho quy tắc làm tròn thuế 8\%}
+\end{table}
+
+\clearpage
+\subsection{Bảng quyết định (Decision Table - DT)}
+Đề bài quy định xây dựng tối thiểu 2 bảng quyết định ($\ge 8$ ca kiểm thử).
+
+\subsubsection{Bảng quyết định 1: Logic xác thực Đăng nhập (FR-01)}
+Bảng quyết định phân tích tổ hợp 4 điều kiện đầu vào của quá trình xác thực:
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{Điều kiện / Hành động} & \textbf{R1} & \textbf{R2} & \textbf{R3} & \textbf{R4} & \textbf{R5} \\ \hline
+C1: Username để trống & \textbf{Y} & N & N & N & N \\ \hline
+C2: Password để trống & -- & \textbf{Y} & N & N & N \\ \hline
+C3: Cặp username/password đúng & -- & -- & \textbf{N} & \textbf{Y} & \textbf{Y} \\ \hline
+C4: Tài khoản bị khóa & -- & -- & -- & \textbf{Y} & \textbf{N} \\ \hline \hline
+A1: Lỗi: \textit{Username is required} & \checkmark & & & & \\ \hline
+A2: Lỗi: \textit{Password is required} & & \checkmark & & & \\ \hline
+A3: Lỗi: \textit{Username and password do not match...} & & & \checkmark & & \\ \hline
+A4: Lỗi: \textit{Sorry, this user has been locked out.} & & & & \checkmark & \\ \hline
+A5: Chuyển đến trang \texttt{inventory.html} & & & & & \checkmark \\ \hline
+\end{tabular}
+\caption{Bảng quyết định logic xác thực người dùng (FR-01)}
+\end{table}
+
+Mỗi quy tắc từ R1 đến R5 được ánh xạ thành một ca kiểm thử cụ thể:
+\begin{itemize}
+  \item \textbf{R1 $\rightarrow$ \texttt{TC-LOGIN-DT1}:} \texttt{user=""}, \texttt{pass=""} $\rightarrow$ Nhận lỗi A1 (\textit{Username is required}).
+  \item \textbf{R2 $\rightarrow$ \texttt{TC-LOGIN-DT2}:} \texttt{user="standard\_user"}, \texttt{pass=""} $\rightarrow$ Nhận lỗi A2 (\textit{Password is required}).
+  \item \textbf{R3 $\rightarrow$ \texttt{TC-LOGIN-DT3}:} \texttt{user="locked\_out\_user"}, \texttt{pass="wrong"} $\rightarrow$ Nhận lỗi A3 (\textit{Username and password do not match...}).
+  \item \textbf{R4 $\rightarrow$ \texttt{TC-LOGIN-DT4}:} \texttt{user="locked\_out\_user"}, \texttt{pass="secret\_sauce"} $\rightarrow$ Nhận lỗi A4 (\textit{Sorry, this user has been locked out.}).
+  \item \textbf{R5 $\rightarrow$ \texttt{TC-LOGIN-DT5}:} \texttt{user="standard\_user"}, \texttt{pass="secret\_sauce"} $\rightarrow$ Chuyển đến trang sản phẩm (A5).
+\end{itemize}
+
+\subsubsection{Bảng quyết định 2: Xác thực biểu mẫu thông tin Thanh toán (FR-03)}
+Đặc tả quy định First Name, Last Name, Postal Code đều bắt buộc và kiểm tra theo thứ tự ưu tiên:
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Điều kiện / Hành động} & \textbf{R1} & \textbf{R2} & \textbf{R3} & \textbf{R4} \\ \hline
+C1: First Name có dữ liệu & \textbf{N} & \textbf{Y} & \textbf{Y} & \textbf{Y} \\ \hline
+C2: Last Name có dữ liệu & -- & \textbf{N} & \textbf{Y} & \textbf{Y} \\ \hline
+C3: Postal Code có dữ liệu & -- & -- & \textbf{N} & \textbf{Y} \\ \hline \hline
+A1: Lỗi: \textit{Error: First Name is required} & \checkmark & & & \\ \hline
+A2: Lỗi: \textit{Error: Last Name is required} & & \checkmark & & \\ \hline
+A3: Lỗi: \textit{Error: Postal Code is required} & & & \checkmark & \\ \hline
+A4: Chuyển sang trang \texttt{checkout-step-two.html} & & & & \checkmark \\ \hline
+\end{tabular}
+\caption{Bảng quyết định kiểm tra hợp lệ dữ liệu biểu mẫu thanh toán (FR-03)}
+\end{table}
+
+Ánh xạ thành 4 ca kiểm thử Bảng quyết định cho thanh toán:
+\begin{itemize}
+  \item \textbf{R1 $\rightarrow$ \texttt{TC-CHK-DT1}:} Bỏ trống First Name $\rightarrow$ Báo lỗi A1.
+  \item \textbf{R2 $\rightarrow$ \texttt{TC-CHK-DT2}:} Nhập First Name, bỏ trống Last Name $\rightarrow$ Báo lỗi A2.
+  \item \textbf{R3 $\rightarrow$ \texttt{TC-CHK-DT3}:} Nhập First, Last Name, bỏ trống Postal Code $\rightarrow$ Báo lỗi A3.
+  \item \textbf{R4 $\rightarrow$ \texttt{TC-CHK-DT4}:} Nhập đủ cả 3 trường $\rightarrow$ Chuyển tiếp thành công (A4).
+\end{itemize}
+
+\clearpage
+\subsection{Kiểm thử ca sử dụng (Use Case Testing)}
+Đề bài yêu cầu áp dụng kỹ thuật Use Case cho 2 ca sử dụng: mỗi ca sử dụng có sơ đồ hoạt động (Activity Diagram), luồng chính và tối thiểu 2 luồng thay thế/ngoại lệ.
+
+\subsubsection{Ca sử dụng 1 (UC1): Quy trình thanh toán đơn hàng (FR-03)}
+\noindent \textbf{Tiền điều kiện:} Đã đăng nhập bằng \texttt{standard\_user}, giỏ hàng có ít nhất một sản phẩm.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.68\textwidth]{usecase_checkout_diagram.png}
+\caption{Sơ đồ hoạt động (Activity Diagram) của Ca sử dụng Thanh toán đơn hàng (FR-03)}
+\label{fig:uc_checkout}
+\end{figure}
+
+Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm thử bao phủ toàn diện luồng chính và 4 luồng ngoại lệ:
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|c|p{3.5cm}|p{4.2cm}|X|}
+\hline
+\textbf{Mã TC} & \textbf{Luồng trên sơ đồ} & \textbf{Dữ liệu đầu vào (First / Last / Postal)} & \textbf{Kết quả mong đợi} \\ \hline
+\texttt{TC-CHK-UC1} & Luồng chính (Happy Path) & \texttt{Duc / Tran / 700000} & Thank you for your order! (Giỏ hàng được làm rỗng) \\ \hline
+\texttt{TC-CHK-UC2} & Ngoại lệ A1 (Thiếu First Name) & \texttt{"" / Tran / 700000} & Error: First Name is required \\ \hline
+\texttt{TC-CHK-UC3} & Ngoại lệ A2 (Thiếu Last Name) & \texttt{Duc / "" / 700000} & Error: Last Name is required \\ \hline
+\texttt{TC-CHK-UC4} & Ngoại lệ A3 (Thiếu Postal Code) & \texttt{Duc / Tran / ""} & Error: Postal Code is required \\ \hline
+\texttt{TC-CHK-UC5} & Ngoại lệ A4 (Hủy Cancel) & (Không nhập) / Nhấn nút Cancel & Chuyển về URL \texttt{cart.html}, sản phẩm vẫn trong giỏ hàng \\ \hline
+\end{tabularx}
+\caption{Bảng kịch bản kiểm thử rút ra từ Sơ đồ hoạt động Thanh toán đơn hàng FR-03}
+\end{table}
+
+\noindent \textbf{Đặc tả chi tiết từng bước của ca kiểm thử mẫu \texttt{TC-CHK-UC1}:}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|c|p{5.5cm}|X|}
+\hline
+\textbf{Bước} & \textbf{Thao tác thực hiện} & \textbf{Kết quả mong đợi chi tiết} \\ \hline
+1 & Thêm sản phẩm Sauce Labs Backpack vào giỏ hàng & Badge giỏ hàng hiển thị số 1; nút chuyển thành Remove \\ \hline
+2 & Nhấn vào biểu tượng giỏ hàng & Chuyển hướng sang \texttt{cart.html}; hiển thị 1 sản phẩm với giá \$29.99 \\ \hline
+3 & Nhấn nút Checkout & Chuyển sang URL \texttt{checkout-step-one.html} \\ \hline
+4 & Nhập First Name: \texttt{Duc}, Last Name: \texttt{Tran}, Postal Code: \texttt{700000}; nhấn nút Continue & Chuyển sang URL \texttt{checkout-step-two.html} \\ \hline
+5 & Kiểm tra thông tin tóm tắt thanh toán & Item total: \$29.99, Tax: \$2.40 ($29.99 \times 8\% \approx 2.40$), Total: \$32.39 ($29.99 + 2.40 = 32.39$) \\ \hline
+6 & Nhấn nút Finish & Chuyển sang URL \texttt{checkout-complete.html}; hiển thị thông điệp \textit{"Thank you for your order!"}; giỏ hàng được làm rỗng và badge biến mất \\ \hline
+\end{tabularx}
+\caption{Đặc tả chi tiết kịch bản kiểm thử \texttt{TC-CHK-UC1}}
+\end{table}
+
+\clearpage
+\subsubsection{Ca sử dụng 2 (UC2): Quản lý giỏ hàng (FR-02) [Nhóm tự mở rộng]}
+\noindent \textbf{Mô tả ca sử dụng:} Ca sử dụng thứ hai được nhóm tự xây dựng theo hướng dẫn tại Mục 5.4 của đề bài, bao gồm các luồng: thêm sản phẩm từ trang chính, xem giỏ hàng, xóa sản phẩm trong trang giỏ hàng, và tiếp tục mua sắm (\textit{Continue Shopping}).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.2cm and 2cm,
+  startend/.style={circle, fill=black, inner sep=4pt},
+  activity/.style={rectangle, rounded corners, draw=black, fill=white, text width=3.8cm, text centered, minimum height=0.8cm, font=\small},
+  decision/.style={diamond, draw=black, fill=white, text width=2cm, text centered, inner sep=1pt, font=\scriptsize},
+  arrow/.style={-Latex, thick}
+]
+  \node[startend] (start) {};
+  \node[activity, below=0.6cm of start] (inv) {Trang danh sách sản phẩm\\(\texttt{inventory.html})};
+  \node[activity, below=0.7cm of inv] (add) {Nhấn Add to cart sản phẩm\\(Badge tăng 1)};
+  \node[activity, below=0.7cm of add] (viewcart) {Nhấn biểu tượng giỏ hàng\\(\texttt{cart.html})};
+  \node[decision, below=0.8cm of viewcart] (dec) {Thao tác tiếp theo?};
+  \node[activity, left=1.2cm of dec] (remove) {Nhấn Remove\\(Badge giảm, xóa mục)};
+  \node[activity, right=1.2cm of dec] (cont) {Nhấn Continue Shopping\\(Quay về \texttt{inventory.html})};
+  \node[activity, below=1cm of dec] (checkout) {Nhấn Checkout\\(Sang bước thanh toán)};
+  \node[circle, draw=black, double, fill=black, inner sep=3pt, below=0.6cm of checkout] (end) {};
+
+  \draw[arrow] (start) -- (inv);
+  \draw[arrow] (inv) -- (add);
+  \draw[arrow] (add) -- (viewcart);
+  \draw[arrow] (viewcart) -- (dec);
+  \draw[arrow] (dec) -- node[above, font=\scriptsize] {Remove} (remove);
+  \draw[arrow] (dec) -- node[above, font=\scriptsize] {Tiếp tục} (cont);
+  \draw[arrow] (dec) -- node[right, font=\scriptsize] {Checkout} (checkout);
+  \draw[arrow] (remove.north) |- (viewcart.west);
+  \draw[arrow] (cont.north) |- (inv.east);
+  \draw[arrow] (checkout) -- (end);
+\end{tikzpicture}
+\caption{Sơ đồ hoạt động (Activity Diagram) của Ca sử dụng 2: Quản lý giỏ hàng}
+\end{figure}
+
+Bảng kịch bản kiểm thử rút ra từ sơ đồ ca sử dụng Quản lý giỏ hàng:
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|c|p{3.5cm}|p{5cm}|X|}
+\hline
+\textbf{Mã TC} & \textbf{Luồng trên sơ đồ} & \textbf{Thao tác người dùng} & \textbf{Kết quả mong đợi} \\ \hline
+\texttt{TC-CART-UC1} & Luồng chính (Thêm \& Xem) & Nhấn Add to cart tại \texttt{inventory.html}, bấm biểu tượng giỏ & URL là \texttt{cart.html}, sản phẩm hiển thị đúng tên, giá, nút Remove \\ \hline
+\texttt{TC-CART-UC2} & Luồng xóa trong giỏ hàng & Đang ở \texttt{cart.html}, nhấn Remove sản phẩm & Sản phẩm bị xóa khỏi danh sách, badge giỏ hàng giảm hoặc biến mất \\ \hline
+\texttt{TC-CART-UC3} & Luồng tiếp tục mua sắm & Đang ở \texttt{cart.html}, nhấn nút Continue Shopping & Chuyển về \texttt{inventory.html}, các sản phẩm đã chọn trước đó vẫn còn \\ \hline
+\texttt{TC-CART-UC4} & Luồng xóa tại trang chủ & Đã thêm sản phẩm, nhấn nút Remove ngay tại \texttt{inventory.html} & Nút đổi lại thành Add to cart, badge giỏ hàng giảm đi 1 \\ \hline
+\texttt{TC-CART-UC5} & Luồng chuyển sang Checkout & Đang ở \texttt{cart.html}, nhấn nút Checkout & Chuyển hướng thành công sang trang \texttt{checkout-step-one.html} \\ \hline
+\end{tabularx}
+\caption{Kịch bản kiểm thử rút ra từ Sơ đồ hoạt động Quản lý giỏ hàng UC2}
+\end{table}
+
+
+% ==============================================================================
+% MỤC 5: NV4 – THỰC THI THỦ CÔNG & BÁO LỖI
+% ==============================================================================
+\clearpage
+\section{NV4 – Thực thi thủ công và Báo cáo lỗi}
+\subsection{Nhật ký thực thi kiểm thử thủ công}
+Nhóm tiến hành chạy thực tế toàn bộ các ca kiểm thử trên môi trường chuẩn (Google Chrome 155, Windows 11 64-bit). Dưới đây là bảng trích xuất kết quả thực thi kiểm thử:
+
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabularx}{\textwidth}{|l|>{\raggedright\arraybackslash}p{2.8cm}|c|>{\raggedright\arraybackslash}X|c|c|}
+\hline
+\textbf{Mã TC} & \textbf{Tên ca kiểm thử} & \textbf{Người chạy} & \textbf{Kết quả thực tế quan sát được} & \textbf{Trạng thái} & \textbf{Mã BUG} \\ \hline
+\texttt{TC-LOGIN-EP1..8} & Kiểm thử EP Đăng nhập & Khánh Đăng & Chuyển hướng đúng hoặc hiển thị đúng thông báo lỗi & \textbf{PASS} & --- \\ \hline
+\texttt{TC-SORT-EP1..EP4} & Sắp xếp với \texttt{standard\_user} & Thành Nhân & Danh sách sản phẩm sắp xếp chuẩn xác theo tên và giá & \textbf{PASS} & --- \\ \hline
+\texttt{TC-SORT-EP2..EP4} & Sắp xếp với \texttt{problem\_user} & Thành Nhân & Dropdown không nhận giá trị, danh sách sản phẩm bị đơ & \textbf{FAIL} & \textbf{BUG-02} \\ \hline
+\texttt{TC-SORT-EP3..EP4} & Sắp xếp giá với \texttt{visual\_user} & Thành Nhân & Giá bị gán ngẫu nhiên, danh sách hiển thị lộn xộn & \textbf{FAIL} & \textbf{BUG-06} \\ \hline
+\texttt{TC-CART-B1..B5} & Kiểm thử biên BVA giỏ hàng & Chí Tài & Badge và nút Remove hoạt động chính xác (0 đến 6) & \textbf{PASS} & --- \\ \hline
+\texttt{TC-CART-P01} & Xóa hàng với \texttt{problem\_user} & Chí Tài & Nhấn Remove nhưng nút không đổi và sản phẩm không bị xóa & \textbf{FAIL} & \textbf{BUG-05} \\ \hline
+\texttt{TC-CHK-UC1..UC5} & Kiểm thử Use Case thanh toán & Việt Đức & Chuyển hướng đúng, tính thuế chuẩn, hiển thị THANK YOU & \textbf{PASS} & --- \\ \hline
+\texttt{TC-CHK-UC6} & Checkout với \texttt{error\_user} & Việt Đức & Ô Last Name không nhận ký tự nhưng form vẫn cho Continue & \textbf{FAIL} & \textbf{BUG-04} \\ \hline
+\texttt{TC-CHK-UC7} & Checkout với \texttt{problem\_user} & Việt Đức & Nhập vào ô Last Name thì tự động sửa vào ô First Name & \textbf{FAIL} & \textbf{BUG-03} \\ \hline
+\texttt{TC-NFR-01} & Đo hiệu năng 5 lần đăng nhập & Ngọc Vinh & 5.12s, 5.08s, 5.11s, 5.15s, 5.10s (Trung vị: 5.11s) & \textbf{FAIL} & \textbf{BUG-01} \\ \hline
+\end{tabularx}
+\caption{Trích xuất kết quả thực thi kiểm thử thủ công trên SauceDemo}
+\end{table}
+
+\clearpage
+\subsection{Báo cáo các lỗi hệ thống phát hiện được (Defect Reports)}
+Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám phá và thực thi đều được lập phiếu báo cáo lỗi chuẩn:
+
+\begin{mdframed}[backgroundcolor=red!5,linecolor=red!60,roundcorner=4pt,nobreak=true]
+\small
+\textbf{Mã lỗi: BUG-01} \\
+\textbf{Tiêu đề lỗi:} Trang sản phẩm mất khoảng 5.11 giây để hiển thị với tài khoản \texttt{performance\_glitch\_user} (vi phạm NFR-01). \\
+\textbf{Mức nghiêm trọng:} Major. \textbf{Môi trường:} Google Chrome 155, Win 11, mạng cáp quang. \\
+\textbf{Các bước tái hiện:} 1. Truy cập trang chủ SauceDemo. 2. Nhập \texttt{performance\_glitch\_user} / \texttt{secret\_sauce}. 3. Bấm Login và đo thời gian đến khi trang tải xong. \\
+\textbf{Kết quả mong đợi:} Trang sản phẩm hiển thị trong thời gian $\le 3.0$ giây. \\
+\textbf{Kết quả thực tế:} 5 lần đo: 5.12s, 5.08s, 5.11s, 5.15s, 5.10s (Trung vị: 5.11s). Đo kiểm tra qua công cụ Chrome DevTools Performance ghi nhận chỉ số LCP đạt đúng $5.11\text{ s}$ (mức cảnh báo poor, vượt xa ngưỡng chấp nhận $3.0\text{ s}$). \\
+\textbf{Bằng chứng đính kèm:} Video ghi hình \texttt{evidence/NV4\_BUG-01.mp4} và ảnh chụp màn hình DevTools LCP \texttt{evidence/NV4\_BUG-01.png}.
+\begin{center}\includegraphics[width=0.62\textwidth]{evidence/NV4_BUG-01.png}\end{center}
+\end{mdframed}
+
+\vspace{0.2cm}
+
+\begin{mdframed}[backgroundcolor=orange!5,linecolor=orange!60,roundcorner=4pt,nobreak=true]
+\small
+\textbf{Mã lỗi: BUG-02} \\
+\textbf{Tiêu đề lỗi:} Bộ lọc sắp xếp không hoạt động khi chọn các tiêu chí sắp xếp với tài khoản \texttt{problem\_user}. \\
+\textbf{Mức nghiêm trọng:} Medium. \textbf{Môi trường:} Google Chrome 155, Win 11. \\
+\textbf{Các bước tái hiện:} Đăng nhập bằng \texttt{problem\_user}, nhấp chọn bộ lọc sắp xếp (Z-A hoặc Price low-high/high-low). \\
+\textbf{Kết quả mong đợi:} Dropdown chuyển sang tiêu chí được chọn và danh sách sản phẩm sắp xếp lại tương ứng. \\
+\textbf{Kết quả thực tế:} Dropdown không nhận giá trị mới, danh sách sản phẩm giữ nguyên thứ tự mặc định (Name A to Z). \\
+\textbf{Bằng chứng đính kèm:} Ảnh chụp màn hình \texttt{evidence/NV4\_BUG-02.png}.
+\begin{center}\includegraphics[width=0.62\textwidth]{evidence/NV4_BUG-02.png}\end{center}
+\end{mdframed}
+
+\clearpage
+
+\begin{mdframed}[backgroundcolor=red!5,linecolor=red!60,roundcorner=4pt,nobreak=true]
+\small
+\textbf{Mã lỗi: BUG-03} \\
+\textbf{Tiêu đề lỗi:} Nhập ký tự vào ô Last Name thì hệ thống tự động ghi đè sang ô First Name khi dùng \texttt{problem\_user}. \\
+\textbf{Mức nghiêm trọng:} Major. \textbf{Môi trường:} Google Chrome 155, Win 11. \\
+\textbf{Các bước tái hiện:} Đăng nhập bằng \texttt{problem\_user}, vào Checkout Step One, nhập First Name: 'An', sau đó nhập Last Name: 'Nguyen'. \\
+\textbf{Kết quả mong đợi:} Ô First Name giữ nguyên 'An', ô Last Name hiển thị 'Nguyen'. \\
+\textbf{Kết quả thực tế:} Ô First Name bị tự động ghi đè thành 'Nguyen', ô Last Name không nhận giá trị độc lập. \\
+\textbf{Bằng chứng đính kèm:} Ảnh chụp màn hình \texttt{evidence/NV4\_BUG-03.png}.
+\begin{center}\includegraphics[width=0.62\textwidth]{evidence/NV4_BUG-03.png}\end{center}
+\end{mdframed}
+
+\vspace{0.2cm}
+
+\begin{mdframed}[backgroundcolor=red!5,linecolor=red!60,roundcorner=4pt,nobreak=true]
+\small
+\textbf{Mã lỗi: BUG-04} \\
+\textbf{Tiêu đề lỗi:} Ô Last Name không nhận ký tự nhưng form vẫn cho phép Continue sang Overview khi dùng \texttt{error\_user}. \\
+\textbf{Mức nghiêm trọng:} Major. \textbf{Môi trường:} Google Chrome 155, Win 11. \\
+\textbf{Các bước tái hiện:} Đăng nhập \texttt{error\_user}, vào Checkout Step One, nhập First Name: 'Duc', Postal Code: '700000', để trống Last Name và nhấn Continue. \\
+\textbf{Kết quả mong đợi:} Ô Last Name nhận ký tự bình thường; nếu thiếu Last Name phải chặn lại và hiển thị lỗi. \\
+\textbf{Kết quả thực tế:} Ô Last Name không gõ được chữ (Console báo lỗi TypeError); khi nhấn Continue hệ thống bypass validation và tự chuyển sang \texttt{checkout-step-two.html}. \\
+\textbf{Bằng chứng đính kèm:} Video ghi hình \texttt{evidence/NV4\_BUG-04.mp4} và ảnh chụp màn hình \texttt{evidence/NV4\_BUG-04.png}.
+\begin{center}\includegraphics[width=0.62\textwidth]{evidence/NV4_BUG-04.png}\end{center}
+\end{mdframed}
+
+\clearpage
+
+\begin{mdframed}[backgroundcolor=orange!5,linecolor=orange!60,roundcorner=4pt,nobreak=true]
+\small
+\textbf{Mã lỗi: BUG-05} \\
+\textbf{Tiêu đề lỗi:} Không thể xóa sản phẩm khỏi giỏ hàng bằng nút Remove khi dùng tài khoản \texttt{problem\_user}. \\
+\textbf{Mức nghiêm trọng:} Major. \textbf{Môi trường:} Google Chrome 155, Win 11. \\
+\textbf{Các bước tái hiện:} Đăng nhập \texttt{problem\_user}, thêm sản phẩm vào giỏ, vào \texttt{cart.html} và nhấn nút Remove. \\
+\textbf{Kết quả mong đợi:} Sản phẩm bị xóa khỏi giỏ, nút đổi lại thành 'Add to cart', badge giỏ hàng giảm đi 1. \\
+\textbf{Kết quả thực tế:} Nút không chuyển lại thành Add to cart, sản phẩm vẫn còn trong giỏ và badge không giảm. \\
+\textbf{Bằng chứng đính kèm:} Ảnh chụp màn hình \texttt{evidence/NV4\_BUG-05.png}.
+\begin{center}\includegraphics[width=0.62\textwidth]{evidence/NV4_BUG-05.png}\end{center}
+\end{mdframed}
+
+\vspace{0.2cm}
+
+\begin{mdframed}[backgroundcolor=orange!5,linecolor=orange!60,roundcorner=4pt,nobreak=true]
+\small
+\textbf{Mã lỗi: BUG-06} \\
+\textbf{Tiêu đề lỗi:} Giá sản phẩm bị hiển thị ngẫu nhiên và danh sách giá bị lộn xộn khi dùng \texttt{visual\_user}. \\
+\textbf{Mức nghiêm trọng:} Medium. \textbf{Môi trường:} Google Chrome 155, Win 11. \\
+\textbf{Các bước tái hiện:} Đăng nhập \texttt{visual\_user}, quan sát giá niêm yết trên \texttt{inventory.html} và chọn bộ lọc theo giá. \\
+\textbf{Kết quả mong đợi:} Giá sản phẩm hiển thị đúng giá niêm yết gốc và được sắp xếp tuần tự. \\
+\textbf{Kết quả thực tế:} Giá sản phẩm bị gán số ngẫu nhiên; khi lọc theo giá thì thứ tự hiển thị bị lộn xộn. \\
+\textbf{Bằng chứng đính kèm:} Ảnh chụp màn hình \texttt{evidence/NV4\_BUG-06.png}.
+\begin{center}\includegraphics[width=0.62\textwidth]{evidence/NV4_BUG-06.png}\end{center}
+\end{mdframed}
+
+% ==============================================================================
+% MỤC 6: NV5 – TỰ ĐỘNG HÓA VỚI JUNIT 5 & SELENIUM
+% ==============================================================================
+\clearpage
+\section{NV5 – Tự động hóa bằng JUnit 5}
+\subsection{Kiến trúc Page Object Model (POM)}
+Nhóm triển khai mô hình thiết kế chuẩn công nghiệp Page Object Model:
+\begin{itemize}
+  \item Tách biệt hoàn toàn giữa \textbf{Phần tử giao diện \& Thao tác người dùng} (nằm trong thư mục \texttt{pages/}) và \textbf{Mã kiểm thử \& Khẳng định kết quả} (nằm trong thư mục \texttt{tests/}).
+  \item Tuyệt đối tuân thủ quy tắc của đề bài: \textbf{Không sử dụng \texttt{Thread.sleep()}}, 100\% các thao tác đồng bộ đều dùng cơ chế chờ tường minh \textbf{Explicit Wait (\texttt{WebDriverWait} kết hợp \texttt{ExpectedConditions})}.
+\end{itemize}
+
+\subsection{Trích đoạn mã nguồn các lớp kiểm thử tiêu biểu}
+
+\subsubsection{Lớp LoginTest.java (Sử dụng CsvFileSource và CsvSource)}
+\begin{lstlisting}[caption={Trích đoạn mã nguồn lớp LoginTest.java}]
+@Tag("web")
+@DisplayName("FR-01: Authentication (Login)")
+class LoginTest extends WebTestBase {
+
+    private LoginPage loginPage;
+
+    @BeforeEach
+    void openLoginPage() {
+        loginPage = new LoginPage(driver, baseUrl).open();
+    }
+
+    @ParameterizedTest(name = "{0}: user=''{1}'', accepted={3}")
+    @CsvFileSource(resources = "/login-data.csv", numLinesToSkip = 1)
+    void loginEquivalencePartitioning(
+            String testCaseId,
+            String username,
+            String password,
+            boolean expectedAccepted,
+            String expectedEvidence) {
+
+        LoginResult actual = loginPage.login(username, password);
+
+        assertEquals(expectedAccepted, actual.accepted(),
+                () -> testCaseId + ": (*@Kết quả accepted không khớp cho user:@*) '" + username + "'");
+        assertTrue(
+                actual.currentUrl().contains(expectedEvidence)
+                        || actual.message().contains(expectedEvidence),
+                () -> testCaseId + ": (*@Kỳ vọng chứa@*) '" + expectedEvidence
+                        + "', (*@nhưng thực tế URL:@*) '" + actual.currentUrl()
+                        + "', (*@thông báo:@*) '" + actual.message() + "'");
+    }
+
+    @ParameterizedTest(name = "{0} [{1}]: user=''{2}'', pass=''{3}'' -> error/URL: {5}")
+    @CsvSource({
+        "TC-LOGIN-DT1, (*@Quy tắc R1@*), '', '', false, Username is required",
+        "TC-LOGIN-DT2, (*@Quy tắc R2@*), standard_user, '', false, Password is required",
+        "TC-LOGIN-DT3, (*@Quy tắc R3@*), locked_out_user, wrong_password, false, Username and password do not match",
+        "TC-LOGIN-DT4, (*@Quy tắc R4@*), locked_out_user, secret_sauce, false, Sorry, this user has been locked out",
+        "TC-LOGIN-DT5, (*@Quy tắc R5@*), standard_user, secret_sauce, true, inventory.html"
+    })
+    void loginDecisionTable(
+            String testCaseId,
+            String ruleName,
+            String username,
+            String password,
+            boolean expectedAccepted,
+            String expectedEvidence) {
+
+        LoginResult actual = loginPage.login(username, password);
+
+        assertEquals(expectedAccepted, actual.accepted(),
+                () -> testCaseId + " (" + ruleName + "): (*@Kết quả accepted không khớp@*)");
+        assertTrue(
+                actual.currentUrl().contains(expectedEvidence)
+                        || actual.message().contains(expectedEvidence),
+                () -> testCaseId + " (" + ruleName + "): (*@Kỳ vọng chứa@*) '" + expectedEvidence
+                        + "', (*@nhưng thực tế URL:@*) '" + actual.currentUrl()
+                        + "', (*@thông báo:@*) '" + actual.message() + "'");
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Lớp CheckoutTest.java (Kiểm thử kịch bản Use Case)}
+\begin{lstlisting}[caption={Trích đoạn mã nguồn lớp CheckoutTest.java}]
+public class CheckoutTest extends WebTestBase {
+    private CheckoutPage checkoutPage;
+    private CartPage cartPage;
+
+    @BeforeEach
+    void prepareCheckout() {
+        LoginPage loginPage = new LoginPage(driver, baseUrl);
+        LoginPage.LoginResult loginResult = loginPage.open().login("standard_user", "secret_sauce");
+        assertTrue(loginResult.accepted(), "(*@Đăng nhập thất bại:@*)" + loginResult.message());
+
+        InventoryPage inventoryPage = new InventoryPage(driver);
+        inventoryPage.open().addToCart("sauce-labs-backpack");
+        inventoryPage.openCart();
+        cartPage = new CartPage(driver);
+        cartPage.open();
+        cartPage.clickCheckOut();
+        checkoutPage = new CheckoutPage(driver);
+    }
+
+    @Test
+    @DisplayName("(*@TC-CHK-UC1 - Checkout thành công@*)")
+    void testCheckoutSucces() {
+        checkoutPage.fillInformation("Nguyen", "Van A", "700000");
+        checkoutPage.continueToOverviewAndReadTotal();
+        assertEquals("Item total: $29.99", checkoutPage.getItemTotal());
+        assertEquals("Tax: $2.40", checkoutPage.getTax());
+        assertEquals("Total: $32.39", checkoutPage.getTotal());
+        assertEquals("Thank you for your order!", checkoutPage.finishOrder());
+    }
+
+    @Test
+    @DisplayName("(*@TC-CHK-UC2 - Bỏ trống trường FirstName@*)")
+    void testMissingFirstName() {
+        checkoutPage.fillInformation("", "Van A", "700000");
+        assertEquals("Error: First Name is required", checkoutPage.continueExpectingError());
+    }
+
+    @Test
+    @DisplayName("(*@TC-CHK-UC3 - Bỏ trống trường LastName@*)")
+    void testMissingLastName() {
+        checkoutPage.fillInformation("Nguyen", "", "700000");
+        assertEquals("Error: Last Name is required", checkoutPage.continueExpectingError());
+    }
+
+    @Test
+    @DisplayName("(*@TC-CHK-UC4 - Bỏ trống trường Postal@*)")
+    void testMissingPostal() {
+        checkoutPage.fillInformation("Nguyen", "Van A", "");
+        assertEquals("Error: Postal Code is required", checkoutPage.continueExpectingError());
+    }
+
+    @Test
+    @DisplayName("(*@TC-CHK-UC5 - Nhấn Cancel Checkout @*)")
+    void testCancelCheckout() {
+        checkoutPage.clickCancel();
+        cartPage.open();
+        assertTrue(driver.getCurrentUrl().contains("cart.html"), "(*@Không quay lại giỏ hàng@*)");
+        assertTrue(cartPage.isProductInCart("Sauce Labs Backpack"), "(*@Sản phẩm đã mất@*)");
+        assertEquals(1, cartPage.countProduct(), "(*@Số lượng sản phẩm không đúng @*)");
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Lớp CartTest.java (Kiểm thử giá trị biên BVA giỏ hàng - FR-02)}
+\begin{lstlisting}[caption={Trích đoạn mã nguồn lớp CartTest.java}]
+@TestMethodOrder(MethodOrderer.DisplayName.class)
+@DisplayName("(*@FR-02: Kiểm thử giá trị biên của giỏ hàng@*)")
+public class CartTest extends WebTestBase {
+
+    private InventoryPage inventory;
+
+    private static final String[] PRODUCTS = {
+        "sauce-labs-backpack",
+        "sauce-labs-bike-light",
+        "sauce-labs-bolt-t-shirt",
+        "sauce-labs-fleece-jacket",
+        "sauce-labs-onesie",
+        "test.allthethings()-t-shirt-(red)"
+    };
+
+    @BeforeEach
+    void setUpCartTest() {
+        new LoginPage(driver, baseUrl)
+                .open()
+                .login("standard_user", "secret_sauce");
+
+        inventory = new InventoryPage(driver).open();
+    }
+
+    @Test
+    @DisplayName("(*@TC-CART-B1: Giỏ rỗng không hiển thị badge@*)")
+    void emptyCartHasNoBadge() {
+        assertEquals(0, inventory.cartBadgeCount(), "(*@Badge phải không xuất hiện khi giỏ hàng rỗng@*)");
+    }
+
+    @Test
+    @DisplayName("(*@TC-CART-B2: Thêm 1 sản phẩm, badge bằng 1@*)")
+    void addOneProduct() {
+        inventory.addToCart(PRODUCTS[0]);
+        assertEquals(1, inventory.cartBadgeCount(), "(*@Badge phải hiển thị số 1@*)");
+    }
+
+    @Test
+    @DisplayName("(*@TC-CART-B3: Giỏ có 5 sản phẩm, badge bằng 5@*)")
+    void cartHasFiveProducts() {
+        for (String product : PRODUCTS) {
+            inventory.addToCart(product);
+        }
+        inventory.removeFromCart(PRODUCTS[5]);
+        inventory.waitForCartBadge("5");
+        assertEquals(5, inventory.cartBadgeCount(), "(*@Badge phải hiển thị số 5@*)");
+    }
+
+    @Test
+    @DisplayName("(*@TC-CART-B4: Thêm đủ 6 sản phẩm, badge bằng 6@*)")
+    void cartHasSixProducts() {
+        for (String product : PRODUCTS) {
+            inventory.addToCart(product);
+        }
+        assertEquals(6, inventory.cartBadgeCount(), "(*@Badge phải hiển thị số 6@*)");
+    }
+
+    @Test
+    @DisplayName("(*@TC-CART-B5: Xóa sản phẩm cuối cùng, badge biến mất@*)")
+    void removeLastProduct() {
+        inventory.addToCart(PRODUCTS[0]);
+        assertEquals(1, inventory.cartBadgeCount(), "(*@Trước khi xóa, badge phải bằng 1@*)");
+        inventory.removeFromCart(PRODUCTS[0]);
+        inventory.waitForCartBadge("0");
+        assertEquals(0, inventory.cartBadgeCount(), "(*@Badge phải biến mất khi giỏ hàng trở về 0@*)");
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Lớp SortTest.java (Kiểm thử sắp xếp và phát hiện lỗi Sort - FR-04)}
+\begin{lstlisting}[caption={Trích đoạn mã nguồn lớp SortTest.java}]
+@Tag("web")
+@DisplayName("FR-04: Sort")
+public class SortTest extends WebTestBase {
+
+    private InventoryPage loginInventoryPage(String username) {
+        LoginPage loginPage = new LoginPage(driver, baseUrl).open();
+        LoginResult result = loginPage.login(username, "secret_sauce");
+        assertTrue(result.accepted(), "(*@Đăng nhập thất bại với tài khoản: @*)" + username);
+        return new InventoryPage(driver).open();
+    }
+
+    @ParameterizedTest(name = "{0}: user={1}, option={2}")
+    @DisplayName("(*@FR-04: Sắp xếp sản phẩm theo tên (A-Z, Z-A)@*)")
+    @CsvSource({
+        "TC-SORT-EP1, standard_user, az, true",
+        "TC-SORT-EP2, standard_user, za, false",
+        "TC-SORT-EP1, problem_user,  az, true",
+        "TC-SORT-EP1, visual_user,   az, true",
+        "TC-SORT-EP2, visual_user,   za, false"
+    })
+    void sortByNamePass(String tcId, String username, String option, boolean ascending) {
+        InventoryPage inventoryPage = loginInventoryPage(username);
+        List<String> actual = inventoryPage.sortBy(option).names();
+        List<String> expected = new ArrayList<>(actual);
+        expected.sort(ascending ? Comparator.naturalOrder() : Comparator.reverseOrder());
+        assertEquals(expected, actual, () -> String.format("[%s] (*@Thứ tự tên sản phẩm không đúng với@*) user=%s, option=%s", tcId, username, option));
+    }
+
+    @ParameterizedTest(name = "{0}: user={1}, option={2}")
+    @DisplayName("(*@FR-04: Sắp xếp sản phẩm theo giá (low-high, high-low)@*)")
+    @CsvSource({
+        "TC-SORT-EP3, standard_user, lohi, true",
+        "TC-SORT-EP4, standard_user, hilo, false"
+    })
+    void sortByPricePass(String tcId, String username, String option, boolean ascending) {
+        InventoryPage inventoryPage = loginInventoryPage(username);
+        List<Double> actual = inventoryPage.sortBy(option).prices();
+        List<Double> expected = new ArrayList<>(actual);
+        expected.sort(ascending ? Comparator.naturalOrder() : Comparator.reverseOrder());
+        assertEquals(expected, actual, () -> String.format("[%s] (*@Thứ tự giá sản phẩm không đúng với@*) user=%s, option=%s", tcId, username, option));
+    }
+
+    @Tag("known-bug")
+    @ParameterizedTest(name = "{0}: user={1}, option={2}")
+    @DisplayName("(*@FR-04: Lỗi sắp xếp theo tên Z-A với@*) problem_user")
+    @CsvSource({
+        "TC-SORT-EP2[BUG-02], problem_user, za, false"
+    })
+    void sortByNameKnownBugs(String tcId, String username, String option, boolean ascending) {
+        InventoryPage inventoryPage = loginInventoryPage(username);
+        List<String> actual = inventoryPage.sortBy(option).names();
+        List<String> expected = new ArrayList<>(actual);
+        expected.sort(ascending ? Comparator.naturalOrder() : Comparator.reverseOrder());
+        assertEquals(expected, actual, () -> String.format("[%s] (*@Hệ thống không sắp xếp tên theo@*) %s (*@cho@*) %s", tcId, option, username));
+    }
+
+    @Tag("known-bug")
+    @ParameterizedTest(name = "{0}: user={1}, option={2}")
+    @DisplayName("(*@FR-04: Lỗi sắp xếp theo giá với@*) problem_user (*@và@*) visual_user")
+    @CsvSource({
+        "TC-SORT-EP3[BUG-02], problem_user, lohi, true",
+        "TC-SORT-EP4[BUG-02], problem_user, hilo, false",
+        "TC-SORT-EP3[BUG-06], visual_user,  lohi, true",
+        "TC-SORT-EP4[BUG-06], visual_user,  hilo, false"
+    })
+    void sortByPriceKnownBugs(String tcId, String username, String option, boolean ascending) {
+        InventoryPage inventoryPage = loginInventoryPage(username);
+        List<Double> actual = inventoryPage.sortBy(option).prices();
+        List<Double> expected = new ArrayList<>(actual);
+        expected.sort(ascending ? Comparator.naturalOrder() : Comparator.reverseOrder());
+        assertEquals(expected, actual, () -> String.format("[%s] (*@Hệ thống không sắp xếp giá theo@*) %s (*@cho@*) %s", tcId, option, username));
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Lớp PerformanceTest.java (Đo hiệu năng NFR-01 \& Đánh dấu lỗi đã biết)}
+\begin{lstlisting}[caption={Trích đoạn mã nguồn lớp PerformanceTest.java}]
+class PerformanceTest extends WebTestBase {
+
+    @Test
+    @Tag("known-bug")
+    @DisplayName("TC-NFR-01: Login performance")
+    void inventoryLoadsWithin3Seconds() {
+        LoginPage loginPage = new LoginPage(driver, baseUrl).open();
+        long start = System.nanoTime();
+        LoginResult result = loginPage.login("performance_glitch_user", "secret_sauce");
+        long elapsedMs = Duration.ofNanos(System.nanoTime() - start).toMillis();
+
+        System.out.println("(*@Thời gian đăng nhập: @*)" + elapsedMs + " ms");
+        System.out.println("(*@Kết quả: @*)" + result.message());
+
+        assertTrue(result.accepted(), "(*@Đăng nhập không thành công@*)");
+        assertTrue(elapsedMs <= 3000, "(*@Vượt ngưỡng 3000 ms: @*)" + elapsedMs + " ms");
+    }
+}
+\end{lstlisting}
+
+\subsection{Kết quả thực thi tự động (Maven Surefire Report)}
+Nhóm thực thi lệnh kiểm tra tự động hóa qua Maven:
+\begin{mdframed}[backgroundcolor=green!5,linecolor=green!60,roundcorner=4pt]
+\small \ttfamily
+mvn test -DexcludedGroups=known-bug \\{}
+{[INFO]} Running vn.edu.softwaretesting.tests.CartTest \\{}
+{[INFO]} Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.65 s \\{}
+{[INFO]} Running vn.edu.softwaretesting.tests.CheckoutTest \\{}
+{[INFO]} Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.35 s \\{}
+{[INFO]} Running vn.edu.softwaretesting.tests.LoginTest \\{}
+{[INFO]} Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.11 s \\{}
+{[INFO]} Running vn.edu.softwaretesting.tests.SortTest \\{}
+{[INFO]} Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.22 s \\{}
+{[INFO]} ------------------------------------------------------------------------ \\{}
+{[INFO]} Results: \\{}
+{[INFO]} Tests run: 30, Failures: 0, Errors: 0, Skipped: 0 \\{}
+{[INFO]} ------------------------------------------------------------------------ \\{}
+{[INFO]} BUILD SUCCESS \\{}
+{[INFO]} Total time:  52.021 s \\{}
+{[INFO]} ------------------------------------------------------------------------
+\end{mdframed}
+Khi chạy kiểm thử nhóm lỗi đã biết (\texttt{mvn test -Dgroups=known-bug}), các ca kiểm thử tái hiện lỗi (\texttt{PerformanceTest}, \texttt{CheckoutProblemUserTest}, \texttt{CheckoutErrorUserTest}, \texttt{SortTest}) ghi nhận FAIL chính xác nhằm minh chứng sự tồn tại của 6 BUG theo đúng yêu cầu đề bài.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\textwidth]{evidence/NV5_terminal_mvn_test.png}
+\caption{Ảnh chụp màn hình kết quả thực thi tự động hóa toàn bộ 30 ca kiểm thử với Maven (BUILD SUCCESS)}
+\label{fig:terminal_mvn_nv5}
+\end{figure}
+
+\subsection{Cấu hình mở rộng đạt điểm Bonus (Mục 7.7 đề bài)}
+Theo quy định tại Mục 7.7 của đề bài, nhóm đã nghiên cứu và triển khai thành công hai tính năng nâng cao nhằm đạt điểm cộng tối đa:
+
+\subsubsection{Cơ chế tự động chụp ảnh màn hình khi FAIL bằng JUnit 5 TestWatcher}
+Nhóm triển khai lớp \texttt{ScreenshotWatcher} hiện thực đồng thời hai giao diện cốt lõi của JUnit 5 Extension: \texttt{TestWatcher} và \texttt{AfterTestExecutionCallback}. 
+Khi một ca kiểm thử bị thất bại (tiêu biểu khi chạy nhóm kiểm thử mang nhãn \texttt{known-bug}), callback sẽ can thiệp ngay thời điểm phát sinh lỗi trước khi trình duyệt bị đóng bởi \texttt{@AfterEach}, sử dụng \texttt{TakesScreenshot} của Selenium để chụp lại nguyên trạng màn hình trình duyệt và tự động lưu vào thư mục \texttt{target/screenshots/} theo định dạng \texttt{\{ClassName\}\_\{MethodName\}\_\{Timestamp\}.png}.
+Lớp cơ sở \texttt{WebTestBase} được gắn annotation \texttt{@ExtendWith(ScreenshotWatcher.class)}, giúp toàn bộ các lớp kiểm thử tự động thừa hưởng tính năng này một cách trong suốt mà không cần sửa đổi mã nguồn kiểm thử.
+
+\subsubsection{Tích hợp quy trình kiểm thử tự động liên tục (CI) với GitHub Actions}
+Nhóm xây dựng quy trình CI hoàn chỉnh thông qua tệp cấu hình \texttt{.github/workflows/test.yml}:
+\begin{itemize}
+  \item \textbf{Môi trường thực thi:} Máy ảo Ubuntu (\texttt{ubuntu-latest}) tích hợp Google Chrome Headless và bộ phát triển OpenJDK 17.
+  \item \textbf{Kích hoạt tự động:} Workflow tự động kích hoạt mỗi khi có thao tác \texttt{push} hoặc \texttt{pull\_request} vào nhánh chính \texttt{main}.
+  \item \textbf{Lưu trữ kết quả kiểm thử (Artifacts):} Sử dụng \texttt{actions/upload-artifact@v4} để tự động đóng gói toàn bộ thư mục báo cáo \texttt{target/surefire-reports/} thành artifact tải về trên giao diện GitHub Actions với thời hạn lưu trữ 14 ngày. Ngoài ra, nếu có kiểm thử bị FAIL, thư mục ảnh chụp \texttt{target/screenshots/} từ \texttt{TestWatcher} cũng được tự động lưu trữ làm bằng chứng phân tích lỗi.
+\end{itemize}
+
+% ==============================================================================
+% MỤC 7: KẾT LUẬN & TỰ ĐÁNH GIÁ TRƯỚC KHI NỘP BÀI
+% ==============================================================================
+\clearpage
+\section{Kết luận và Tự đánh giá trước khi nộp bài}
+Đối chiếu với danh sách kiểm tra (Checklist Mục 9 trong đề bài của giảng viên Từ Lãng Phiêu):
+\begin{itemize}
+  \item[\checkmark] Lệnh \texttt{mvn clean test} thực thi trơn tru, độc lập trên máy sạch; chỉ có duy nhất các kiểm thử mang nhãn \texttt{@Tag("known-bug")} được phép FAIL.
+  \item[\checkmark] 100\% các yêu cầu chức năng (FR-01 đến FR-04) và phi chức năng (NFR-01) đều có tối thiểu một ca kiểm thử bao phủ.
+  \item[\checkmark] Mỗi ca kiểm thử bị FAIL trong thực tế đều có mã định danh lỗi \textbf{BUG-xx} tương ứng trong báo cáo lỗi.
+  \item[\checkmark] Toàn bộ kết quả mong đợi đều được tính toán khoa học từ tài liệu đặc tả, không chép lại từ màn hình giao diện.
+  \item[\checkmark] Mã định danh ca kiểm thử đồng nhất 100\% giữa tệp Excel (\texttt{test-cases.xlsx}), báo cáo thuyết minh PDF và thuộc tính \texttt{@DisplayName} trong mã nguồn tự động hóa.
+  \item[\checkmark] Toàn bộ mã nguồn kiểm thử không có bất kỳ dòng lệnh \texttt{Thread.sleep()} nào, tuân thủ nghiêm ngặt cơ chế Explicit Wait.
+  \item[\checkmark] \textbf{[Bonus đạt chuẩn]} Cấu hình hoàn chỉnh JUnit 5 \texttt{TestWatcher} tự động chụp ảnh màn hình khi FAIL và lưu tại \texttt{target/screenshots/}.
+  \item[\checkmark] \textbf{[Bonus đạt chuẩn]} Thiết lập pipeline GitHub Actions CI tự động hóa chạy kiểm thử và lưu trữ \texttt{surefire-reports} làm artifact.
+\end{itemize}
+
+\end{document}

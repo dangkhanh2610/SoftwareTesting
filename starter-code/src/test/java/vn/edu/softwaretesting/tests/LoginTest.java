@@ -25,10 +25,7 @@ class LoginTest extends WebTestBase {
         loginPage = new LoginPage(driver, baseUrl).open();
     }
 
-    /**
-     * Kiểm thử Phân lớp tương đương (EP) - Đọc dữ liệu từ file ngoài login-data.csv
-     * Bao phủ các ca kiểm thử: TC-LOGIN-EP1 đến TC-LOGIN-EP8
-     */
+    
     @ParameterizedTest(name = "{0}: user=''{1}'', accepted={3}")
     @CsvFileSource(resources = "/login-data.csv", numLinesToSkip = 1)
     void loginEquivalencePartitioning(
@@ -50,10 +47,7 @@ class LoginTest extends WebTestBase {
                         + "', thông báo: '" + actual.message() + "'");
     }
 
-    /**
-     * Kiểm thử Bảng quyết định (DT) - Sử dụng nguồn dữ liệu trực tiếp @CsvSource
-     * Bao phủ các ca kiểm thử: TC-LOGIN-DT1 đến TC-LOGIN-DT5 tương ứng với 5 quy tắc R1-R5
-     */
+    
     @ParameterizedTest(name = "{0} [{1}]: user=''{2}'', pass=''{3}'' -> error/URL: {5}")
     @CsvSource({
         "TC-LOGIN-DT1, Quy tac R1, '', '', false, Username is required",

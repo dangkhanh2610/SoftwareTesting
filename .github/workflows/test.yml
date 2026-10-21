@@ -1,0 +1,46 @@
+name: Automated Testing (JUnit 5 & Selenium)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Run JUnit 5 Selenium Tests
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run Maven Tests (Standard Test Suite)
+        run: |
+          cd starter-code
+          mvn clean test -DexcludedGroups=known-bug
+
+      - name: Upload Surefire Test Reports Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-test-reports
+          path: starter-code/target/surefire-reports/
+          retention-days: 14
+
+      - name: Upload TestWatcher Screenshots Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: testwatcher-failure-screenshots
+          path: starter-code/target/screenshots/
+          if-no-files-found: ignore
+          retention-days: 14
