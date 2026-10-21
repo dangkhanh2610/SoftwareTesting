@@ -1045,28 +1045,29 @@ Nhóm thực thi lệnh kiểm tra tự động hóa qua Maven:
 \begin{mdframed}[backgroundcolor=green!5,linecolor=green!60,roundcorner=4pt]
 \small \ttfamily
 mvn test -DexcludedGroups=known-bug \\{}
-{[INFO]} Running vn.edu.softwaretesting.tests.LoginTest \\{}
-{[INFO]} Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.57 s \\{}
-{[INFO]} Running vn.edu.softwaretesting.tests.CheckoutTest \\{}
-{[INFO]} Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.86 s \\{}
 {[INFO]} Running vn.edu.softwaretesting.tests.CartTest \\{}
-{[INFO]} Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.07 s \\{}
+{[INFO]} Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.65 s \\{}
+{[INFO]} Running vn.edu.softwaretesting.tests.CheckoutTest \\{}
+{[INFO]} Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.35 s \\{}
+{[INFO]} Running vn.edu.softwaretesting.tests.LoginTest \\{}
+{[INFO]} Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.11 s \\{}
 {[INFO]} Running vn.edu.softwaretesting.tests.SortTest \\{}
-{[INFO]} Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.60 s \\{}
+{[INFO]} Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.22 s \\{}
 {[INFO]} ------------------------------------------------------------------------ \\{}
 {[INFO]} Results: \\{}
 {[INFO]} Tests run: 30, Failures: 0, Errors: 0, Skipped: 0 \\{}
 {[INFO]} ------------------------------------------------------------------------ \\{}
 {[INFO]} BUILD SUCCESS \\{}
+{[INFO]} Total time:  52.021 s \\{}
 {[INFO]} ------------------------------------------------------------------------
 \end{mdframed}
 Khi chạy kiểm thử nhóm lỗi đã biết (\texttt{mvn test -Dgroups=known-bug}), các ca kiểm thử tái hiện lỗi (\texttt{PerformanceTest}, \texttt{CheckoutProblemUserTest}, \texttt{CheckoutErrorUserTest}, \texttt{SortTest}) ghi nhận FAIL chính xác nhằm minh chứng sự tồn tại của 6 BUG theo đúng yêu cầu đề bài.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.88\textwidth]{evidence/NV1_terminal_mvn_clean_test.png}
-\caption{Ảnh chụp màn hình kết quả thực thi tự động hóa với Maven}
-\label{fig:terminal_mvn}
+\includegraphics[width=0.92\textwidth]{evidence/NV5_terminal_mvn_test.png}
+\caption{Ảnh chụp màn hình kết quả thực thi tự động hóa toàn bộ 30 ca kiểm thử với Maven (BUILD SUCCESS)}
+\label{fig:terminal_mvn_nv5}
 \end{figure}
 
 \subsection{Cấu hình mở rộng đạt điểm Bonus (Mục 7.7 đề bài)}

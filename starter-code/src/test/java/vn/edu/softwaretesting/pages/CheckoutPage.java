@@ -3,7 +3,6 @@ import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -32,23 +31,9 @@ public class CheckoutPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
     public CheckoutPage fillInformation(String first, String last, String postal) {
-        WebElement firstElem = wait.until(ExpectedConditions.visibilityOfElementLocated(FIRST_NAME));
-        firstElem.clear();
-        if (first != null && !first.isEmpty()) {
-            firstElem.sendKeys(first);
-        }
-
-        WebElement lastElem = wait.until(ExpectedConditions.visibilityOfElementLocated(LAST_NAME));
-        lastElem.clear();
-        if (last != null && !last.isEmpty()) {
-            lastElem.sendKeys(last);
-        }
-
-        WebElement postalElem = wait.until(ExpectedConditions.visibilityOfElementLocated(POSTAL_CODE));
-        postalElem.clear();
-        if (postal != null && !postal.isEmpty()) {
-            postalElem.sendKeys(postal);
-        }
+        wait.until(ExpectedConditions.visibilityOfElementLocated(FIRST_NAME)).sendKeys(first);
+        driver.findElement(LAST_NAME).sendKeys(last);
+        driver.findElement(POSTAL_CODE).sendKeys(postal);
         return this;
     }
     public String continueToOverviewAndReadTotal() {
@@ -74,7 +59,7 @@ public class CheckoutPage {
                 ExpectedConditions.visibilityOfElementLocated(COMPLETE)).getText();
     }
     public void clickCancel() {
-        wait.until(ExpectedConditions.elementToBeClickable(CANCEL)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(CANCEL)).click();
     }
 
 }
