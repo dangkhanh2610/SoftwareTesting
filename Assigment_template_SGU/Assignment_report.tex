@@ -336,7 +336,7 @@ Ma trận truy vết được nhóm xây dựng ở NV2 và cập nhật đồng
 \textbf{Mã YC} & \textbf{Tên chức năng} & \textbf{Kỹ thuật áp dụng} & \textbf{Mã Test Case} & \textbf{Lớp Test JUnit 5} & \textbf{Mã Lỗi} \\ \hline
 \textbf{FR-01} & Đăng nhập & EP, Bảng quyết định (DT) & \texttt{TC-LOGIN-EP1..EP8}, \texttt{DT1..DT5} & \texttt{LoginTest} & --- \\ \hline
 \textbf{FR-02} & Giỏ hàng & BVA, Use Case (UC2) & \texttt{TC-CART-B1..B5}, \texttt{UC1..UC5}, \texttt{P01} & \texttt{CartTest} & \textbf{BUG-05} \\ \hline
-\textbf{FR-03} & Thanh toán & Use Case (UC1), DT, BVA & \texttt{TC-CHK-01..05}, \texttt{DT1..DT4}, \texttt{TAX-B1..B3}, \texttt{06..07} & \texttt{CheckoutTest} & \textbf{BUG-03, 04} \\ \hline
+\textbf{FR-03} & Thanh toán & Use Case (UC1), DT, BVA & \texttt{TC-CHK-UC1..UC5}, \texttt{DT1..DT4}, \texttt{TAX-B1..B3}, \texttt{UC6..UC7} & \texttt{CheckoutTest} & \textbf{BUG-03, 04} \\ \hline
 \textbf{FR-04} & Sắp xếp & Phân lớp tương đương (EP) & \texttt{TC-SORT-EP1..EP4} & \texttt{SortTest} & \textbf{BUG-02, 06} \\ \hline
 \textbf{NFR-01} & Hiệu năng & Đo thời gian (5 lần đo) & \texttt{TC-NFR-01} & \texttt{PerformanceTest} & \textbf{BUG-01} \\ \hline
 \end{tabularx}
@@ -358,7 +358,7 @@ Mật khẩu cố định là \texttt{secret\_sauce}. Miền giá trị của Us
 \centering
 \small
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|p{4cm}|l|X|c|}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}p{4cm}|l|>{\raggedright\arraybackslash}X|c|}
 \hline
 \textbf{Lớp} & \textbf{Mô tả lớp} & \textbf{Giá trị đại diện} & \textbf{Kết quả mong đợi} & \textbf{Mã TC} \\ \hline
 \makecell[t]{\textbf{EC1}\\\scriptsize(Hợp lệ)} & Tài khoản tồn tại, đang hoạt động & \texttt{standard\_user} & Chuyển đến URL \texttt{inventory.html} & \texttt{TC-LOGIN-EP1} \\ \hline
@@ -378,7 +378,7 @@ Tên đăng nhập cố định là \texttt{standard\_user}. Miền giá trị P
 \centering
 \small
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|p{4cm}|l|X|c|}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}p{4cm}|l|>{\raggedright\arraybackslash}X|c|}
 \hline
 \textbf{Lớp} & \textbf{Mô tả lớp} & \textbf{Giá trị đại diện} & \textbf{Kết quả mong đợi} & \textbf{Mã TC} \\ \hline
 \makecell[t]{\textbf{EC6}\\\scriptsize(Hợp lệ)} & Mật khẩu chính xác & \texttt{secret\_sauce} & Chuyển đến URL \texttt{inventory.html} & *(Trùng EP1)* \\ \hline
@@ -532,16 +532,16 @@ Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm th�
 \begin{tabularx}{\textwidth}{|c|p{3.5cm}|p{4.2cm}|X|}
 \hline
 \textbf{Mã TC} & \textbf{Luồng trên sơ đồ} & \textbf{Dữ liệu đầu vào (First / Last / Postal)} & \textbf{Kết quả mong đợi} \\ \hline
-\texttt{TC-CHK-01} & Luồng chính (Happy Path) & \texttt{Duc / Tran / 700000} & Thank you for your order! (Giỏ hàng được làm rỗng) \\ \hline
-\texttt{TC-CHK-02} & Ngoại lệ A1 (Thiếu First Name) & \texttt{"" / Tran / 700000} & Error: First Name is required \\ \hline
-\texttt{TC-CHK-03} & Ngoại lệ A2 (Thiếu Last Name) & \texttt{Duc / "" / 700000} & Error: Last Name is required \\ \hline
-\texttt{TC-CHK-04} & Ngoại lệ A3 (Thiếu Postal Code) & \texttt{Duc / Tran / ""} & Error: Postal Code is required \\ \hline
-\texttt{TC-CHK-05} & Ngoại lệ A4 (Hủy Cancel) & (Không nhập) / Nhấn nút Cancel & Chuyển về URL \texttt{cart.html}, sản phẩm vẫn trong giỏ hàng \\ \hline
+\texttt{TC-CHK-UC1} & Luồng chính (Happy Path) & \texttt{Duc / Tran / 700000} & Thank you for your order! (Giỏ hàng được làm rỗng) \\ \hline
+\texttt{TC-CHK-UC2} & Ngoại lệ A1 (Thiếu First Name) & \texttt{"" / Tran / 700000} & Error: First Name is required \\ \hline
+\texttt{TC-CHK-UC3} & Ngoại lệ A2 (Thiếu Last Name) & \texttt{Duc / "" / 700000} & Error: Last Name is required \\ \hline
+\texttt{TC-CHK-UC4} & Ngoại lệ A3 (Thiếu Postal Code) & \texttt{Duc / Tran / ""} & Error: Postal Code is required \\ \hline
+\texttt{TC-CHK-UC5} & Ngoại lệ A4 (Hủy Cancel) & (Không nhập) / Nhấn nút Cancel & Chuyển về URL \texttt{cart.html}, sản phẩm vẫn trong giỏ hàng \\ \hline
 \end{tabularx}
 \caption{Bảng kịch bản kiểm thử rút ra từ Sơ đồ hoạt động Thanh toán đơn hàng FR-03}
 \end{table}
 
-\noindent \textbf{Đặc tả chi tiết từng bước của ca kiểm thử mẫu \texttt{TC-CHK-01}:}
+\noindent \textbf{Đặc tả chi tiết từng bước của ca kiểm thử mẫu \texttt{TC-CHK-UC1}:}
 \begin{table}[H]
 \centering
 \small
@@ -555,7 +555,7 @@ Từ sơ đồ hoạt động, nhóm xây dựng bảng kịch bản kiểm th�
 5 & Kiểm tra thông tin tóm tắt thanh toán & Item total: \$29.99, Tax: \$2.40 ($29.99 \times 8\% \approx 2.40$), Total: \$32.39 ($29.99 + 2.40 = 32.39$) \\ \hline
 6 & Nhấn nút Finish & Chuyển sang URL \texttt{checkout-complete.html}; hiển thị thông điệp \textit{"Thank you for your order!"}; giỏ hàng được làm rỗng và badge biến mất \\ \hline
 \end{tabularx}
-\caption{Đặc tả chi tiết kịch bản kiểm thử \texttt{TC-CHK-01}}
+\caption{Đặc tả chi tiết kịch bản kiểm thử \texttt{TC-CHK-UC1}}
 \end{table}
 
 \clearpage
@@ -611,24 +611,6 @@ Bảng kịch bản kiểm thử rút ra từ sơ đồ ca sử dụng Quản l�
 \caption{Kịch bản kiểm thử rút ra từ Sơ đồ hoạt động Quản lý giỏ hàng UC2}
 \end{table}
 
-\clearpage
-\subsection{Bảng tổng hợp đối chiếu số lượng ca kiểm thử (Mục 5.5)}
-Theo quy định tại Mục 5.5 của đề bài, nhóm tự đánh giá số lượng ca kiểm thử đã thiết kế so với chỉ tiêu tối thiểu:
-\begin{table}[H]
-\centering
-\small
-\begin{tabularx}{\textwidth}{|l|c|c|X|c|}
-\hline
-\textbf{Kỹ thuật kiểm thử} & \textbf{Đề yêu cầu} & \textbf{Số lượng của nhóm} & \textbf{Danh sách các ca kiểm thử} & \textbf{Đánh giá} \\ \hline
-EP (2 trường) & $\ge 8$ & \textbf{12} & \texttt{TC-LOGIN-EP1..EP8}, \texttt{TC-SORT-EP1..EP4} & \textbf{ĐẠT (Vượt)} \\ \hline
-BVA (2 miền giá trị) & $\ge 8$ & \textbf{8} & \texttt{TC-CART-B1..B5}, \texttt{TC-TAX-B1..B3} & \textbf{ĐẠT} \\ \hline
-Bảng quyết định (2 bảng) & $\ge 8$ & \textbf{9} & \texttt{TC-LOGIN-DT1..DT5}, \texttt{TC-CHK-DT1..DT4} & \textbf{ĐẠT} \\ \hline
-Use Case (2 ca sử dụng) & $\ge 8$ & \textbf{10} & \texttt{TC-CHK-01..05}, \texttt{TC-CART-UC1..UC5} & \textbf{ĐẠT (Vượt)} \\ \hline
-NFR-01 (Hiệu năng) & $\ge 1$ & \textbf{1} & \texttt{TC-NFR-01} & \textbf{ĐẠT} \\ \hline \hline
-\textbf{Tổng cộng} & $\ge \mathbf{33}$ & \textbf{40} & \textit{Bao gồm cả các ca kiểm thử bổ sung} & \textbf{HOÀN THÀNH} \\ \hline
-\end{tabularx}
-\caption{Bảng đối chiếu số lượng ca kiểm thử thiết kế so với quy định đề bài}
-\end{table}
 
 % ==============================================================================
 % MỤC 5: NV4 – THỰC THI THỦ CÔNG & BÁO LỖI
@@ -642,7 +624,7 @@ Nhóm tiến hành chạy thực tế toàn bộ các ca kiểm thử trên môi
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3.5pt}
-\begin{tabularx}{\textwidth}{|l|p{2.8cm}|c|X|c|c|}
+\begin{tabularx}{\textwidth}{|l|>{\raggedright\arraybackslash}p{2.8cm}|c|>{\raggedright\arraybackslash}X|c|c|}
 \hline
 \textbf{Mã TC} & \textbf{Tên ca kiểm thử} & \textbf{Người chạy} & \textbf{Kết quả thực tế quan sát được} & \textbf{Trạng thái} & \textbf{Mã BUG} \\ \hline
 \texttt{TC-LOGIN-EP1..8} & Kiểm thử EP Đăng nhập & Khánh Đăng & Chuyển hướng đúng hoặc hiển thị đúng thông báo lỗi & \textbf{PASS} & --- \\ \hline
@@ -651,9 +633,9 @@ Nhóm tiến hành chạy thực tế toàn bộ các ca kiểm thử trên môi
 \texttt{TC-SORT-EP3..EP4} & Sắp xếp giá với \texttt{visual\_user} & Thành Nhân & Giá bị gán ngẫu nhiên, danh sách hiển thị lộn xộn & \textbf{FAIL} & \textbf{BUG-06} \\ \hline
 \texttt{TC-CART-B1..B5} & Kiểm thử biên BVA giỏ hàng & Chí Tài & Badge và nút Remove hoạt động chính xác (0 đến 6) & \textbf{PASS} & --- \\ \hline
 \texttt{TC-CART-P01} & Xóa hàng với \texttt{problem\_user} & Chí Tài & Nhấn Remove nhưng nút không đổi và sản phẩm không bị xóa & \textbf{FAIL} & \textbf{BUG-05} \\ \hline
-\texttt{TC-CHK-01..05} & Kiểm thử Use Case thanh toán & Việt Đức & Chuyển hướng đúng, tính thuế chuẩn, hiển thị THANK YOU & \textbf{PASS} & --- \\ \hline
-\texttt{TC-CHK-06} & Checkout với \texttt{error\_user} & Việt Đức & Ô Last Name không nhận ký tự nhưng form vẫn cho Continue & \textbf{FAIL} & \textbf{BUG-04} \\ \hline
-\texttt{TC-CHK-07} & Checkout với \texttt{problem\_user} & Việt Đức & Nhập vào ô Last Name thì tự động sửa vào ô First Name & \textbf{FAIL} & \textbf{BUG-03} \\ \hline
+\texttt{TC-CHK-UC1..UC5} & Kiểm thử Use Case thanh toán & Việt Đức & Chuyển hướng đúng, tính thuế chuẩn, hiển thị THANK YOU & \textbf{PASS} & --- \\ \hline
+\texttt{TC-CHK-UC6} & Checkout với \texttt{error\_user} & Việt Đức & Ô Last Name không nhận ký tự nhưng form vẫn cho Continue & \textbf{FAIL} & \textbf{BUG-04} \\ \hline
+\texttt{TC-CHK-UC7} & Checkout với \texttt{problem\_user} & Việt Đức & Nhập vào ô Last Name thì tự động sửa vào ô First Name & \textbf{FAIL} & \textbf{BUG-03} \\ \hline
 \texttt{TC-NFR-01} & Đo hiệu năng 5 lần đăng nhập & Ngọc Vinh & 5.12s, 5.08s, 5.11s, 5.15s, 5.10s (Trung vị: 5.11s) & \textbf{FAIL} & \textbf{BUG-01} \\ \hline
 \end{tabularx}
 \caption{Trích xuất kết quả thực thi kiểm thử thủ công trên SauceDemo}
@@ -845,7 +827,7 @@ public class CheckoutTest extends WebTestBase {
     }
 
     @Test
-    @DisplayName("(*@TC-CHK-01 - Checkout thành công@*)")
+    @DisplayName("(*@TC-CHK-UC1 - Checkout thành công@*)")
     void testCheckoutSucces() {
         checkoutPage.fillInformation("Nguyen", "Van A", "700000");
         checkoutPage.continueToOverviewAndReadTotal();
@@ -856,28 +838,28 @@ public class CheckoutTest extends WebTestBase {
     }
 
     @Test
-    @DisplayName("(*@TC-CHK-02 - Bỏ trống trường FirstName@*)")
+    @DisplayName("(*@TC-CHK-UC2 - Bỏ trống trường FirstName@*)")
     void testMissingFirstName() {
         checkoutPage.fillInformation("", "Van A", "700000");
         assertEquals("Error: First Name is required", checkoutPage.continueExpectingError());
     }
 
     @Test
-    @DisplayName("(*@TC-CHK-03 - Bỏ trống trường LastName@*)")
+    @DisplayName("(*@TC-CHK-UC3 - Bỏ trống trường LastName@*)")
     void testMissingLastName() {
         checkoutPage.fillInformation("Nguyen", "", "700000");
         assertEquals("Error: Last Name is required", checkoutPage.continueExpectingError());
     }
 
     @Test
-    @DisplayName("(*@TC-CHK-04 - Bỏ trống trường Postal@*)")
+    @DisplayName("(*@TC-CHK-UC4 - Bỏ trống trường Postal@*)")
     void testMissingPostal() {
         checkoutPage.fillInformation("Nguyen", "Van A", "");
         assertEquals("Error: Postal Code is required", checkoutPage.continueExpectingError());
     }
 
     @Test
-    @DisplayName("(*@TC-CHK-05 - Nhấn Cancel Checkout @*)")
+    @DisplayName("(*@TC-CHK-UC5 - Nhấn Cancel Checkout @*)")
     void testCancelCheckout() {
         checkoutPage.clickCancel();
         cartPage.open();

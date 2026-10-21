@@ -31,7 +31,7 @@ public class CheckoutTest extends WebTestBase{
         checkoutPage = new CheckoutPage(driver);
     }
     @Test
-    @DisplayName("TC-CHK-01 - Checkout thành công")
+    @DisplayName("TC-CHK-UC1 - Checkout thành công")
     void testCheckoutSucces() {
         checkoutPage.fillInformation("Nguyen", "Van A", "700000");
         checkoutPage.continueToOverviewAndReadTotal();
@@ -41,25 +41,25 @@ public class CheckoutTest extends WebTestBase{
         assertEquals("Thank you for your order!", checkoutPage.finishOrder());
     }
     @Test
-    @DisplayName("TC-CHK-02 - Bỏ trống trường FirstName")
+    @DisplayName("TC-CHK-UC2 - Bỏ trống trường FirstName")
     void testMissingFirstName() {
         checkoutPage.fillInformation("","Van A","700000");
         assertEquals("Error: First Name is required", checkoutPage.continueExpectingError());
     }
     @Test
-    @DisplayName("TC-CHK-03 - Bỏ trống trường LastName")
+    @DisplayName("TC-CHK-UC3 - Bỏ trống trường LastName")
     void testMissingLastName() {
         checkoutPage.fillInformation("Nguyen", "","700000");
         assertEquals("Error: Last Name is required", checkoutPage.continueExpectingError());
     }
     @Test
-    @DisplayName("TC-CHK-04 - Bỏ trống trường Postal")
+    @DisplayName("TC-CHK-UC4 - Bỏ trống trường Postal")
     void testMissingPostal() {
         checkoutPage.fillInformation("Nguyen", "Van A","");
         assertEquals("Error: Postal Code is required", checkoutPage.continueExpectingError());
     }
     @Test
-    @DisplayName("TC-CHK-05 - Nhấn Cancel Checkout ")
+    @DisplayName("TC-CHK-UC5 - Nhấn Cancel Checkout ")
     void testCancelCheckout() {
         checkoutPage.clickCancel();
         cartPage.open();

@@ -36,7 +36,7 @@ public class CheckoutErrorUserTest extends WebTestBase {
     }
 
     @Test
-    @DisplayName("TC-CHK-06 [BUG-04] - Lỗi bỏ qua kiểm tra LastName khi checkout với error_user")
+    @DisplayName("TC-CHK-UC6 [BUG-04] - Lỗi bỏ qua kiểm tra LastName khi checkout với error_user")
     public void errorMissingLastName() {
         checkoutPage.fillInformation("Nguyen", "", "700000");
         driver.findElement(By.id("continue")).click();
