@@ -44,7 +44,8 @@ public class ScreenshotWatcher implements TestWatcher, AfterTestExecutionCallbac
 
                     File screenshotFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
                     Files.copy(screenshotFile.toPath(), destination);
-                    System.out.printf("[TestWatcher] Ca kiểm thử FAIL: %s#%s. Đã tự động chụp ảnh màn hình lưu tại: %s%n",
+                    System.out.printf(
+                            "[TestWatcher] Ca kiểm thử FAIL: %s#%s. Đã tự động chụp ảnh màn hình lưu tại: %s%n",
                             className, methodName, destination.toAbsolutePath());
                 }
             }

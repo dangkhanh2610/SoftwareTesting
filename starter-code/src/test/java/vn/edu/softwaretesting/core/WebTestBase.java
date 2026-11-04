@@ -54,6 +54,7 @@ public abstract class WebTestBase {
         if (headless) {
             options.addArguments("--headless=new");
         }
+        options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-search-engine-choice-screen");
         return options;
     }
