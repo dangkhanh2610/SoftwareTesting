@@ -5,7 +5,7 @@
 % ==============================================================================
 
 \documentclass[a4paper]{article}
-\usepackage{vntex}
+\usepackage[utf8]{vntex}
 \usepackage{a4wide,amssymb,latexsym,multicol,array,hhline,fancyhdr}
 \usepackage{booktabs}
 \usepackage{amsmath}
@@ -21,7 +21,7 @@
 \usepackage{geometry}
 \usepackage{setspace}
 \usepackage{listings}
-\usepackage{hyperref}
+\usepackage[hypertexnames=false]{hyperref}
 \hypersetup{urlcolor=blue,linkcolor=black,citecolor=black,colorlinks=true} 
 
 \geometry{
@@ -57,22 +57,25 @@
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\footrulewidth}{0.3pt}
 
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
-\definecolor{navyblue}{rgb}{0.12,0.23,0.54}
+\definecolor{dkgreen}{rgb}{0,0.42,0}
+\definecolor{gray}{rgb}{0.32,0.32,0.32}
+\definecolor{mauve}{rgb}{0.42,0,0.62}
+\definecolor{navyblue}{rgb}{0.05,0.15,0.50}
+\definecolor{codebg}{rgb}{0.98,0.98,0.99}
 
 \lstset{
   frame=single,
+  backgroundcolor=\color{codebg},
+  rulecolor=\color{black!55},
   language=Java,
   aboveskip=3mm,
   belowskip=3mm,
   showstringspaces=false,
   columns=flexible,
-  basicstyle={\small\ttfamily},
+  basicstyle={\small\ttfamily\color{black}},
   numbers=left,
   numberstyle=\tiny\color{gray},
-  keywordstyle=\color{blue}\bfseries,
+  keywordstyle=\color{navyblue}\bfseries,
   commentstyle=\color{dkgreen}\textit,
   stringstyle=\color{mauve},
   breaklines=true,
@@ -83,8 +86,12 @@
   escapeinside={(*@}{@*)}
 }
 
-% Điều chỉnh độ giãn dòng bảng chuẩn đẹp
+% Điều chỉnh độ giãn dòng bảng chuẩn đẹp và triệt tiêu cảnh báo tràn/thiếu dòng (Overfull/Underfull hbox)
 \renewcommand{\arraystretch}{1.25}
+\emergencystretch=3em
+\hbadness=10000
+\vbadness=10000
+\hfuzz=2pt
 
 \begin{document}
 
@@ -125,22 +132,21 @@
 
 \vspace{1.2cm}
 
-% Bảng thông tin nhóm căn chính giữa (center) cân đối tuyệt đối
+% Bảng thông tin nhóm căn chính giữa (center) cân đối tuyệt đối (Đã xóa cột vai trò)
 \begin{center}
-\begin{tabular}{cllcc}
-  \multicolumn{5}{l}{\textbf{Nhóm thực hiện:}\quad \textbf{Nhóm 04}} \\[0.2cm]
-  \multicolumn{5}{l}{\textbf{Giảng viên hướng dẫn:}\quad \textbf{Từ Lãng Phiêu}} \\[0.4cm]
-  \textbf{STT} & \textbf{Họ và tên sinh viên} & \textbf{Vai trò phụ trách} & \textbf{MSSV} & \textbf{Đóng góp} \\
+\begin{tabular}{clcc}
+  \multicolumn{4}{l}{\textbf{Nhóm thực hiện:}\quad \textbf{Nhóm 04}} \\[0.2cm]
+  \multicolumn{4}{l}{\textbf{Giảng viên hướng dẫn:}\quad \textbf{Từ Lãng Phiêu}} \\[0.4cm]
+  \textbf{STT} & \textbf{Họ và tên sinh viên} & \textbf{MSSV} & \textbf{Đóng góp} \\
   \hline
-  1 & Lê Khánh Đăng & Nhóm trưởng (Login - FR-01) & 3124560022 & 100\% \\
-  2 & Dương Chí Tài & QA (Giỏ hàng - FR-02) & 3124560076 & 100\% \\
-  3 & Trần Việt Đức & QA (Thanh toán - FR-03) & 3124560024 & 100\% \\
-  4 & Nguyễn Thành Nhân & QA (Sắp xếp - FR-04) & 3124560065 & 100\% \\
-  5 & Phan Ngọc Vinh & QA (Hiệu năng - NFR-01/Excel) & 3124560098 & 100\% \\
+  1 & Lê Khánh Đăng & 3124560022 & 20\% \\
+  2 & Dương Chí Tài & 3124560076 & 20\% \\
+  3 & Trần Việt Đức & 3124560024 & 20\% \\
+  4 & Nguyễn Thành Nhân & 3124560065 & 20\% \\
+  5 & Phan Ngọc Vinh & 3124560098 & 20\% \\
   \hline
 \end{tabular}
 \end{center}
-
 \vfill
 
 \begin{center}
@@ -197,7 +203,7 @@ Nhóm tiến hành khởi chạy dự án mẫu (\texttt{starter-code}) thông q
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.92\textwidth]{NV1_terminal_mvn_clean_test.png}
+\includegraphics[width=0.92\textwidth]{evidence/NV1_terminal_mvn_clean_test.png}
 \caption{Ảnh chụp màn hình kết quả chạy thực tế \texttt{mvn clean test} thành công}
 \end{figure}
 
@@ -222,9 +228,9 @@ Kiến trúc kiểm thử tự động của dự án ứng dụng ba annotation
 \clearpage
 \section{NV2 – Phân tích yêu cầu và Đánh giá rủi ro}
 \subsection{Đặc tả yêu cầu chi tiết (Requirements Specification)}
-Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với các thành viên phụ trách, mỗi phân hệ được chuẩn hóa theo định dạng 3 cột thống nhất: \textbf{Mã yêu cầu}, \textbf{Mô tả yêu cầu}, và \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)}.
+Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với 4 yêu cầu chức năng (FR-01 đến FR-04) và 1 yêu cầu phi chức năng (NFR-01), mỗi phân hệ được chuẩn hóa theo định dạng 3 cột thống nhất: \textbf{Mã yêu cầu}, \textbf{Mô tả yêu cầu}, và \textbf{Kết quả mong đợi (Quy tắc kiểm tra cụ thể)}.
 
-\subsubsection{Đặc tả FR-01: Xác thực và Đăng nhập (Lê Khánh Đăng)}
+\subsubsection{Đặc tả FR-01: Xác thực và Đăng nhập}
 \begin{table}[H]
 \centering
 \small
@@ -240,7 +246,7 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \caption{Bảng đặc tả yêu cầu chức năng FR-01: Đăng nhập}
 \end{table}
 
-\subsubsection{Đặc tả FR-02: Quản lý giỏ hàng (Dương Chí Tài)}
+\subsubsection{Đặc tả FR-02: Quản lý giỏ hàng}
 \begin{table}[H]
 \centering
 \small
@@ -256,7 +262,7 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \end{table}
 
 \clearpage
-\subsubsection{Đặc tả FR-03: Quy trình thanh toán (Trần Việt Đức)}
+\subsubsection{Đặc tả FR-03: Quy trình thanh toán}
 \begin{table}[H]
 \centering
 \small
@@ -274,7 +280,7 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \caption{Bảng đặc tả yêu cầu chức năng FR-03: Thanh toán}
 \end{table}
 
-\subsubsection{Đặc tả FR-04: Sắp xếp danh sách sản phẩm (Nguyễn Thành Nhân)}
+\subsubsection{Đặc tả FR-04: Sắp xếp danh sách sản phẩm}
 \begin{table}[H]
 \centering
 \small
@@ -289,7 +295,7 @@ Nhóm phân rã đặc tả hệ thống thành 5 phân hệ tương ứng với
 \caption{Bảng đặc tả yêu cầu chức năng FR-04: Sắp xếp sản phẩm}
 \end{table}
 
-\subsubsection{Đặc tả NFR-01: Yêu cầu phi chức năng - Hiệu năng (Phan Ngọc Vinh)}
+\subsubsection{Đặc tả NFR-01: Yêu cầu phi chức năng - Hiệu năng}
 \begin{table}[H]
 \centering
 \small
@@ -688,13 +694,13 @@ Toàn bộ 6 lỗi hệ thống phát hiện được qua kiểm thử khám ph�
 \vspace{0.2cm}
 
 \begin{mdframed}[backgroundcolor=red!5,linecolor=red!60,roundcorner=4pt,nobreak=true]
-\small
+\small\sloppy
 \textbf{Mã lỗi: BUG-04} \\
 \textbf{Tiêu đề lỗi:} Ô Last Name không nhận ký tự nhưng form vẫn cho phép Continue sang Overview khi dùng \texttt{error\_user}. \\
 \textbf{Mức nghiêm trọng:} Major. \textbf{Môi trường:} Google Chrome 155, Win 11. \\
 \textbf{Các bước tái hiện:} Đăng nhập \texttt{error\_user}, vào Checkout Step One, nhập First Name: 'Duc', Postal Code: '700000', để trống Last Name và nhấn Continue. \\
 \textbf{Kết quả mong đợi:} Ô Last Name nhận ký tự bình thường; nếu thiếu Last Name phải chặn lại và hiển thị lỗi. \\
-\textbf{Kết quả thực tế:} Ô Last Name không gõ được chữ (Console báo lỗi TypeError); khi nhấn Continue hệ thống bypass validation và tự chuyển sang \texttt{checkout-step-two.html}. \\
+\textbf{Kết quả thực tế:} Ô Last Name không gõ được chữ (Console báo lỗi TypeError); khi nhấn Continue hệ thống bỏ qua kiểm tra hợp lệ và tự chuyển sang trang \texttt{checkout-step-two.html}. \\
 \textbf{Bằng chứng đính kèm:} Video ghi hình \texttt{evidence/NV4\_BUG-04.mp4} và ảnh chụp màn hình \texttt{evidence/NV4\_BUG-04.png}.
 \begin{center}\includegraphics[width=0.62\textwidth]{evidence/NV4_BUG-04.png}\end{center}
 \end{mdframed}
