@@ -9,6 +9,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import vn.edu.softwaretesting.core.DemoSlowMotion;
+
 public class CheckoutPage {
     private static final By FIRST_NAME = By.id("first-name");
     private static final By LAST_NAME = By.id("last-name");
@@ -33,27 +35,28 @@ public class CheckoutPage {
 
     private void clickElement(By locator) {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+        element.click();
+        DemoSlowMotion.pauseStep(driver);
     }
 
     public CheckoutPage fillInformation(String first, String last, String postal) {
         WebElement firstInput = wait.until(ExpectedConditions.visibilityOfElementLocated(FIRST_NAME));
-        firstInput.clear();
-        if (first != null && !first.isEmpty()) {
-            firstInput.sendKeys(first);
+        if (!firstInput.getAttribute("value").isEmpty()) {
+            firstInput.clear();
         }
+        DemoSlowMotion.typeSlowly(driver, firstInput, first);
 
         WebElement lastInput = wait.until(ExpectedConditions.visibilityOfElementLocated(LAST_NAME));
-        lastInput.clear();
-        if (last != null && !last.isEmpty()) {
-            lastInput.sendKeys(last);
+        if (!lastInput.getAttribute("value").isEmpty()) {
+            lastInput.clear();
         }
+        DemoSlowMotion.typeSlowly(driver, lastInput, last);
 
         WebElement postalInput = wait.until(ExpectedConditions.visibilityOfElementLocated(POSTAL_CODE));
-        postalInput.clear();
-        if (postal != null && !postal.isEmpty()) {
-            postalInput.sendKeys(postal);
+        if (!postalInput.getAttribute("value").isEmpty()) {
+            postalInput.clear();
         }
+        DemoSlowMotion.typeSlowly(driver, postalInput, postal);
         return this;
     }
 

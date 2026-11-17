@@ -11,6 +11,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import vn.edu.softwaretesting.core.DemoSlowMotion;
+
 public class CartPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
@@ -26,6 +28,7 @@ public class CartPage {
     private void clickElement(By locator) {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+        DemoSlowMotion.pauseStep(driver);
     }
 
     public CartPage open() {

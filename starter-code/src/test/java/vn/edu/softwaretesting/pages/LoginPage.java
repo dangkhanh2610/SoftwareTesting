@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import vn.edu.softwaretesting.core.DemoSlowMotion;
+
 public final class LoginPage {
 
     private static final By USERNAME = By.id("user-name");
@@ -29,18 +31,20 @@ public final class LoginPage {
     public LoginPage open() {
         driver.get(baseUrl);
         wait.until(ExpectedConditions.visibilityOfElementLocated(USERNAME));
+        DemoSlowMotion.pauseStep(driver);
         return this;
     }
 
     public LoginResult login(String username, String password) {
-        driver.findElement(USERNAME).sendKeys(username);
-        driver.findElement(PASSWORD).sendKeys(password);
+        DemoSlowMotion.typeSlowly(driver, driver.findElement(USERNAME), username);
+        DemoSlowMotion.typeSlowly(driver, driver.findElement(PASSWORD), password);
         driver.findElement(LOGIN_BUTTON).click();
 
         try {
             wait.until(ExpectedConditions.or(
                     ExpectedConditions.visibilityOfElementLocated(INVENTORY),
                     ExpectedConditions.visibilityOfElementLocated(ERROR)));
+            DemoSlowMotion.pauseStep(driver);
         } catch (TimeoutException exception) {
             return new LoginResult(false, driver.getCurrentUrl(),
                     "No success or error state appeared within the timeout");

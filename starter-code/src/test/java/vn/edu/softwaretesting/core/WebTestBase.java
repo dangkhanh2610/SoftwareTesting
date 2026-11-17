@@ -45,6 +45,7 @@ public abstract class WebTestBase {
     @AfterEach
     void closeBrowser() {
         if (driver != null) {
+            DemoSlowMotion.pauseBeforeClose(driver);
             driver.quit();
         }
     }
@@ -58,6 +59,7 @@ public abstract class WebTestBase {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-search-engine-choice-screen");
+        options.addArguments("--incognito");
         return options;
     }
 

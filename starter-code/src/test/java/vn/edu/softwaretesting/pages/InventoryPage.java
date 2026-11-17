@@ -12,6 +12,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import vn.edu.softwaretesting.core.DemoSlowMotion;
+
 public class InventoryPage {
 
         private final WebDriver driver;
@@ -33,6 +35,7 @@ public class InventoryPage {
         private void clickElement(By locator) {
                 WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
                 ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+                DemoSlowMotion.pauseStep(driver);
         }
 
         public InventoryPage open() {
@@ -78,6 +81,7 @@ public class InventoryPage {
                 WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(sortDropdown));
                 new Select(dropdown).selectByValue(option);
                 wait.until(ExpectedConditions.visibilityOfElementLocated(inventoryList));
+                DemoSlowMotion.pauseStep(driver);
                 return this;
         }
 
